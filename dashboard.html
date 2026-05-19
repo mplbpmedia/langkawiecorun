@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin — Langkawi Eco Run 2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gd:#1a4a1a;--gm:#2d7a2d;--gl:#4caf50;--glt:#a8d5a2;--gp:#e8f5e2;--y:#f5c518;--yd:#d4a017;--w:#fff;--off:#f9fdf6;--tx:#111f11;--mt:#4a6b4a;--red:#e53935}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--tx);min-height:100vh}
+
+/* NAV */
+.adm-nav{background:var(--gd);padding:.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(245,197,24,.2)}
+.adm-logo{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--w);letter-spacing:2px}
+.adm-logo .eco{color:var(--y)}
+.adm-logo small{font-family:'DM Sans',sans-serif;font-size:.72rem;color:rgba(255,255,255,.35);font-weight:300;letter-spacing:0;margin-left:.5rem}
+.nav-right{display:flex;align-items:center;gap:1rem}
+.adm-date{color:rgba(255,255,255,.4);font-size:.78rem}
+.btn-logout{background:transparent;color:rgba(255,255,255,.55);font-size:.78rem;border:1px solid rgba(255,255,255,.15);padding:.38rem .85rem;border-radius:50px;cursor:pointer;transition:background .2s,color .2s;text-decoration:none}
+.btn-logout:hover{background:rgba(255,255,255,.08);color:var(--w)}
+
+/* BODY */
+.body{padding:2rem 2.5rem}
+@media(max-width:768px){.body{padding:1.25rem 1rem}}
+
+/* PAGE HEADER */
+.page-hd{margin-bottom:2rem}
+.page-hd h1{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gd);letter-spacing:1px}
+.page-hd p{font-size:.83rem;color:var(--mt);margin-top:.2rem}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+@media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--w);border:1px solid #e0eed8;border-radius:14px;padding:1.2rem 1rem}
+.kpi.yl{border-left:4px solid var(--y)}
+.kpi.gn{border-left:4px solid var(--gl)}
+.kpi.bl{border-left:4px solid #1976d2}
+.kpi.pu{border-left:4px solid #7b1fa2}
+.kpi-lbl{font-size:.68rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--mt);margin-bottom:.4rem}
+.kpi-val{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gd);line-height:1}
+.kpi-sub{font-size:.72rem;color:var(--mt);margin-top:.2rem}
+
+/* TABLE SECTION */
+.tbl-wrap{background:var(--w);border:1px solid #e0eed8;border-radius:16px;overflow:hidden}
+
+/* TOOLBAR */
+.toolbar{padding:1.1rem 1.25rem;border-bottom:1px solid #f0f0f0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.toolbar-left h3{font-size:.95rem;font-weight:600;color:var(--gd)}
+.toolbar-left p{font-size:.75rem;color:var(--mt);margin-top:.1rem}
+.toolbar-right{display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+
+/* CATEGORY TABS */
+.cat-tabs{display:flex;background:var(--off);border:1px solid #e0eed8;border-radius:8px;overflow:hidden;margin-bottom:0}
+.cat-tab{padding:.45rem .9rem;font-size:.78rem;font-weight:600;color:var(--mt);cursor:pointer;border:none;background:none;transition:background .2s,color .2s;white-space:nowrap}
+.cat-tab.active{background:var(--gm);color:var(--w)}
+.cat-tab:hover:not(.active){background:var(--gp);color:var(--gd)}
+
+/* SEARCH */
+.search-box{padding:.5rem .85rem;border:1.5px solid #d4e8cc;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.83rem;outline:none;width:200px;transition:border-color .2s}
+.search-box:focus{border-color:var(--gl)}
+@media(max-width:600px){.search-box{width:150px}}
+
+/* EXPORT BTN */
+.btn-export{background:var(--gp);color:var(--gd);font-size:.78rem;font-weight:600;padding:.5rem .9rem;border-radius:8px;border:1px solid #c8e6c9;cursor:pointer;transition:background .2s;white-space:nowrap}
+.btn-export:hover{background:#c8e6c9}
+
+/* TABLE */
+.tbl-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.83rem;min-width:700px}
+thead tr{background:var(--gp)}
+th{padding:.8rem 1rem;text-align:left;font-size:.68rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--gm);border-bottom:1px solid #d4e8cc;white-space:nowrap}
+td{padding:.75rem 1rem;border-bottom:1px solid #f5f5f5;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafff8}
+
+/* BIB BADGE */
+.bib{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--gd);background:var(--y);padding:.15rem .55rem;border-radius:6px;letter-spacing:1px;display:inline-block}
+
+/* CATEGORY BADGE */
+.badge-k{display:inline-block;padding:.22rem .65rem;border-radius:50px;font-size:.7rem;font-weight:700;letter-spacing:.5px}
+.b5{background:#e8f5e2;color:var(--gm)}
+.b10{background:#fff3cd;color:#b8900a}
+.bpaid{background:#e8f5e2;color:var(--gm)}
+
+/* DELETE BTN */
+.btn-del{background:transparent;color:#b71c1c;border:1px solid #ffcdd2;border-radius:8px;padding:.35rem .7rem;font-size:.75rem;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s;white-space:nowrap}
+.btn-del:hover{background:#ffebee;border-color:#e57373}
+
+/* EMPTY */
+.empty-state{text-align:center;padding:3rem;color:var(--mt)}
+.empty-state div{font-size:2.5rem;margin-bottom:.75rem}
+.empty-state p{font-size:.88rem}
+
+/* FOOTER COUNT */
+.tbl-footer{padding:.85rem 1.25rem;border-top:1px solid #f0f0f0;font-size:.78rem;color:var(--mt);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
+
+/* CONFIRM MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.show{display:flex}
+.modal{background:var(--w);border-radius:20px;padding:2rem;max-width:380px;width:100%;text-align:center}
+.modal h3{font-size:1.1rem;font-weight:600;color:var(--tx);margin-bottom:.75rem}
+.modal p{font-size:.88rem;color:var(--mt);line-height:1.6;margin-bottom:1.5rem}
+.modal-name{font-weight:600;color:var(--gd)}
+.modal-bib{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--y);background:var(--gd);padding:.2rem .75rem;border-radius:8px;display:inline-block;margin:.25rem 0}
+.modal-btns{display:flex;gap:.75rem;justify-content:center}
+.btn-cancel{background:var(--off);color:var(--mt);border:1px solid #d4e8cc;border-radius:50px;padding:.65rem 1.5rem;font-size:.88rem;cursor:pointer;transition:background .2s}
+.btn-cancel:hover{background:#e0e0e0}
+.btn-confirm-del{background:var(--red);color:var(--w);border:none;border-radius:50px;padding:.65rem 1.5rem;font-size:.88rem;font-weight:600;cursor:pointer;transition:background .2s}
+.btn-confirm-del:hover{background:#c62828}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--gd);color:var(--w);padding:.75rem 1.5rem;border-radius:50px;font-size:.85rem;font-weight:600;z-index:600;transition:transform .3s ease;white-space:nowrap;border:1px solid rgba(245,197,24,.3)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .adm-nav{padding:.8rem 1rem}
+  .adm-date{display:none}
+  .toolbar{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="adm-nav">
+  <div class="adm-logo">
+    LANGKAWI <span class="eco">ECO</span> RUN
+    <small>— Admin Dashboard</small>
+  </div>
+  <div class="nav-right">
+    <span class="adm-date" id="adm-date"></span>
+    <a href="admin-login.html" class="btn-logout" onclick="doLogout()">Log Keluar</a>
+  </div>
+</nav>
+
+<!-- BODY -->
+<div class="body">
+
+  <!-- PAGE HEADER -->
+  <div class="page-hd">
+    <h1>Dashboard Penganjur</h1>
+    <p>Langkawi Eco Run 2.0 — Majlis Perbandaran Langkawi Bandaraya Pelancongan (MPLBP)</p>
+  </div>
+
+  <!-- KPI -->
+  <div class="kpi-grid">
+    <div class="kpi yl">
+      <div class="kpi-lbl">Jumlah Peserta</div>
+      <div class="kpi-val" id="k-total">0</div>
+      <div class="kpi-sub">Pendaftaran diterima</div>
+    </div>
+    <div class="kpi gn">
+      <div class="kpi-lbl">Kategori 5 KM</div>
+      <div class="kpi-val" id="k-5km">0</div>
+      <div class="kpi-sub">Fun Run</div>
+    </div>
+    <div class="kpi bl">
+      <div class="kpi-lbl">Kategori 10 KM</div>
+      <div class="kpi-val" id="k-10km">0</div>
+      <div class="kpi-sub">Competitive Run</div>
+    </div>
+    <div class="kpi pu">
+      <div class="kpi-lbl">Jumlah Kutipan</div>
+      <div class="kpi-val" id="k-rev">RM 0</div>
+      <div class="kpi-sub">Yuran pendaftaran</div>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="tbl-wrap">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <h3>📋 Senarai Peserta & No. Bib</h3>
+        <p>No. Bib = No. Pendaftaran peserta (digunakan untuk Cabutan Bertuah)</p>
+      </div>
+      <div class="toolbar-right">
+        <!-- Category Tabs -->
+        <div class="cat-tabs">
+          <button class="cat-tab active" onclick="setFilter('',this)">Semua</button>
+          <button class="cat-tab" onclick="setFilter('5km',this)">5 KM</button>
+          <button class="cat-tab" onclick="setFilter('10km',this)">10 KM</button>
+        </div>
+        <!-- Search -->
+        <input class="search-box" type="text" id="search-box" placeholder="🔍 Cari nama / bib / emel..." oninput="renderTable()">
+        <!-- Export -->
+        <button class="btn-export" onclick="exportCSV()">⬇ Export CSV</button>
+      </div>
+    </div>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>No. Bib</th>
+            <th>Nama Penuh</th>
+            <th>Emel</th>
+            <th>No. Telefon</th>
+            <th>Kategori</th>
+            <th>T-Shirt</th>
+            <th>Negeri</th>
+            <th>Bayaran</th>
+            <th>Tarikh Daftar</th>
+            <th>Tindakan</th>
+          </tr>
+        </thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+    </div>
+
+    <div class="tbl-footer">
+      <span id="tbl-count">0 peserta dijumpai</span>
+      <span style="color:var(--gm);font-weight:600" id="tbl-fee-total"></span>
+    </div>
+  </div>
+
+</div>
+
+<!-- DELETE CONFIRM MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div style="font-size:2.5rem;margin-bottom:.75rem">🗑️</div>
+    <h3>Padam Peserta?</h3>
+    <p>
+      Anda akan memadam rekod:<br>
+      <span class="modal-name" id="modal-name">—</span><br>
+      <span class="modal-bib" id="modal-bib">—</span><br>
+      <small style="color:#b71c1c;font-size:.78rem">⚠ Tindakan ini tidak boleh dibatalkan.</small>
+    </p>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Batal</button>
+      <button class="btn-confirm-del" onclick="confirmDelete()">Ya, Padam</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== SEMAK SESI =====
+if(sessionStorage.getItem('ecr2_admin')!=='true'){
+  window.location.href='admin-login.html';
+}
+
+let filterCat='';
+let deleteId=null;
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('adm-date').textContent=new Date().toLocaleDateString('ms-MY',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  loadKPI();
+  renderTable();
+});
+
+// ===== LOAD KPI =====
+function loadKPI(){
+  const data=getData();
+  const k5=data.filter(d=>d.kategori==='5km').length;
+  const k10=data.filter(d=>d.kategori==='10km').length;
+  const rev=data.reduce((s,d)=>s+(d.bayaran||0),0);
+  document.getElementById('k-total').textContent=data.length;
+  document.getElementById('k-5km').textContent=k5;
+  document.getElementById('k-10km').textContent=k10;
+  document.getElementById('k-rev').textContent='RM '+rev.toLocaleString();
+}
+
+// ===== GET DATA =====
+function getData(){
+  return JSON.parse(localStorage.getItem('ecr2_registrations')||'[]');
+}
+function saveData(d){
+  localStorage.setItem('ecr2_registrations',JSON.stringify(d));
+}
+
+// ===== SET FILTER =====
+function setFilter(cat,btn){
+  filterCat=cat;
+  document.querySelectorAll('.cat-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  renderTable();
+}
+
+// ===== RENDER TABLE =====
+function renderTable(){
+  const data=getData();
+  const q=document.getElementById('search-box').value.toLowerCase().trim();
+
+  const filtered=data.filter(d=>{
+    const matchCat=!filterCat||d.kategori===filterCat;
+    const matchQ=!q||
+      d.nama.toLowerCase().includes(q)||
+      d.id.toLowerCase().includes(q)||
+      d.emel.toLowerCase().includes(q)||
+      (d.tel||'').includes(q)||
+      (d.negeri||'').toLowerCase().includes(q);
+    return matchCat&&matchQ;
+  });
+
+  const tbody=document.getElementById('tbl-body');
+  const count=document.getElementById('tbl-count');
+  const feeTotal=document.getElementById('tbl-fee-total');
+
+  count.textContent=filtered.length+' peserta dijumpai';
+  const total=filtered.reduce((s,d)=>s+(d.bayaran||0),0);
+  feeTotal.textContent=filtered.length?'Jumlah: RM '+total.toLocaleString():'';
+
+  if(!filtered.length){
+    tbody.innerHTML=`
+      <tr><td colspan="11">
+        <div class="empty-state">
+          <div>${q?'🔍':'📋'}</div>
+          <p>${q?'Tiada peserta yang sepadan dengan carian "'+q+'"':'Belum ada peserta berdaftar lagi.'}</p>
+        </div>
+      </td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML=filtered.map((d,i)=>`
+    <tr>
+      <td style="color:var(--mt);font-size:.78rem">${i+1}</td>
+      <td><span class="bib">#${d.id}</span></td>
+      <td><strong style="font-size:.88rem">${d.nama}</strong></td>
+      <td style="font-size:.8rem;color:var(--mt)">${d.emel}</td>
+      <td style="font-size:.8rem">${d.tel||'—'}</td>
+      <td><span class="badge-k ${d.kategori==='5km'?'b5':'b10'}">${d.kategori.toUpperCase()}</span></td>
+      <td style="text-align:center">${d.tshirt||'—'}</td>
+      <td style="font-size:.8rem">${d.negeri||'—'}</td>
+      <td><span class="badge-k bpaid">RM ${d.bayaran} ✓</span></td>
+      <td style="font-size:.78rem;color:var(--mt)">${d.tarikhDaftar}</td>
+      <td><button class="btn-del" onclick="askDelete('${d.id}','${d.nama.replace(/'/g,"\\'")}')">🗑 Padam</button></td>
+    </tr>
+  `).join('');
+}
+
+// ===== DELETE =====
+function askDelete(id,nama){
+  deleteId=id;
+  document.getElementById('modal-name').textContent=nama;
+  document.getElementById('modal-bib').textContent='Bib #'+id;
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(){
+  document.getElementById('modal').classList.remove('show');
+  deleteId=null;
+}
+
+function confirmDelete(){
+  if(!deleteId)return;
+  let data=getData();
+  const idx=data.findIndex(d=>d.id===deleteId);
+  if(idx>-1){
+    const nama=data[idx].nama;
+    data.splice(idx,1);
+    saveData(data);
+    closeModal();
+    loadKPI();
+    renderTable();
+    showToast('✅ Rekod '+nama+' berjaya dipadam.');
+  }
+}
+
+// ===== EXPORT CSV =====
+function exportCSV(){
+  const data=getData();
+  if(!data.length){alert('Tiada data untuk dieksport.');return}
+  const headers=['No. Bib','Nama','IC','Emel','Tel','Tarikh Lahir','Jantina','Negeri','Kategori','T-Shirt','Kecemasan','Tel Kecemasan','Bayaran (RM)','Status','Tarikh Daftar'];
+  const rows=data.map(d=>[
+    d.id,d.nama,d.ic,d.emel,d.tel,d.dob,d.jantina,d.negeri,
+    d.kategori.toUpperCase(),d.tshirt,d.ekname,d.ektel,d.bayaran,d.status,d.tarikhDaftar
+  ].map(v=>'"'+(v||'').toString().replace(/"/g,'""')+'"').join(','));
+  const csv=[headers.join(','),...rows].join('\n');
+  const a=document.createElement('a');
+  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download='EcoRun2_Peserta_'+new Date().toISOString().slice(0,10)+'.csv';
+  a.click();
+}
+
+// ===== LOGOUT =====
+function doLogout(){
+  sessionStorage.removeItem('ecr2_admin');
+}
+
+// ===== TOAST =====
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// Close modal on overlay click
+document.getElementById('modal').addEventListener('click',function(e){
+  if(e.target===this)closeModal();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Langkawi Eco Run 2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gd:#1a4a1a;--gm:#2d7a2d;--gl:#4caf50;--glt:#a8d5a2;--gp:#e8f5e2;
+  --y:#f5c518;--yd:#d4a017;--w:#fff;--off:#f9fdf6;--tx:#111f11;--mt:#4a6b4a;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--tx);overflow-x:hidden}
+.view{display:none}.view.active{display:block}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:300;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1rem 2.5rem;
+  background:rgba(26,74,26,.93);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(245,197,24,.25);
+}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--w);letter-spacing:2px;cursor:pointer;text-decoration:none;border:none;background:none}
+.nav-logo .eco{color:var(--y)}
+
+/* HAMBURGER */
+.menu-btn{
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  width:44px;height:44px;gap:5px;
+  background:rgba(245,197,24,.12);
+  border:1px solid rgba(245,197,24,.35);
+  border-radius:12px;cursor:pointer;
+  transition:background .2s,border-color .2s;
+  flex-shrink:0;
+}
+.menu-btn:hover,.menu-btn.open{background:rgba(245,197,24,.22);border-color:var(--y)}
+.bar{width:20px;height:2px;background:var(--y);border-radius:2px;transition:transform .3s,opacity .3s,width .3s}
+.menu-btn.open .bar:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.menu-btn.open .bar:nth-child(2){opacity:0;width:0}
+.menu-btn.open .bar:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* DROPDOWN */
+.nav-dropdown{
+  position:fixed;top:70px;right:2.5rem;
+  background:rgba(18,48,18,.97);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(245,197,24,.22);
+  border-radius:20px;padding:1rem;
+  min-width:230px;z-index:299;
+  display:none;flex-direction:column;gap:.35rem;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  animation:dropIn .22s ease;
+}
+.nav-dropdown.open{display:flex}
+@keyframes dropIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+.nav-item{
+  display:flex;align-items:center;gap:.85rem;
+  padding:.7rem 1rem;border-radius:12px;
+  color:rgba(255,255,255,.78);font-size:.88rem;
+  cursor:pointer;text-decoration:none;
+  transition:background .2s,color .2s;
+  border:none;background:transparent;
+  font-family:'DM Sans',sans-serif;width:100%;text-align:left;
+}
+.nav-item:hover{background:rgba(255,255,255,.07);color:var(--w)}
+.nav-item-ic{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.nav-item-txt strong{display:block;font-size:.87rem;font-weight:600;color:var(--w)}
+.nav-item-txt small{font-size:.7rem;color:rgba(255,255,255,.38);display:block}
+.nav-divider{height:1px;background:rgba(255,255,255,.07);margin:.2rem 0}
+.nav-item.cta{background:var(--y)}
+.nav-item.cta .nav-item-txt strong{color:var(--gd)}
+.nav-item.cta .nav-item-txt small{color:rgba(26,74,26,.6)}
+.nav-item.cta:hover{background:var(--yd)}
+.nav-item.adm .nav-item-txt strong{color:rgba(255,255,255,.45);font-weight:400;font-size:.82rem}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:grid;grid-template-columns:1fr 1fr;
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(105deg,rgba(10,35,10,.9) 0%,rgba(20,55,20,.78) 45%,rgba(10,30,10,.55) 100%),
+    url('Background_Hero.jpg') center 30% / cover no-repeat;
+}
+.hero-left{display:flex;flex-direction:column;justify-content:center;padding:8rem 3rem 4rem 4.5rem;position:relative;z-index:2}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,197,24,.15);border:1px solid rgba(245,197,24,.5);
+  color:var(--y);font-size:.72rem;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;padding:.4rem 1rem;border-radius:50px;
+  width:fit-content;margin-bottom:1.5rem;
+}
+.badge::before{content:'';width:7px;height:7px;background:var(--y);border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero-title{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3.5rem,7vw,6.5rem);
+  line-height:.92;color:var(--w);letter-spacing:3px;margin-bottom:.75rem;
+  text-shadow:0 2px 20px rgba(0,0,0,.4);
+}
+.hero-title .eco{color:var(--y)}
+.hero-title .ver{font-size:55%;color:rgba(255,255,255,.3);letter-spacing:2px;margin-left:.05em}
+.hero-sub{font-size:1rem;color:rgba(255,255,255,.82);font-weight:300;line-height:1.7;max-width:400px;margin-bottom:2rem;text-shadow:0 1px 8px rgba(0,0,0,.3)}
+.meta{display:flex;flex-direction:column;gap:.65rem;margin-bottom:2.5rem}
+.meta-item{display:flex;align-items:center;gap:.75rem;color:rgba(255,255,255,.88);font-size:.9rem}
+.meta-ic{width:32px;height:32px;background:rgba(245,197,24,.18);border:1px solid rgba(245,197,24,.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.hero-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.btn-y{background:var(--y);color:var(--gd);font-weight:700;font-size:.9rem;padding:.8rem 1.75rem;border-radius:50px;border:none;cursor:pointer;transition:transform .15s,background .2s;text-decoration:none;display:inline-block}
+.btn-y:hover{background:var(--yd);transform:translateY(-2px)}
+.btn-o{background:rgba(255,255,255,.1);color:var(--w);font-size:.9rem;padding:.8rem 1.75rem;border-radius:50px;border:1px solid rgba(255,255,255,.3);cursor:pointer;transition:border-color .2s,background .2s;text-decoration:none;display:inline-block;backdrop-filter:blur(4px)}
+.btn-o:hover{border-color:var(--w);background:rgba(255,255,255,.18)}
+
+/* HERO RIGHT */
+.hero-right{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ghost-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(8rem,14vw,13rem);color:rgba(255,255,255,.04);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.cat-pills{display:flex;flex-direction:column;gap:1.25rem;padding:2.5rem;position:relative;z-index:3;margin-top:4rem}
+.cat-pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:18px;padding:1.75rem 2rem;display:flex;align-items:center;gap:1.25rem;backdrop-filter:blur(12px);transition:transform .2s,border-color .2s}
+.cat-pill:hover{transform:translateX(-5px);border-color:var(--y)}
+.dist{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--y);line-height:1}
+.dist small{font-size:1.1rem;color:rgba(255,255,255,.5)}
+.plabel{color:var(--w);font-size:.95rem;font-weight:600;margin-bottom:.2rem}
+.pdesc{color:var(--glt);font-size:.82rem;font-weight:300}
+
+/* SCROLL INDICATOR */
+.scroll-ind{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:rgba(255,255,255,.35);font-size:.68rem;letter-spacing:1.5px;text-transform:uppercase;z-index:2;animation:bounce 2s infinite}
+.scroll-ind::after{content:'';width:1px;height:28px;background:linear-gradient(var(--y),transparent);display:block;margin-top:.2rem}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ===== COUNTDOWN ===== */
+.countdown-section{
+  background:var(--gd);padding:3.5rem 2rem;text-align:center;
+  position:relative;overflow:hidden;
+}
+.countdown-section::before{
+  content:'11·11';font-family:'Bebas Neue',sans-serif;font-size:22rem;
+  color:rgba(255,255,255,.02);position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap;
+}
+.cd-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,197,24,.12);border:1px solid rgba(245,197,24,.3);color:var(--y);font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px;margin-bottom:1rem}
+.cd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.4rem,3vw,2rem);color:var(--w);letter-spacing:2px;margin-bottom:.4rem}
+.cd-date{font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:2.5rem;letter-spacing:1px}
+.cd-grid{display:flex;justify-content:center;align-items:center;gap:1rem;flex-wrap:wrap;position:relative;z-index:2}
+.cd-box{
+  background:rgba(255,255,255,.06);border:1px solid rgba(245,197,24,.2);
+  border-radius:20px;padding:1.5rem 1.75rem;min-width:100px;text-align:center;
+  backdrop-filter:blur(8px);position:relative;overflow:hidden;transition:border-color .3s;
+}
+.cd-box::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(245,197,24,.4),transparent)}
+.cd-box:hover{border-color:rgba(245,197,24,.5)}
+.cd-num{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,6vw,5rem);color:var(--y);line-height:1;letter-spacing:3px;display:block;transition:transform .15s,color .15s}
+.cd-num.flip{transform:scale(1.1);color:#fff}
+.cd-lbl{font-size:.63rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.38);margin-top:.4rem;display:block}
+.cd-sep{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:rgba(245,197,24,.4);line-height:1;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.cd-done{font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--y);letter-spacing:3px;display:none;position:relative;z-index:2}
+
+/* ===== STATS ===== */
+.stats-bar{background:var(--y);display:flex;justify-content:center;flex-wrap:wrap}
+.stat{flex:1;min-width:120px;max-width:200px;text-align:center;padding:1.25rem .5rem;border-right:1px solid rgba(26,74,26,.15)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gd)}
+.stat-l{font-size:.68rem;color:var(--gd);font-weight:600;letter-spacing:1.5px;text-transform:uppercase}
+
+/* ===== SECTION ===== */
+.section{padding:4rem 6rem}
+.stag{font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gm);margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.stag::after{content:'';flex:1;height:1px;background:var(--gm);max-width:40px}
+.stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3rem);color:var(--gd);line-height:1.05;letter-spacing:1px;margin-bottom:1.25rem}
+.stitle .hl{color:var(--gm)}
+.sbody{color:var(--mt);font-size:.95rem;line-height:1.8;font-weight:300}
+
+/* ===== ABOUT ===== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+.feat-row{display:flex;align-items:flex-start;gap:.85rem;padding:.9rem 1rem;background:var(--w);border-radius:12px;border:1px solid #e0eed8;transition:border-color .2s,transform .2s}
+.feat-row:hover{border-color:var(--gl);transform:translateX(4px)}
+.feat-ic{width:36px;height:36px;background:var(--gp);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.feat-t h4{font-size:.88rem;font-weight:600;color:var(--gd);margin-bottom:.2rem}
+.feat-t p{font-size:.8rem;color:var(--mt);line-height:1.5;font-weight:300}
+.lucky-row{grid-column:1/-1;background:linear-gradient(135deg,#fffbe6,#fff8d0);border:1px solid rgba(245,197,24,.5);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:flex-start;gap:.85rem}
+.lucky-row .feat-ic{background:#fff3cd}
+.lucky-row .feat-t h4{color:#7a5800}
+.lucky-row .feat-t p{color:#8a6500}
+
+/* ===== CATEGORIES ===== */
+.cat-section{padding:4rem 6rem;background:var(--gd);position:relative;overflow:hidden}
+.cat-section::before{content:'RUN';font-family:'Bebas Neue',sans-serif;font-size:18rem;color:rgba(255,255,255,.02);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;letter-spacing:20px}
+.cat-hd{text-align:center;margin-bottom:3rem;position:relative;z-index:2}
+.cat-hd .stag{justify-content:center}.cat-hd .stag::after{display:none}
+.cat-hd .stitle{color:var(--w)}
+.cat-cards{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:780px;margin:0 auto;position:relative;z-index:2}
+.cc{border-radius:20px;padding:2.5rem;position:relative;overflow:hidden;transition:transform .2s;cursor:pointer}
+.cc:hover{transform:translateY(-6px)}
+.cc.grn{background:linear-gradient(135deg,var(--gm) 0%,var(--gd) 100%);border:1px solid rgba(76,175,80,.4)}
+.cc.yel{background:linear-gradient(135deg,#e8b800 0%,#b8900a 100%);border:1px solid rgba(245,197,24,.4)}
+.cc-dist{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;line-height:1;margin-bottom:.2rem}
+.cc.grn .cc-dist{color:var(--y)}.cc.yel .cc-dist{color:var(--gd)}
+.cc-name{font-size:1rem;font-weight:600;margin-bottom:1rem}
+.cc.grn .cc-name{color:var(--w)}.cc.yel .cc-name{color:var(--gd)}
+.cc-det{display:flex;flex-direction:column;gap:.5rem;font-size:.83rem}
+.cc.grn .cc-det div{color:var(--glt)}.cc.yel .cc-det div{color:rgba(26,74,26,.8)}
+.cc-bg{position:absolute;bottom:-15px;right:-10px;font-family:'Bebas Neue',sans-serif;font-size:6rem;opacity:.06;pointer-events:none}
+.cc.grn .cc-bg{color:var(--w)}.cc.yel .cc-bg{color:var(--gd)}
+.cc-fee{margin-top:1.25rem;padding-top:1rem;font-size:.82rem}
+.cc.grn .cc-fee{color:rgba(255,255,255,.7);border-top:1px solid rgba(255,255,255,.15)}
+.cc.yel .cc-fee{color:rgba(26,74,26,.7);border-top:1px solid rgba(26,74,26,.2)}
+.cc-fee strong{font-size:1.4rem;font-family:'Bebas Neue',sans-serif;letter-spacing:1px}
+.cc.grn .cc-fee strong{color:var(--y)}.cc.yel .cc-fee strong{color:var(--gd)}
+
+/* ===== REGISTRATION ===== */
+#view-daftar{background:var(--w)}
+.form-wrap{max-width:680px;margin:0 auto;padding:6rem 2rem 4rem}
+.form-back{display:inline-flex;align-items:center;gap:.5rem;color:var(--gm);font-size:.85rem;font-weight:600;cursor:pointer;margin-bottom:2rem;padding:.4rem .8rem;border-radius:8px;border:1px solid var(--gp);transition:background .2s;background:none}
+.form-back:hover{background:var(--gp)}
+.steps{display:flex;margin-bottom:2.5rem;border-radius:12px;overflow:hidden;border:1px solid #e0eed8}
+.step{flex:1;padding:.75rem;text-align:center;font-size:.75rem;font-weight:600;background:var(--off);color:var(--mt);transition:background .3s,color .3s}
+.step.active{background:var(--gm);color:var(--w)}.step.done{background:var(--gp);color:var(--gm)}
+.form-section{display:none}.form-section.active{display:block}
+.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+label{font-size:.8rem;font-weight:600;color:var(--tx);letter-spacing:.3px}
+input,select,textarea{padding:.7rem 1rem;border:1.5px solid #d4e8cc;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--tx);background:var(--off);transition:border-color .2s,box-shadow .2s;outline:none;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--gl);box-shadow:0 0 0 3px rgba(76,175,80,.12);background:var(--w)}
+textarea{resize:vertical;min-height:80px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.cat-pick{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.cpcard{border:2px solid #d4e8cc;border-radius:12px;padding:1rem 1.25rem;cursor:pointer;display:flex;align-items:center;gap:.9rem;background:var(--off);transition:border-color .2s,background .2s}
+.cpcard:hover{border-color:var(--gl);background:var(--gp)}.cpcard.sel{border-color:var(--gm);background:var(--gp)}
+.cpcard input{width:auto}
+.cpinfo h4{font-size:.92rem;font-weight:600;color:var(--gd)}.cpinfo p{font-size:.78rem;color:var(--mt);margin-top:2px}
+.form-nav{display:flex;justify-content:space-between;margin-top:1.75rem;align-items:center}
+.btn-g{background:var(--gm);color:var(--w);font-weight:700;font-size:.92rem;padding:.8rem 1.75rem;border-radius:50px;border:none;cursor:pointer;transition:background .2s,transform .15s}
+.btn-g:hover{background:var(--gd);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--mt);font-size:.88rem;padding:.8rem 1.5rem;border-radius:50px;border:1px solid #d4e8cc;cursor:pointer;transition:background .2s}
+.btn-ghost:hover{background:var(--off)}
+.summary-card{background:var(--gp);border:1px solid #c8e6c9;border-radius:16px;padding:1.5rem;margin-bottom:1.5rem}
+.summary-card h3{font-size:1rem;font-weight:600;color:var(--gd);margin-bottom:1rem}
+.sum-row{display:flex;justify-content:space-between;align-items:center;padding:.45rem 0;border-bottom:1px solid rgba(76,175,80,.15);font-size:.88rem}
+.sum-row:last-child{border-bottom:none}
+.sum-row span:first-child{color:var(--mt)}.sum-row span:last-child{font-weight:600;color:var(--gd)}
+.fee-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}
+.fee-row .label{font-size:.88rem;color:var(--mt)}
+.fee-row .amt{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gd)}
+.pay-methods{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.5rem}
+.pay-card{border:2px solid #d4e8cc;border-radius:12px;padding:1rem 1.25rem;cursor:pointer;display:flex;align-items:center;gap:1rem;background:var(--off);transition:border-color .2s,background .2s}
+.pay-card:hover{border-color:var(--gl);background:var(--gp)}.pay-card.sel{border-color:var(--gm);background:var(--gp)}
+.pay-ic{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+.pay-info h4{font-size:.92rem;font-weight:600;color:var(--gd)}.pay-info p{font-size:.78rem;color:var(--mt)}
+.card-fields{background:var(--off);border:1px solid #d4e8cc;border-radius:12px;padding:1.25rem;margin-top:1rem;display:none}
+.card-fields.show{display:block}
+
+/* OVERLAY */
+#overlay{display:none;position:fixed;inset:0;background:rgba(26,74,26,.92);z-index:500;flex-direction:column;align-items:center;justify-content:center;gap:1.5rem}
+#overlay.show{display:flex}
+.spinner{width:56px;height:56px;border:4px solid rgba(245,197,24,.3);border-top-color:var(--y);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#overlay p{color:var(--w);font-size:1rem;font-weight:300}
+
+/* SUCCESS */
+#view-success{background:var(--off);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6rem 1.5rem 3rem}
+.success-box{max-width:520px;width:100%;background:var(--w);border-radius:24px;border:1px solid #c8e6c9;padding:2.5rem 2rem;text-align:center}
+.tick{width:80px;height:80px;background:var(--gp);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 1.5rem;border:3px solid var(--gl)}
+.success-box h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gd);letter-spacing:1px;margin-bottom:.5rem}
+.success-box p{color:var(--mt);font-size:.92rem;line-height:1.7}
+.reg-id-box{background:var(--gd);border-radius:16px;padding:1.5rem;margin:1.25rem 0}
+.reg-id-label{font-size:.72rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--glt);margin-bottom:.5rem}
+.reg-id-num{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--y);letter-spacing:6px;line-height:1}
+.reg-id-sub{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.4rem}
+.notif-box{background:var(--gp);border:1px solid #c8e6c9;border-radius:12px;padding:1rem 1.25rem;margin:1rem 0;text-align:left}
+.notif-box p{font-size:.85rem;color:var(--mt);line-height:1.6}
+.notif-box strong{color:var(--gd)}
+.warn-box{background:#fff3cd;border:1px solid #ffe082;border-radius:12px;padding:1rem 1.25rem;margin:1rem 0;text-align:left}
+.warn-box p{font-size:.85rem;color:#7a5800;line-height:1.6}
+
+/* FOOTER */
+footer{background:var(--gd);padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--w);letter-spacing:2px}
+.flogo .eco{color:var(--y)}
+.forg{color:rgba(255,255,255,.4);font-size:.78rem;margin-top:.2rem}
+.fright p{color:rgba(255,255,255,.45);font-size:.78rem;line-height:1.7}
+.fright a{color:var(--glt);text-decoration:none}
+
+/* ===== WHATSAPP BTN ===== */
+.wa-btn{
+  position:fixed;bottom:2rem;right:2rem;z-index:400;
+  display:flex;align-items:center;gap:.65rem;
+  background:#25d366;color:var(--w);text-decoration:none;
+  padding:.75rem 1.25rem;border-radius:50px;font-size:.85rem;font-weight:600;
+  box-shadow:0 4px 20px rgba(37,211,102,.4);
+  transition:transform .2s,box-shadow .2s,background .2s;
+}
+.wa-btn:hover{background:#1ebe5d;transform:translateY(-3px);box-shadow:0 8px 30px rgba(37,211,102,.5)}
+.wa-icon{font-size:1.3rem;line-height:1}
+.wa-text strong{display:block;font-size:.85rem}
+.wa-text small{font-size:.68rem;font-weight:300;opacity:.85}
+.wa-pulse{position:absolute;top:-3px;right:-3px;width:12px;height:12px;background:#ff4444;border-radius:50%;border:2px solid var(--w);animation:wpulse 2s infinite}
+@keyframes wpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.6}}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  .hero{grid-template-columns:1fr}
+  .hero-right{display:none}
+  .hero-left{padding:6rem 1.5rem 3rem}
+  .section{padding:3rem 1.5rem}
+  .cat-section{padding:3rem 1.5rem}
+  .about-grid{grid-template-columns:1fr;gap:2rem}
+  .feat-grid{grid-template-columns:1fr}
+  .lucky-row{grid-column:auto}
+  .cat-cards{grid-template-columns:1fr}
+  nav{padding:1rem 1.25rem}
+  .nav-dropdown{right:1.25rem;min-width:210px}
+  .row2{grid-template-columns:1fr}
+  .cat-pick{grid-template-columns:1fr}
+  footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+  .cd-grid{gap:.6rem}
+  .cd-box{padding:1.1rem 1.2rem;min-width:72px}
+  .cd-sep{font-size:2.2rem}
+  .wa-btn{bottom:1.25rem;right:1.25rem;padding:.65rem 1rem}
+  .wa-text small{display:none}
+}
+@media(max-width:400px){
+  .cd-box{padding:.85rem .9rem;min-width:62px}
+  .cd-num{font-size:2.4rem}
+}
+</style>
+</head>
+<body>
+
+<div id="overlay">
+  <div class="spinner"></div>
+  <p id="overlay-msg">Memproses pembayaran...</p>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav id="main-nav">
+  <button class="nav-logo" onclick="showView('landing')">LANGKAWI <span class="eco">ECO</span> RUN</button>
+  <div style="position:relative">
+    <button class="menu-btn" id="menu-btn" onclick="toggleMenu()" aria-label="Buka Menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <div class="nav-dropdown" id="nav-dropdown">
+      <button class="nav-item" onclick="scrollTo_('#tentang');closeMenu()">
+        <div class="nav-item-ic" style="background:rgba(76,175,80,.15)">🌿</div>
+        <div class="nav-item-txt"><strong>Tentang Event</strong><small>Kenali Langkawi Eco Run 2.0</small></div>
+      </button>
+      <button class="nav-item" onclick="scrollTo_('#kategori');closeMenu()">
+        <div class="nav-item-ic" style="background:rgba(76,175,80,.15)">🏃</div>
+        <div class="nav-item-txt"><strong>Kategori Larian</strong><small>5 KM &amp; 10 KM</small></div>
+      </button>
+      <a class="nav-item" href="gallery.html" onclick="closeMenu()">
+        <div class="nav-item-ic" style="background:rgba(245,197,24,.12)">📷</div>
+        <div class="nav-item-txt"><strong>Galeri Foto</strong><small>Foto &amp; buletin event lepas</small></div>
+      </a>
+      <div class="nav-divider"></div>
+      <button class="nav-item cta" onclick="showView('daftar');closeMenu()">
+        <div class="nav-item-ic" style="background:rgba(26,74,26,.15)">✍️</div>
+        <div class="nav-item-txt"><strong>Daftar Sekarang</strong><small>5KM — RM30 &nbsp;|&nbsp; 10KM — RM50</small></div>
+      </button>
+      <div class="nav-divider"></div>
+      <a class="nav-item adm" href="admin-login.html" onclick="closeMenu()">
+        <div class="nav-item-ic" style="background:rgba(255,255,255,.04)">🔐</div>
+        <div class="nav-item-txt"><strong>Portal Admin</strong><small>Penganjur sahaja</small></div>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================================================================
+     LANDING PAGE
+================================================================ -->
+<div id="view-landing" class="view active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="badge">Penganjuran MPLBP</div>
+      <h1 class="hero-title">
+        LANGKAWI<br>
+        <span class="eco">ECO</span> RUN<span class="ver">2.0</span>
+      </h1>
+      <p class="hero-sub">Berlari bersama alam di bumi Langkawi — pulau yang diiktiraf sebagai Geopark UNESCO.</p>
+      <div class="meta">
+        <div class="meta-item"><div class="meta-ic">📅</div><span><strong style="color:#fff">11 November 2026</strong> — Tarikh Rasmi</span></div>
+        <div class="meta-item"><div class="meta-ic">📍</div><span><strong style="color:#fff">Masjid Temonyong</strong>, Langkawi, Kedah</span></div>
+        <div class="meta-item"><div class="meta-ic">🏃</div><span><strong style="color:#fff">2 Kategori</strong> — 5 km &amp; 10 km</span></div>
+      </div>
+      <div class="hero-btns">
+        <button class="btn-y" onclick="showView('daftar')">Daftar Sekarang →</button>
+        <button class="btn-o" onclick="scrollTo_('#kategori')">Lihat Kategori</button>
+        <a href="gallery.html" class="btn-o">📷 Galeri</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="ghost-num">2.0</div>
+      <div class="cat-pills">
+        <div class="cat-pill">
+          <div class="dist">5<small>KM</small></div>
+          <div><div class="plabel">Kategori Fun Run</div><div class="pdesc">Sesuai untuk semua peringkat usia</div></div>
+        </div>
+        <div class="cat-pill">
+          <div class="dist">10<small>KM</small></div>
+          <div><div class="plabel">Kategori Competitive</div><div class="pdesc">Cabaran untuk pelari berpengalaman</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-ind">Tatal ke bawah</div>
+  </section>
+
+  <!-- COUNTDOWN -->
+  <section class="countdown-section">
+    <div class="cd-tag">⏳ Kiraan Masa</div>
+    <div class="cd-title">LANGKAWI ECO RUN 2.0 BERMULA DALAM</div>
+    <div class="cd-date">11 NOVEMBER 2026 — MASJID TEMONYONG, LANGKAWI</div>
+    <div class="cd-grid" id="cd-grid">
+      <div class="cd-box"><span class="cd-num" id="cd-days">000</span><span class="cd-lbl">Hari</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-lbl">Jam</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-lbl">Minit</span></div>
+      <span class="cd-sep">:</span>
+      <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-lbl">Saat</span></div>
+    </div>
+    <div class="cd-done" id="cd-done">🎉 EVENT SUDAH BERMULA!</div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat"><div class="stat-n">2</div><div class="stat-l">Kategori Larian</div></div>
+    <div class="stat"><div class="stat-n">5K/10K</div><div class="stat-l">Jarak Larian</div></div>
+    <div class="stat"><div class="stat-n">40</div><div class="stat-l">Pemenang Cabutan</div></div>
+    <div class="stat"><div class="stat-n">MPLBP</div><div class="stat-l">Penganjur</div></div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section" id="tentang" style="background:var(--off)">
+    <div class="about-grid">
+      <div>
+        <div class="stag">Tentang Event</div>
+        <h2 class="stitle">Lari Bersama <span class="hl">Alam</span> Langkawi</h2>
+        <p class="sbody">Langkawi Eco Run 2.0 adalah acara larian ekologikal yang dianjurkan oleh Majlis Perbandaran Langkawi Bandaraya Pelancongan (MPLBP) sebagai inisiatif menggalakkan gaya hidup aktif sambil menghargai keindahan alam semula jadi Langkawi.</p>
+        <p class="sbody" style="margin-top:.75rem">Larian ini bukan sahaja satu pertandingan — ia adalah perayaan alam, kesihatan, dan komuniti yang menyatukan warga Langkawi dan pelawat dari seluruh Malaysia.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat-row"><div class="feat-ic">🌿</div><div class="feat-t"><h4>Konsep Ekologi</h4><p>Larian mesra alam yang menghargai biodiversiti Langkawi.</p></div></div>
+        <div class="feat-row"><div class="feat-ic">🏅</div><div class="feat-t"><h4>Hadiah &amp; Sijil</h4><p>Pemenang menerima hadiah, trofi, dan sijil penghargaan.</p></div></div>
+        <div class="feat-row"><div class="feat-ic">👕</div><div class="feat-t"><h4>Pakej Peserta</h4><p>Bib, t-shirt rasmi, medal, dan goodies bag.</p></div></div>
+        <div class="feat-row"><div class="feat-ic">🚑</div><div class="feat-t"><h4>Keselamatan</h4><p>Pasukan perubatan bersiaga sepanjang laluan.</p></div></div>
+        <div class="feat-row lucky-row">
+          <div class="feat-ic">🎁</div>
+          <div class="feat-t">
+            <h4>✨ Cabutan Bertuah — 40 Pemenang Bertuah!</h4>
+            <p>Jangan lepaskan peluang keemasan ini! Setiap peserta yang berdaftar secara automatik layak menyertai <strong>Cabutan Bertuah Langkawi Eco Run 2.0</strong>. Sebanyak <strong>40 hadiah sukan bernilai tinggi</strong> menanti — termasuk peralatan sukan premium, kasut larian, aksesori outdoor dan banyak lagi. Semakin awal kau daftar, semakin bertuah kau! 🏆</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="cat-section" id="kategori">
+    <div class="cat-hd">
+      <div class="stag" style="color:var(--glt)">Kategori Larian</div>
+      <h2 class="stitle">Pilih <span style="color:var(--y)">Kategori</span> Anda</h2>
+    </div>
+    <div class="cat-cards">
+      <div class="cc grn" onclick="showView('daftar');preselect('5km')">
+        <div class="cc-dist">5<small style="font-size:1.8rem"> KM</small></div>
+        <div class="cc-name">Fun Run</div>
+        <div class="cc-det">
+          <div>✅ Terbuka untuk semua peringkat</div>
+          <div>✅ Laluan santai &amp; selamat</div>
+          <div>✅ Sesuai untuk keluarga</div>
+          <div>✅ Masa tidak dihadkan</div>
+        </div>
+        <div class="cc-fee">Yuran Pendaftaran<br><strong>RM 30</strong></div>
+        <div class="cc-bg">5K</div>
+      </div>
+      <div class="cc yel" onclick="showView('daftar');preselect('10km')">
+        <div class="cc-dist" style="color:var(--gd)">10<small style="font-size:1.8rem"> KM</small></div>
+        <div class="cc-name">Competitive Run</div>
+        <div class="cc-det">
+          <div>🏆 Pertandingan penuh ranking</div>
+          <div>🏆 Hadiah wang tunai</div>
+          <div>🏆 Chip timing rasmi</div>
+          <div>🏆 Sijil keputusan</div>
+        </div>
+        <div class="cc-fee" style="border-top-color:rgba(26,74,26,.2);color:rgba(26,74,26,.7)">Yuran Pendaftaran<br><strong style="color:var(--gd)">RM 50</strong></div>
+        <div class="cc-bg">10K</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <div class="flogo">LANGKAWI <span class="eco">ECO</span> RUN 2.0</div>
+      <div class="forg">Dianjurkan oleh Majlis Perbandaran Langkawi Bandaraya Pelancongan (MPLBP)</div>
+    </div>
+    <div class="fright">
+      <p>📍 Masjid Temonyong, Langkawi, Kedah</p>
+      <p>📧 <a href="mailto:info@mplbp.gov.my">info@mplbp.gov.my</a></p>
+      <p style="margin-top:.5rem;font-size:.7rem;color:rgba(255,255,255,.2)">© 2025 MPLBP. Hak Cipta Terpelihara.</p>
+    </div>
+  </footer>
+</div>
+
+<!-- ================================================================
+     BORANG DAFTAR
+================================================================ -->
+<div id="view-daftar" class="view">
+  <div class="form-wrap">
+    <button class="form-back" onclick="showView('landing')">← Kembali ke Laman Utama</button>
+    <div class="stag">Pendaftaran Peserta</div>
+    <h2 class="stitle" style="margin-bottom:1.75rem">Borang <span class="hl">Pendaftaran</span></h2>
+    <div class="steps">
+      <div class="step active" id="s1i">1. Maklumat Diri</div>
+      <div class="step" id="s2i">2. Kategori &amp; Saiz</div>
+      <div class="step" id="s3i">3. Semakan</div>
+      <div class="step" id="s4i">4. Pembayaran</div>
+    </div>
+
+    <!-- LANGKAH 1 -->
+    <div class="form-section active" id="step1">
+      <div class="row2">
+        <div class="fg"><label>Nama Penuh (seperti IC)</label><input id="f-nama" type="text" placeholder="Muhammad Ali bin Bakar" required></div>
+        <div class="fg"><label>No. IC / Passport</label><input id="f-ic" type="text" placeholder="000000-00-0000" required></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Emel</label><input id="f-emel" type="email" placeholder="nama@emel.com" required></div>
+        <div class="fg"><label>No. Telefon</label><input id="f-tel" type="tel" placeholder="01X-XXXXXXX" required></div>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Tarikh Lahir</label><input id="f-dob" type="date" required></div>
+        <div class="fg"><label>Jantina</label>
+          <select id="f-jantina"><option value="">-- Pilih --</option><option>Lelaki</option><option>Perempuan</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>Negeri Asal</label>
+        <select id="f-negeri">
+          <option value="">-- Pilih Negeri --</option>
+          <option>Kedah</option><option>Perlis</option><option>Pulau Pinang</option><option>Perak</option>
+          <option>Selangor</option><option>Kuala Lumpur</option><option>Negeri Sembilan</option><option>Melaka</option>
+          <option>Johor</option><option>Pahang</option><option>Terengganu</option><option>Kelantan</option>
+          <option>Sabah</option><option>Sarawak</option><option>Lain-lain</option>
+        </select>
+      </div>
+      <div class="fg"><label>Kondisi Perubatan (Pilihan)</label><textarea id="f-kondisi" placeholder="Kosongkan jika tiada."></textarea></div>
+      <div class="form-nav"><div></div><button class="btn-g" onclick="nextStep(1)">Seterusnya →</button></div>
+    </div>
+
+    <!-- LANGKAH 2 -->
+    <div class="form-section" id="step2">
+      <div class="fg"><label>Pilih Kategori Larian</label>
+        <div class="cat-pick">
+          <div class="cpcard" id="cp5" onclick="pickCat('5km')"><input type="radio" name="kat" value="5km"><div class="cpinfo"><h4>5 KM — Fun Run</h4><p>Terbuka untuk semua | RM 30</p></div></div>
+          <div class="cpcard" id="cp10" onclick="pickCat('10km')"><input type="radio" name="kat" value="10km"><div class="cpinfo"><h4>10 KM — Competitive</h4><p>Pelari berpengalaman | RM 50</p></div></div>
+        </div>
+      </div>
+      <div class="fg"><label>Saiz T-Shirt</label>
+        <select id="f-tshirt"><option value="">-- Pilih Saiz --</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select>
+      </div>
+      <div class="row2">
+        <div class="fg"><label>Nama Kecemasan</label><input id="f-ekname" type="text" placeholder="Nama waris / kecemasan"></div>
+        <div class="fg"><label>No. Telefon Kecemasan</label><input id="f-ektel" type="tel" placeholder="01X-XXXXXXX"></div>
+      </div>
+      <div class="form-nav">
+        <button class="btn-ghost" onclick="goStep(1)">← Kembali</button>
+        <button class="btn-g" onclick="nextStep(2)">Seterusnya →</button>
+      </div>
+    </div>
+
+    <!-- LANGKAH 3 -->
+    <div class="form-section" id="step3">
+      <div class="summary-card">
+        <h3>📋 Semakan Maklumat</h3>
+        <div class="sum-row"><span>Nama Penuh</span><span id="s-nama">—</span></div>
+        <div class="sum-row"><span>No. IC / Passport</span><span id="s-ic">—</span></div>
+        <div class="sum-row"><span>Emel</span><span id="s-emel">—</span></div>
+        <div class="sum-row"><span>No. Telefon</span><span id="s-tel">—</span></div>
+        <div class="sum-row"><span>Tarikh Lahir</span><span id="s-dob">—</span></div>
+        <div class="sum-row"><span>Jantina</span><span id="s-jantina">—</span></div>
+        <div class="sum-row"><span>Negeri</span><span id="s-negeri">—</span></div>
+        <div class="sum-row"><span>Kategori</span><span id="s-kat">—</span></div>
+        <div class="sum-row"><span>Saiz T-Shirt</span><span id="s-tshirt">—</span></div>
+        <div class="sum-row"><span>Nama Kecemasan</span><span id="s-ekname">—</span></div>
+      </div>
+      <div class="summary-card" style="background:var(--w)">
+        <div class="fee-row"><span class="label">Jumlah Pembayaran</span><span class="amt" id="s-fee">RM 0</span></div>
+      </div>
+      <div class="form-nav">
+        <button class="btn-ghost" onclick="goStep(2)">← Kembali</button>
+        <button class="btn-g" onclick="goStep(4)">Teruskan ke Pembayaran →</button>
+      </div>
+    </div>
+
+    <!-- LANGKAH 4 -->
+    <div class="form-section" id="step4">
+      <div class="summary-card" style="background:var(--w);margin-bottom:1.25rem">
+        <div class="fee-row"><span class="label">Jumlah untuk dibayar</span><span class="amt" id="p-fee">RM 0</span></div>
+      </div>
+      <div class="fg"><label>Pilih Kaedah Pembayaran</label></div>
+      <div class="pay-methods">
+        <div class="pay-card" onclick="pickPay('fpx',this)"><input type="radio" name="pay" value="fpx"><div class="pay-ic" style="background:#e8f0fe">🏦</div><div class="pay-info"><h4>FPX — Internet Banking</h4><p>Maybank, CIMB, RHB, Public Bank &amp; lain-lain</p></div></div>
+        <div class="pay-card" onclick="pickPay('card',this)"><input type="radio" name="pay" value="card"><div class="pay-ic" style="background:#fce4ec">💳</div><div class="pay-info"><h4>Kad Kredit / Debit</h4><p>Visa, Mastercard</p></div></div>
+        <div class="pay-card" onclick="pickPay('ewallet',this)"><input type="radio" name="pay" value="ewallet"><div class="pay-ic" style="background:#e8f5e2">📱</div><div class="pay-info"><h4>e-Wallet</h4><p>Touch 'n Go, GrabPay, Boost</p></div></div>
+      </div>
+      <div class="card-fields" id="card-fields">
+        <div class="fg"><label>Nombor Kad</label><input id="cc-num" type="text" placeholder="1234 5678 9012 3456" maxlength="19"></div>
+        <div class="row2">
+          <div class="fg"><label>Tarikh Luput</label><input id="cc-exp" type="text" placeholder="MM/YY" maxlength="5"></div>
+          <div class="fg"><label>CVV</label><input id="cc-cvv" type="text" placeholder="123" maxlength="3"></div>
+        </div>
+        <div class="fg"><label>Nama Pemegang Kad</label><input id="cc-name" type="text" placeholder="Nama seperti pada kad"></div>
+      </div>
+      <div class="form-nav">
+        <button class="btn-ghost" onclick="goStep(3)">← Kembali</button>
+        <button class="btn-g" onclick="processPayment()">💳 Bayar Sekarang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================
+     BERJAYA
+================================================================ -->
+<div id="view-success" class="view">
+  <div class="success-box">
+    <div class="tick">✅</div>
+    <h2>Pembayaran Berjaya!</h2>
+    <p>Tahniah! Pendaftaran anda untuk Langkawi Eco Run 2.0 telah disahkan.</p>
+    <div class="reg-id-box">
+      <div class="reg-id-label">No. Pendaftaran &amp; No. Bib Anda</div>
+      <div class="reg-id-num" id="reg-id-display">—</div>
+      <div class="reg-id-sub">Simpan nombor ini untuk rujukan &amp; Cabutan Bertuah</div>
+    </div>
+    <div class="notif-box">
+      <p>📧 <strong>Pengesahan pembayaran</strong> telah dihantar ke emel <strong id="conf-email">—</strong>. Sila semak inbox (dan folder Spam) anda.</p>
+    </div>
+    <div class="notif-box" style="background:#e8f5e2;border-color:#a5d6a7">
+      <p>🎁 <strong>Tahniah!</strong> Nombor pendaftaran anda <strong id="lucky-num">—</strong> layak menyertai <strong>Cabutan Bertuah</strong> — 40 hadiah sukan menanti!</p>
+    </div>
+    <div class="warn-box">
+      <p>📌 <strong>Ingatan:</strong> Hadir ke lokasi sekurang-kurangnya <strong>1 jam</strong> sebelum permulaan untuk ambil bib &amp; pakej peserta.</p>
+    </div>
+    <button class="btn-g" style="width:100%;margin-top:1rem" onclick="showView('landing')">← Kembali ke Laman Utama</button>
+  </div>
+</div>
+
+<!-- ===== WHATSAPP BUTTON ===== -->
+<!-- PENTING: Tukar 601XXXXXXXXX kepada nombor WhatsApp admin sebenar -->
+<a class="wa-btn" id="wa-btn"
+   href="https://wa.me/601XXXXXXXXX?text=Assalamualaikum%2C%20saya%20ingin%20bertanya%20tentang%20Langkawi%20Eco%20Run%202.0"
+   target="_blank" rel="noopener noreferrer">
+  <div class="wa-pulse"></div>
+  <span class="wa-icon">💬</span>
+  <div class="wa-text">
+    <strong>Chat Admin</strong>
+    <small>WhatsApp kami</small>
+  </div>
+</a>
+
+<script>
+// ===== HAMBURGER MENU =====
+function toggleMenu(){
+  document.getElementById('menu-btn').classList.toggle('open');
+  document.getElementById('nav-dropdown').classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('menu-btn').classList.remove('open');
+  document.getElementById('nav-dropdown').classList.remove('open');
+}
+document.addEventListener('click',function(e){
+  const btn=document.getElementById('menu-btn');
+  const dd=document.getElementById('nav-dropdown');
+  if(!btn.contains(e.target)&&!dd.contains(e.target))closeMenu();
+});
+
+// ===== COUNTDOWN =====
+function updateCountdown(){
+  const target=new Date('2026-11-11T07:00:00+08:00');
+  const now=new Date();
+  const diff=target-now;
+  if(diff<=0){
+    document.getElementById('cd-grid').style.display='none';
+    document.getElementById('cd-done').style.display='block';
+    return;
+  }
+  const days=Math.floor(diff/(1000*60*60*24));
+  const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const mins=Math.floor((diff%(1000*60*60))/(1000*60));
+  const secs=Math.floor((diff%(1000*60))/1000);
+  function setVal(id,val,pad){
+    const el=document.getElementById(id);
+    const nv=String(val).padStart(pad||2,'0');
+    if(el.textContent!==nv){
+      el.classList.add('flip');
+      setTimeout(()=>el.classList.remove('flip'),180);
+      el.textContent=nv;
+    }
+  }
+  setVal('cd-days',days,3);
+  setVal('cd-hours',hours);
+  setVal('cd-mins',mins);
+  setVal('cd-secs',secs);
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+// ===== VIEW MANAGEMENT =====
+let selCat='',selPay='',formData={};
+function showView(v){
+  document.querySelectorAll('.view').forEach(e=>e.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  document.getElementById('wa-btn').style.display=v==='landing'?'flex':'none';
+  window.scrollTo(0,0);
+  if(v==='daftar')goStep(1);
+}
+function scrollTo_(id){
+  showView('landing');
+  setTimeout(()=>{const el=document.querySelector(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},120);
+}
+
+// ===== FORM STEPS =====
+function goStep(n){
+  document.querySelectorAll('.form-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById('step'+n).classList.add('active');
+  for(let i=1;i<=4;i++){
+    const ind=document.getElementById('s'+i+'i');
+    ind.className='step';
+    if(i<n)ind.classList.add('done');
+    else if(i===n)ind.classList.add('active');
+  }
+  if(n===3)fillSummary();
+  if(n===4)document.getElementById('p-fee').textContent=selCat==='10km'?'RM 50':'RM 30';
+}
+function nextStep(from){
+  if(from===1){
+    if(!document.getElementById('f-nama').value.trim()||
+       !document.getElementById('f-ic').value.trim()||
+       !document.getElementById('f-emel').value.trim()||
+       !document.getElementById('f-tel').value.trim()){
+      alert('Sila lengkapkan semua maklumat wajib.');return;
+    }
+    if(!document.getElementById('f-emel').value.includes('@')){
+      alert('Format emel tidak sah.');return;
+    }
+  }
+  if(from===2){
+    if(!selCat){alert('Sila pilih kategori larian.');return}
+    if(!document.getElementById('f-tshirt').value){alert('Sila pilih saiz t-shirt.');return}
+  }
+  goStep(from+1);
+}
+function preselect(cat){setTimeout(()=>{if(cat)pickCat(cat)},200)}
+function pickCat(cat){
+  selCat=cat;
+  document.querySelectorAll('.cpcard').forEach(c=>c.classList.remove('sel'));
+  document.getElementById(cat==='5km'?'cp5':'cp10').classList.add('sel');
+}
+function pickPay(method,el){
+  selPay=method;
+  document.querySelectorAll('.pay-card').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  el.querySelector('input').checked=true;
+  document.getElementById('card-fields').className='card-fields'+(method==='card'?' show':'');
+}
+function fillSummary(){
+  const dob=document.getElementById('f-dob').value;
+  document.getElementById('s-nama').textContent=document.getElementById('f-nama').value||'—';
+  document.getElementById('s-ic').textContent=document.getElementById('f-ic').value||'—';
+  document.getElementById('s-emel').textContent=document.getElementById('f-emel').value||'—';
+  document.getElementById('s-tel').textContent=document.getElementById('f-tel').value||'—';
+  document.getElementById('s-dob').textContent=dob?new Date(dob).toLocaleDateString('ms-MY',{day:'numeric',month:'long',year:'numeric'}):'—';
+  document.getElementById('s-jantina').textContent=document.getElementById('f-jantina').value||'—';
+  document.getElementById('s-negeri').textContent=document.getElementById('f-negeri').value||'—';
+  document.getElementById('s-kat').textContent=selCat==='5km'?'5 KM — Fun Run':selCat==='10km'?'10 KM — Competitive':'—';
+  document.getElementById('s-tshirt').textContent=document.getElementById('f-tshirt').value||'—';
+  document.getElementById('s-ekname').textContent=document.getElementById('f-ekname').value||'—';
+  document.getElementById('s-fee').textContent=selCat==='10km'?'RM 50':'RM 30';
+}
+
+// ===== PAYMENT =====
+function processPayment(){
+  if(!selPay){alert('Sila pilih kaedah pembayaran.');return}
+  const ov=document.getElementById('overlay');
+  const msg=document.getElementById('overlay-msg');
+  ov.classList.add('show');
+  const msgs=['Menghubungi gateway pembayaran...','Memproses transaksi...','Mengesahkan pembayaran...','Menyimpan pendaftaran...'];
+  let i=0;
+  const iv=setInterval(()=>{
+    if(i<msgs.length){msg.textContent=msgs[i++]}
+    else{clearInterval(iv);ov.classList.remove('show');saveReg();showSuccess()}
+  },900);
+}
+function getNextId(){
+  const existing=JSON.parse(localStorage.getItem('ecr2_registrations')||'[]');
+  return String(existing.length+1).padStart(4,'0');
+}
+function saveReg(){
+  const regId=getNextId();
+  const record={
+    id:regId,
+    nama:document.getElementById('f-nama').value,
+    ic:document.getElementById('f-ic').value,
+    emel:document.getElementById('f-emel').value,
+    tel:document.getElementById('f-tel').value,
+    dob:document.getElementById('f-dob').value,
+    jantina:document.getElementById('f-jantina').value,
+    negeri:document.getElementById('f-negeri').value,
+    kondisi:document.getElementById('f-kondisi').value,
+    kategori:selCat,
+    tshirt:document.getElementById('f-tshirt').value,
+    ekname:document.getElementById('f-ekname').value,
+    ektel:document.getElementById('f-ektel').value,
+    bayaran:selCat==='10km'?50:30,
+    status:'Dibayar',
+    tarikhDaftar:new Date().toLocaleDateString('ms-MY',{day:'2-digit',month:'2-digit',year:'numeric'})
+  };
+  formData=record;
+  const existing=JSON.parse(localStorage.getItem('ecr2_registrations')||'[]');
+  existing.push(record);
+  localStorage.setItem('ecr2_registrations',JSON.stringify(existing));
+}
+function showSuccess(){
+  document.getElementById('reg-id-display').textContent=formData.id;
+  document.getElementById('lucky-num').textContent='#'+formData.id;
+  document.getElementById('conf-email').textContent=formData.emel;
+  showView('success');
+}
+
+// ===== FORMAT INPUT KAD =====
+document.addEventListener('DOMContentLoaded',()=>{
+  const ccNum=document.getElementById('cc-num');
+  if(ccNum)ccNum.addEventListener('input',function(){
+    this.value=this.value.replace(/\D/g,'').replace(/(.{4})/g,'$1 ').trim().slice(0,19);
+  });
+  const ccExp=document.getElementById('cc-exp');
+  if(ccExp)ccExp.addEventListener('input',function(){
+    this.value=this.value.replace(/\D/g,'').replace(/^(\d{2})(\d)/,'$1/$2').slice(0,5);
+  });
+});
+</script>
+</body>
+</html>

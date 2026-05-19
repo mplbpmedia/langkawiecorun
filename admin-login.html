@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Log Masuk — Langkawi Eco Run 2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gd:#1a4a1a;--gm:#2d7a2d;--gl:#4caf50;--glt:#a8d5a2;--gp:#e8f5e2;--y:#f5c518;--yd:#d4a017;--w:#fff;--off:#f9fdf6;--tx:#111f11;--mt:#4a6b4a}
+body{font-family:'DM Sans',sans-serif;background:var(--gd);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem 1rem;position:relative;overflow:hidden}
+
+/* BG DECOR */
+.bg-circle{position:absolute;border-radius:50%;pointer-events:none}
+.bc1{width:600px;height:600px;background:radial-gradient(circle,rgba(76,175,80,.08) 0%,transparent 70%);top:-150px;right:-150px}
+.bc2{width:400px;height:400px;background:radial-gradient(circle,rgba(245,197,24,.05) 0%,transparent 70%);bottom:-100px;left:-100px}
+.bg-text{position:absolute;font-family:'Bebas Neue',sans-serif;font-size:20rem;color:rgba(255,255,255,.02);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none;letter-spacing:10px}
+
+/* BACK LINK */
+.back-link{position:absolute;top:1.5rem;left:2rem;color:rgba(255,255,255,.45);font-size:.82rem;text-decoration:none;display:flex;align-items:center;gap:.4rem;transition:color .2s}
+.back-link:hover{color:var(--y)}
+
+/* CARD */
+.login-card{position:relative;z-index:2;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:2.5rem 2rem;width:100%;max-width:400px;backdrop-filter:blur(16px)}
+
+/* LOGO */
+.logo-wrap{text-align:center;margin-bottom:2rem}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--w);letter-spacing:3px}
+.logo .eco{color:var(--y)}
+.logo-sub{font-size:.75rem;color:rgba(255,255,255,.4);letter-spacing:1.5px;text-transform:uppercase;margin-top:.25rem}
+.admin-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,197,24,.12);border:1px solid rgba(245,197,24,.3);color:var(--y);font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:.35rem .9rem;border-radius:50px;margin-top:.75rem}
+
+/* FORM */
+.fg{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+label{font-size:.78rem;font-weight:600;color:rgba(255,255,255,.6);letter-spacing:.5px}
+input{padding:.75rem 1rem;border:1.5px solid rgba(255,255,255,.15);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:.92rem;color:var(--w);background:rgba(255,255,255,.07);transition:border-color .2s,box-shadow .2s;outline:none;width:100%}
+input:focus{border-color:var(--y);box-shadow:0 0 0 3px rgba(245,197,24,.12);background:rgba(255,255,255,.1)}
+input::placeholder{color:rgba(255,255,255,.25)}
+
+.input-wrap{position:relative}
+.toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:.85rem;padding:.25rem;transition:color .2s}
+.toggle-pw:hover{color:var(--y)}
+
+.btn-login{background:var(--y);color:var(--gd);font-weight:700;font-size:.95rem;padding:.85rem;border-radius:12px;border:none;cursor:pointer;width:100%;transition:background .2s,transform .15s;margin-top:.5rem;letter-spacing:.3px}
+.btn-login:hover{background:var(--yd);transform:translateY(-1px)}
+.btn-login:active{transform:translateY(0)}
+
+.err-msg{background:rgba(229,57,53,.12);border:1px solid rgba(229,57,53,.3);border-radius:8px;padding:.65rem 1rem;font-size:.82rem;color:#ff8a80;margin-bottom:1rem;display:none;align-items:center;gap:.5rem}
+.err-msg.show{display:flex}
+
+.divider{border:none;border-top:1px solid rgba(255,255,255,.08);margin:1.5rem 0}
+
+.demo-hint{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:.85rem 1rem;font-size:.78rem;color:rgba(255,255,255,.35);text-align:center;line-height:1.6}
+.demo-hint strong{color:rgba(255,255,255,.55)}
+
+/* LOADING */
+.btn-login.loading{opacity:.7;pointer-events:none}
+.spinner-sm{width:18px;height:18px;border:2px solid rgba(26,74,26,.3);border-top-color:var(--gd);border-radius:50%;animation:spin .7s linear infinite;display:inline-block;vertical-align:middle;margin-right:.5rem}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* RESPONSIVE */
+@media(max-width:480px){
+  .login-card{padding:2rem 1.5rem}
+  .back-link{top:1rem;left:1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-circle bc1"></div>
+<div class="bg-circle bc2"></div>
+<div class="bg-text">ADMIN</div>
+
+<a href="index.html" class="back-link">← Kembali ke Laman Utama</a>
+
+<div class="login-card">
+  <div class="logo-wrap">
+    <div class="logo">LANGKAWI <span class="eco">ECO</span> RUN</div>
+    <div class="logo-sub">Langkawi Eco Run 2.0</div>
+    <div class="admin-badge">🔐 Portal Admin</div>
+  </div>
+
+  <div class="err-msg" id="err-msg">
+    <span>⚠</span>
+    <span id="err-text">Nama pengguna atau kata laluan salah.</span>
+  </div>
+
+  <div class="fg">
+    <label>Nama Pengguna</label>
+    <input id="adm-user" type="text" placeholder="admin" autocomplete="username">
+  </div>
+
+  <div class="fg">
+    <label>Kata Laluan</label>
+    <div class="input-wrap">
+      <input id="adm-pass" type="password" placeholder="••••••••" autocomplete="current-password">
+      <button class="toggle-pw" onclick="togglePw()" type="button" id="toggle-btn">👁</button>
+    </div>
+  </div>
+
+  <button class="btn-login" id="btn-login" onclick="doLogin()">Log Masuk →</button>
+
+  <hr class="divider">
+
+  <div class="demo-hint">
+    Demo: <strong>admin</strong> / <strong>ecorun2025</strong><br>
+    Tukar kata laluan sebelum guna untuk event sebenar.
+  </div>
+</div>
+
+<script>
+function togglePw(){
+  const input=document.getElementById('adm-pass');
+  const btn=document.getElementById('toggle-btn');
+  if(input.type==='password'){input.type='text';btn.textContent='🙈'}
+  else{input.type='password';btn.textContent='👁'}
+}
+
+function doLogin(){
+  const u=document.getElementById('adm-user').value.trim();
+  const p=document.getElementById('adm-pass').value;
+  const err=document.getElementById('err-msg');
+  const errTxt=document.getElementById('err-text');
+  const btn=document.getElementById('btn-login');
+
+  if(!u||!p){
+    errTxt.textContent='Sila masukkan nama pengguna dan kata laluan.';
+    err.classList.add('show');
+    return;
+  }
+
+  // Tunjuk loading
+  btn.classList.add('loading');
+  btn.innerHTML='<span class="spinner-sm"></span>Menyemak...';
+
+  setTimeout(()=>{
+    if(u==='admin'&&p==='ecorun2025'){
+      // Simpan sesi
+      sessionStorage.setItem('ecr2_admin','true');
+      window.location.href='dashboard.html';
+    } else {
+      btn.classList.remove('loading');
+      btn.textContent='Log Masuk →';
+      errTxt.textContent='Nama pengguna atau kata laluan salah.';
+      err.classList.add('show');
+      document.getElementById('adm-pass').value='';
+    }
+  },1200);
+}
+
+// Enter key support
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter')doLogin();
+});
+
+// Semak kalau dah login
+if(sessionStorage.getItem('ecr2_admin')==='true'){
+  window.location.href='dashboard.html';
+}
+</script>
+</body>
+</html>

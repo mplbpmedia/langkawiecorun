@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Foto — Langkawi Eco Run 2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--gd:#1a4a1a;--gm:#2d7a2d;--gl:#4caf50;--glt:#a8d5a2;--gp:#e8f5e2;--y:#f5c518;--yd:#d4a017;--w:#fff;--off:#f9fdf6;--tx:#111f11;--mt:#4a6b4a}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--tx);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1rem 2.5rem;background:rgba(26,74,26,.94);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,197,24,.3)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--w);letter-spacing:2px;text-decoration:none}
+.nav-logo .eco{color:var(--y)}
+.nav-back{color:rgba(255,255,255,.7);font-size:.83rem;text-decoration:none;display:flex;align-items:center;gap:.4rem;border:1px solid rgba(255,255,255,.2);padding:.4rem .9rem;border-radius:50px;transition:background .2s,color .2s}
+.nav-back:hover{background:rgba(255,255,255,.08);color:var(--w)}
+.nav-cta{background:var(--y);color:var(--gd);font-size:.83rem;font-weight:700;text-decoration:none;padding:.45rem 1rem;border-radius:50px;transition:background .2s}
+.nav-cta:hover{background:var(--yd)}
+
+/* HERO */
+.gallery-hero{padding:7rem 6rem 3rem;background:var(--gd);position:relative;overflow:hidden;text-align:center}
+.gallery-hero::before{content:'FOTO';font-family:'Bebas Neue',sans-serif;font-size:18rem;color:rgba(255,255,255,.02);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;letter-spacing:15px}
+.gh-tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(245,197,24,.12);border:1px solid rgba(245,197,24,.3);color:var(--y);font-size:.7rem;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px;margin-bottom:1rem}
+.gh-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--w);letter-spacing:3px;line-height:1;position:relative;z-index:2}
+.gh-title .eco{color:var(--y)}
+.gh-sub{color:var(--glt);font-size:.95rem;font-weight:300;line-height:1.7;max-width:560px;margin:.75rem auto 0;position:relative;z-index:2}
+
+/* BULLETIN */
+.bulletin{max-width:800px;margin:0 auto;padding:3rem 2rem}
+.bul-tag{font-size:.68rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gm);margin-bottom:.75rem;display:flex;align-items:center;gap:8px}
+.bul-tag::after{content:'';flex:1;height:1px;background:var(--gm);max-width:40px}
+.bul-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);color:var(--gd);letter-spacing:1px;margin-bottom:1.25rem}
+.bul-body{color:var(--mt);font-size:.95rem;line-height:1.85;font-weight:300}
+.bul-body p{margin-bottom:1rem}
+.bul-body strong{color:var(--gd);font-weight:600}
+.bul-highlight{background:var(--gp);border-left:4px solid var(--gl);border-radius:0 12px 12px 0;padding:1rem 1.25rem;margin:1.5rem 0;font-size:.92rem;color:var(--gd);font-weight:400}
+
+/* SLIDESHOW */
+.slideshow-section{background:var(--gd);padding:3rem 0;position:relative}
+.ss-header{text-align:center;margin-bottom:2rem;padding:0 2rem}
+.ss-header h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);color:var(--w);letter-spacing:2px}
+.ss-header p{color:var(--glt);font-size:.88rem;margin-top:.35rem}
+
+/* MAIN SLIDESHOW */
+.slideshow{position:relative;max-width:900px;margin:0 auto;padding:0 1rem}
+.slides-container{position:relative;border-radius:20px;overflow:hidden;background:#0d2a0d;aspect-ratio:16/9}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .6s ease;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.slide.active{opacity:1}
+
+/* PLACEHOLDER SLIDES — tukar dengan <img src="foto.jpg"> */
+.slide-img{width:100%;height:100%;object-fit:cover;display:block}
+.slide-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem;background:linear-gradient(135deg,var(--gm) 0%,var(--gd) 100%);color:rgba(255,255,255,.4);font-size:.85rem}
+.slide-placeholder .ph-icon{font-size:3.5rem;opacity:.4}
+.slide-placeholder .ph-text{text-align:center;line-height:1.5}
+.slide-placeholder .ph-text strong{display:block;color:rgba(255,255,255,.6);font-size:1rem;margin-bottom:.25rem}
+
+/* SLIDE CAPTION */
+.slide-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.75));padding:2rem 1.5rem 1.25rem;color:var(--w)}
+.slide-caption h4{font-size:.95rem;font-weight:600;margin-bottom:.2rem}
+.slide-caption p{font-size:.78rem;color:rgba(255,255,255,.65)}
+
+/* CONTROLS */
+.slide-controls{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1.25rem}
+.ctrl-btn{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:var(--w);font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.ctrl-btn:hover{background:var(--y);color:var(--gd);border-color:var(--y)}
+.slide-dots{display:flex;gap:.5rem;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25);cursor:pointer;transition:background .2s,transform .2s;border:none;padding:0}
+.dot.active{background:var(--y);transform:scale(1.3)}
+.slide-counter{color:rgba(255,255,255,.5);font-size:.8rem;min-width:40px;text-align:center}
+
+/* AUTOPLAY TOGGLE */
+.autoplay-btn{background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.55);font-size:.75rem;padding:.35rem .85rem;border-radius:50px;cursor:pointer;transition:background .2s;display:flex;align-items:center;gap:.4rem}
+.autoplay-btn:hover{background:rgba(255,255,255,.08)}
+.autoplay-btn.on{border-color:var(--y);color:var(--y)}
+
+/* THUMBNAIL STRIP */
+.thumb-strip{display:flex;gap:.6rem;margin-top:1rem;overflow-x:auto;padding:.25rem .25rem .5rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.2) transparent}
+.thumb{width:80px;height:55px;border-radius:8px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:border-color .2s,opacity .2s;flex-shrink:0;background:#0d2a0d;display:flex;align-items:center;justify-content:center}
+.thumb:hover{opacity:.85}.thumb.active{border-color:var(--y)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb-ph{font-size:1.2rem;opacity:.4}
+
+/* GRID GALLERY */
+.gallery-grid-section{padding:3rem 6rem}
+@media(max-width:768px){.gallery-grid-section{padding:2rem 1.25rem}}
+.gg-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:.75rem}
+.gg-header h2{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gd);letter-spacing:1px}
+.gg-header p{font-size:.82rem;color:var(--mt)}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}
+@media(max-width:600px){.gallery-grid{grid-template-columns:repeat(2,1fr)}}
+.gallery-item{border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:var(--gp);border:1px solid #d4e8cc;cursor:pointer;position:relative;transition:transform .2s}
+.gallery-item:hover{transform:scale(1.02)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-item-ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;color:var(--mt);font-size:.78rem}
+.gallery-item-ph .gi-icon{font-size:2rem;opacity:.5}
+.gallery-item-ph .gi-label{font-weight:600;color:var(--gm);font-size:.8rem}
+/* First item spans 2 columns */
+.gallery-item:first-child{grid-column:span 2;aspect-ratio:2/1}
+@media(max-width:600px){.gallery-item:first-child{grid-column:span 1;aspect-ratio:4/3}}
+
+/* UPLOAD HINT */
+.upload-hint{background:var(--gp);border:2px dashed #a5d6a7;border-radius:16px;padding:2rem;text-align:center;margin-top:1.5rem}
+.upload-hint h3{font-size:1rem;font-weight:600;color:var(--gm);margin-bottom:.5rem}
+.upload-hint p{font-size:.83rem;color:var(--mt);line-height:1.6}
+.upload-hint code{background:var(--w);border:1px solid #c8e6c9;border-radius:4px;padding:1px 6px;font-size:.8rem;color:var(--gd)}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:500;align-items:center;justify-content:center;padding:1rem}
+.lightbox.show{display:flex}
+.lb-content{position:relative;max-width:900px;width:100%}
+.lb-img{width:100%;border-radius:12px;max-height:80vh;object-fit:contain;display:block}
+.lb-close{position:absolute;top:-2.5rem;right:0;background:rgba(255,255,255,.1);border:none;color:var(--w);font-size:1.2rem;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lb-close:hover{background:rgba(255,255,255,.2)}
+
+/* FOOTER */
+footer{background:var(--gd);padding:2.5rem 5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:var(--w);letter-spacing:2px}
+.flogo .eco{color:var(--y)}
+.forg{color:rgba(255,255,255,.35);font-size:.75rem;margin-top:.2rem}
+.fright p{color:rgba(255,255,255,.4);font-size:.75rem;line-height:1.7}
+.fright a{color:var(--glt);text-decoration:none}
+@media(max-width:600px){
+  nav{padding:.9rem 1.25rem}
+  .gallery-hero{padding:6rem 1.5rem 2rem}
+  .bulletin{padding:2rem 1.25rem}
+  footer{padding:2rem 1.5rem;flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">LANGKAWI <span class="eco">ECO</span> RUN</a>
+  <div style="display:flex;gap:.75rem;align-items:center">
+    <a href="index.html" class="nav-back">← Laman Utama</a>
+    <a href="index.html#daftar" class="nav-cta">Daftar Sekarang</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="gallery-hero">
+  <div class="gh-tag">📷 Galeri Foto &amp; Buletin</div>
+  <h1 class="gh-title">LANGKAWI <span class="eco">ECO</span> RUN</h1>
+  <p class="gh-sub">Rakaman kenangan indah dari acara-acara larian kami yang lalu. Jadilah sebahagian dari cerita seterusnya!</p>
+</section>
+
+<!-- BULLETIN -->
+<section class="bulletin" id="buletin">
+  <div class="bul-tag">Buletin Event</div>
+  <h2 class="bul-title">Sorotan Langkawi Eco Run</h2>
+  <div class="bul-body">
+    <p>
+      <strong>Langkawi Eco Run</strong> telah bermula sebagai satu inisiatif kecil untuk menggalakkan gaya hidup aktif dalam kalangan warga Langkawi. Kini, ia telah berkembang menjadi salah satu acara larian paling dinantikan di Pulau Langkawi, menarik penyertaan dari seluruh pelusuk Malaysia.
+    </p>
+    <div class="bul-highlight">
+      🏆 Edisi pertama Langkawi Eco Run telah mendapat sambutan yang luar biasa dengan penyertaan ramai pelari dari pelbagai lapisan masyarakat — membuktikan bahawa semangat berlari dan cinta alam memang sebati dalam diri warga Langkawi.
+    </div>
+    <p>
+      Setiap edisi direka dengan teliti untuk memastikan setiap peserta bukan sahaja mendapat pengalaman larian yang menyeronokkan, malah turut menghargai <strong>keindahan alam semula jadi Langkawi</strong> yang merupakan warisan UNESCO Geopark.
+    </p>
+    <p>
+      Untuk <strong>Langkawi Eco Run 2.0</strong>, kami membawa semangat yang lebih besar, laluan yang lebih mencabar, dan kejutan-kejutan istimewa yang tidak pernah ada sebelum ini. Nantikan pengumuman rasmi tarikh dan butiran lanjut tidak lama lagi!
+    </p>
+  </div>
+</section>
+
+<!-- SLIDESHOW -->
+<section class="slideshow-section" id="galeri">
+  <div class="ss-header">
+    <h2>🎬 Slideshow Foto Event</h2>
+    <p>Foto-foto terpilih dari Langkawi Eco Run edisi lepas</p>
+  </div>
+
+  <div class="slideshow">
+    <div class="slides-container" id="slides-container">
+
+      <!-- SLIDE 1 — Tukar src="foto1.jpg" dengan foto sebenar -->
+      <div class="slide active" data-caption="Permulaan Larian" data-desc="Peserta bersiap sedia di garisan permulaan">
+        <div class="slide-placeholder">
+          <div class="ph-icon">🏃</div>
+          <div class="ph-text"><strong>Slot Foto 1</strong>Gantikan dengan: &lt;img src="foto1.jpg"&gt;</div>
+        </div>
+        <div class="slide-caption"><h4>Permulaan Larian</h4><p>Peserta bersiap sedia di garisan permulaan — Langkawi Eco Run 1.0</p></div>
+      </div>
+
+      <!-- SLIDE 2 -->
+      <div class="slide" data-caption="Sepanjang Laluan" data-desc="Pelari menikmati keindahan alam Langkawi">
+        <div class="slide-placeholder">
+          <div class="ph-icon">🌿</div>
+          <div class="ph-text"><strong>Slot Foto 2</strong>Gantikan dengan: &lt;img src="foto2.jpg"&gt;</div>
+        </div>
+        <div class="slide-caption"><h4>Sepanjang Laluan</h4><p>Pelari menikmati keindahan alam dan suasana ekologi Langkawi</p></div>
+      </div>
+
+      <!-- SLIDE 3 -->
+      <div class="slide" data-caption="Garisan Penamat" data-desc="Detik kegembiraan di garisan penamat">
+        <div class="slide-placeholder">
+          <div class="ph-icon">🏅</div>
+          <div class="ph-text"><strong>Slot Foto 3</strong>Gantikan dengan: &lt;img src="foto3.jpg"&gt;</div>
+        </div>
+        <div class="slide-caption"><h4>Garisan Penamat</h4><p>Detik kegembiraan apabila pelari mencapai garisan penamat</p></div>
+      </div>
+
+      <!-- SLIDE 4 -->
+      <div class="slide" data-caption="Majlis Penyampaian Hadiah" data-desc="Pemenang menerima trofi dan hadiah">
+        <div class="slide-placeholder">
+          <div class="ph-icon">🏆</div>
+          <div class="ph-text"><strong>Slot Foto 4</strong>Gantikan dengan: &lt;img src="foto4.jpg"&gt;</div>
+        </div>
+        <div class="slide-caption"><h4>Majlis Penyampaian Hadiah</h4><p>Pemenang kategori menerima trofi dan hadiah daripada MPLBP</p></div>
+      </div>
+
+      <!-- SLIDE 5 -->
+      <div class="slide" data-caption="Suasana Meriah" data-desc="Kegembiraan peserta dan keluarga">
+        <div class="slide-placeholder">
+          <div class="ph-icon">🎉</div>
+          <div class="ph-text"><strong>Slot Foto 5</strong>Gantikan dengan: &lt;img src="foto5.jpg"&gt;</div>
+        </div>
+        <div class="slide-caption"><h4>Suasana Meriah</h4><p>Kegembiraan peserta, keluarga dan sukarelawan sepanjang acara</p></div>
+      </div>
+
+      <!-- SLIDE 6 -->
+      <div class="slide" data-caption="Kenangan Bersama" data-desc="Gambar kenangan peserta">
+        <div class="slide-placeholder">
+          <div class="ph-icon">📸</div>
+          <div class="ph-text"><strong>Slot Foto 6</strong>Gantikan dengan: &lt;img src="foto6.jpg"&gt;</div>
+        </div>
+        <div class="slide-caption"><h4>Kenangan Bersama</h4><p>Gambar kenangan peserta bersama penganjur MPLBP</p></div>
+      </div>
+
+    </div><!-- end slides-container -->
+
+    <!-- CONTROLS -->
+    <div class="slide-controls">
+      <button class="ctrl-btn" onclick="changeSlide(-1)" title="Sebelumnya">&#8592;</button>
+      <div class="slide-dots" id="slide-dots"></div>
+      <span class="slide-counter" id="slide-counter">1 / 6</span>
+      <button class="ctrl-btn" onclick="changeSlide(1)" title="Seterusnya">&#8594;</button>
+      <button class="autoplay-btn on" id="autoplay-btn" onclick="toggleAutoplay()">▶ Auto</button>
+    </div>
+
+    <!-- THUMBNAILS -->
+    <div class="thumb-strip" id="thumb-strip"></div>
+  </div>
+</section>
+
+<!-- GRID GALLERY -->
+<section class="gallery-grid-section">
+  <div class="gg-header">
+    <div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gd);letter-spacing:1px">📸 Semua Foto</h2>
+      <p style="font-size:.82rem;color:var(--mt);margin-top:.2rem">Koleksi lengkap foto dari Langkawi Eco Run edisi lepas</p>
+    </div>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid">
+    <!-- Dijana oleh JavaScript -->
+  </div>
+
+  <!-- UPLOAD HINT -->
+  <div class="upload-hint">
+    <h3>📁 Cara Tambah Foto Sebenar</h3>
+    <p>
+      Letak fail foto dalam folder yang sama dengan <code>gallery.html</code>.<br>
+      Kemudian dalam kod, gantikan <code>&lt;div class="slide-placeholder"&gt;</code> dengan:<br>
+      <code>&lt;img src="nama-foto.jpg" alt="Penerangan foto" class="slide-img"&gt;</code><br><br>
+      Untuk grid foto bawah, ubah bahagian <code>photoData</code> dalam JavaScript dengan nama fail foto kau.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="flogo">LANGKAWI <span class="eco">ECO</span> RUN 2.0</div>
+    <div class="forg">Dianjurkan oleh Majlis Perbandaran Langkawi Bandaraya Pelancongan (MPLBP)</div>
+  </div>
+  <div class="fright">
+    <p>📍 Masjid Temonyong, Langkawi, Kedah</p>
+    <p>📧 <a href="mailto:info@mplbp.gov.my">info@mplbp.gov.my</a></p>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <div class="lb-content" onclick="event.stopPropagation()">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <img class="lb-img" id="lb-img" src="" alt="">
+  </div>
+</div>
+
+<script>
+// ===== SLIDESHOW =====
+const slides=document.querySelectorAll('.slide');
+let current=0;
+let autoplayInterval=null;
+let isAutoplay=true;
+const TOTAL=slides.length;
+
+function buildDots(){
+  const dc=document.getElementById('slide-dots');
+  dc.innerHTML='';
+  slides.forEach((_,i)=>{
+    const d=document.createElement('button');
+    d.className='dot'+(i===0?' active':'');
+    d.onclick=()=>goSlide(i);
+    dc.appendChild(d);
+  });
+}
+
+function buildThumbs(){
+  const strip=document.getElementById('thumb-strip');
+  strip.innerHTML='';
+  slides.forEach((s,i)=>{
+    const t=document.createElement('div');
+    t.className='thumb'+(i===0?' active':'');
+    t.onclick=()=>goSlide(i);
+    const img=s.querySelector('.slide-img');
+    if(img){
+      const ti=document.createElement('img');
+      ti.src=img.src;ti.alt='';
+      t.appendChild(ti);
+    } else {
+      const ph=document.createElement('div');
+      ph.className='thumb-ph';
+      ph.textContent=['🏃','🌿','🏅','🏆','🎉','📸'][i]||'📷';
+      t.appendChild(ph);
+    }
+    strip.appendChild(t);
+  });
+}
+
+function goSlide(n){
+  slides[current].classList.remove('active');
+  document.querySelectorAll('.dot')[current].classList.remove('active');
+  document.querySelectorAll('.thumb')[current].classList.remove('active');
+  current=(n+TOTAL)%TOTAL;
+  slides[current].classList.add('active');
+  document.querySelectorAll('.dot')[current].classList.add('active');
+  const thumbs=document.querySelectorAll('.thumb');
+  thumbs[current].classList.add('active');
+  thumbs[current].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  document.getElementById('slide-counter').textContent=(current+1)+' / '+TOTAL;
+}
+
+function changeSlide(dir){
+  goSlide(current+dir);
+  if(isAutoplay)resetAutoplay();
+}
+
+function startAutoplay(){
+  autoplayInterval=setInterval(()=>goSlide(current+1),4000);
+}
+
+function resetAutoplay(){
+  clearInterval(autoplayInterval);
+  if(isAutoplay)startAutoplay();
+}
+
+function toggleAutoplay(){
+  isAutoplay=!isAutoplay;
+  const btn=document.getElementById('autoplay-btn');
+  if(isAutoplay){btn.textContent='▶ Auto';btn.classList.add('on');startAutoplay()}
+  else{btn.textContent='⏸ Berhenti';btn.classList.remove('on');clearInterval(autoplayInterval)}
+}
+
+// Swipe support
+let touchX=0;
+document.getElementById('slides-container').addEventListener('touchstart',e=>{touchX=e.touches[0].clientX});
+document.getElementById('slides-container').addEventListener('touchend',e=>{
+  const diff=touchX-e.changedTouches[0].clientX;
+  if(Math.abs(diff)>50){changeSlide(diff>0?1:-1)}
+});
+
+// Keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft')changeSlide(-1);
+  else if(e.key==='ArrowRight')changeSlide(1);
+  else if(e.key==='Escape')closeLightbox();
+});
+
+// ===== GRID GALLERY =====
+// Tukar data di bawah dengan foto sebenar kau
+const photoData=[
+  {src:'',icon:'🏃',label:'Slot Foto A'},
+  {src:'',icon:'🌿',label:'Slot Foto B'},
+  {src:'',icon:'🏅',label:'Slot Foto C'},
+  {src:'',icon:'🏆',label:'Slot Foto D'},
+  {src:'',icon:'🎉',label:'Slot Foto E'},
+  {src:'',icon:'📸',label:'Slot Foto F'},
+  {src:'',icon:'🌅',label:'Slot Foto G'},
+  {src:'',icon:'👟',label:'Slot Foto H'},
+  {src:'',icon:'🤝',label:'Slot Foto I'},
+];
+
+function buildGrid(){
+  const grid=document.getElementById('gallery-grid');
+  grid.innerHTML=photoData.map((p,i)=>`
+    <div class="gallery-item" onclick="openLightbox('${p.src}','${p.label}')">
+      ${p.src
+        ?`<img src="${p.src}" alt="${p.label}">`
+        :`<div class="gallery-item-ph"><div class="gi-icon">${p.icon}</div><div class="gi-label">${p.label}</div><div style="font-size:.7rem;opacity:.6">Tambah foto di sini</div></div>`
+      }
+    </div>
+  `).join('');
+}
+
+// ===== LIGHTBOX =====
+function openLightbox(src,alt){
+  if(!src)return;
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lb-img').alt=alt;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('show');
+}
+
+// ===== INIT =====
+buildDots();
+buildThumbs();
+buildGrid();
+startAutoplay();
+</script>
+</body>
+</html>
