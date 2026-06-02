@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ms">
+<html lang="en" class="scroll-smooth"></html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,9 +31,9 @@
     <div class="hidden lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex items-center">
         <ul class="flex space-x-10 text-white font-semi-bold uppercase text-[13px] tracking-widest">
             <li><a href="#" class="hover:text-orange-500 transition-colors duration-300">Home</a></li>
-            <li><a href="#" class="hover:text-orange-500 transition-colors duration-300">About</a></li>
-            <li><a href="#" class="hover:text-orange-500 transition-colors duration-300">Registration</a></li>
-            <li><a href="#" class="hover:text-orange-500 transition-colors duration-300">Gallery</a></li>
+            <li><a href="#about" class="hover:text-orange-500 transition-colors duration-300">About</a></li>
+            <li><a href="#categories" class="hover:text-orange-500 transition-colors duration-300">Registration</a></li>
+            <li><a href="#media" class="hover:text-orange-500 transition-colors duration-300">Gallery</a></li>
             <li><a href="#" class="hover:text-orange-500 transition-colors duration-300">Blog</a></li>
         </ul>
     </div>
@@ -55,9 +56,9 @@
     <div id="mobile-menu" class="fixed inset-0 bg-blue-950/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">
         <ul class="flex flex-col space-y-6 text-center text-white font-semi-bold uppercase text-lg tracking-widest mb-8">
             <li><a href="#" class="mobile-link hover:text-orange-500 transition">Home</a></li>
-            <li><a href="#" class="mobile-link hover:text-orange-500 transition">About</a></li>
-            <li><a href="#" class="mobile-link hover:text-orange-500 transition">Registration</a></li>
-            <li><a href="#" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>
+            <li><a href="#about" class="mobile-link hover:text-orange-500 transition">About</a></li>
+            <li><a href="#categories" class="mobile-link hover:text-orange-500 transition">Registration</a></li>
+            <li><a href="#media" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>
             <li><a href="#" class="mobile-link hover:text-orange-500 transition">Blog</a></li>
         </ul>
         <!-- Special Log In Button for Mobile Only -->
@@ -102,9 +103,9 @@
                     Register Now
                 </button>
                 
-                <button class="w-fit bg-blue-900/40 border border-white/30 backdrop-blur-md hover:bg-white hover:text-blue-900 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-semi-bold text-sm md:text-lg transition whitespace-nowrap">
+                <a href="#categories" class="w-fit bg-blue-900/40 border border-white/30 backdrop-blur-md hover:bg-white hover:text-blue-900 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-semi-bold text-sm md:text-lg transition whitespace-nowrap">
                     Explore Categories
-                </button>
+                </a>
             </div>
         </div>
     </section>
@@ -157,7 +158,7 @@
             </div>
         </div>
         
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-1 items-center mb-12">
+        <div id="about" class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-1 items-center mb-12">
             <div>
                 <h4 class="text-orange-600 font-bold tracking-[0.3em] uppercase text-sm mb-1">Our Mission</h4>
                 <h2 class="text-4xl md:text-6xl font-black italic text-blue-950 leading-none uppercase tracking-tighter">
@@ -208,7 +209,7 @@
 </section>
 
     <!-- Race Categories & Register -->
-    <section class="pt-10 pb-10 pxy-6 bg-white">
+    <section id="categories" class="pt-10 pb-10 pxy-6 bg-white">
     <div class="max-w-7xl mx-auto text-center mb-16">
         <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">Race Categories</h2>
         <p class="text-gray-500 uppercase tracking-[0.2em] font-semi-bold mt-2">Find Your Perfect Challenge</p>
@@ -329,7 +330,7 @@
 </section>
 
 <!-- SECTION: MERCHANDISE (SLIDER) & LUCKY DRAW -->
-<section class="py-24 px-6 bg-white overflow-hidden">
+<section id="merchandise" class="py-24 px-6 bg-white overflow-hidden">
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
             
@@ -488,7 +489,7 @@
 </section>
 
 <!-- SECTION: MEDIA HUB (YOUTUBE & TIKTOK) -->
-<section class="py-24 px-6 bg-gray-50 relative overflow-hidden">
+<section id="media" class="py-24 px-6 bg-gray-50 relative overflow-hidden">
     <!-- Dekorasi Latar Belakang Digital -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none"></div>
 
@@ -677,7 +678,7 @@
             <div class="space-y-4">
                 <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Quick Links</h4>
                 <ul class="space-y-2 text-sm text-blue-100/70">
-                    <li><a href="#home" class="hover:text-orange-400 transition-colors duration-200">Home</a></li>
+                    <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Home</a></li>
                     <li><a href="#categories" class="hover:text-orange-400 transition-colors duration-200">Race Categories</a></li>
                     <li><a href="#merchandise" class="hover:text-orange-400 transition-colors duration-200">Official Merchandise</a></li>
                     <li><a href="#media" class="hover:text-orange-400 transition-colors duration-200">Media Hub</a></li>
