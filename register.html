@@ -1,0 +1,650 @@
+<!DOCTYPE html>  
+<html lang="ms" class="scroll-smooth">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Registration | Langkawi Eco Run 2.0</title>  
+    <script src="https://cdn.tailwindcss.com"></script>  
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">  
+    <style>  
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');  
+        body { font-family: 'Oswald', sans-serif; }  
+        .hero-register-gradient {  
+            background:  
+                linear-gradient(to top, rgb(249, 250, 251) 0%, rgba(249, 250, 251, 0) 50%),   
+                linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),   
+                url('assets/images/Background_Hero.jpg');  
+            background-size: cover;  
+            background-position: center;  
+        }  
+        /* Menyembunyikan step form yang tidak aktif */  
+        .form-step { display: none; }  
+        .form-step-active { display: block; }  
+    </style>  
+</head>  
+<body class="bg-gray-50 overflow-x-hidden">  
+  
+    <!-- NAVBAR (Dikekalkan daripada website asal) -->  
+    <nav class="absolute top-0 left-0 w-full z-50 px-6 py-6">  
+        <div class="max-w-7xl mx-auto flex justify-between items-center relative">  
+            <div class="text-white font-black text-2xl italic leading-none tracking-tighter shrink-0 z-10">  
+                LANGKAWI<br><span class="tracking-[0.03em] opacity-100 uppercase">ECO RUN</span>  
+            </div>  
+              
+            <div class="hidden lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex items-center">  
+                <ul class="flex space-x-10 text-white font-semi-bold uppercase text-[13px] tracking-widest">  
+                    <li><a href="index.html" class="hover:text-orange-500 transition-colors duration-300">Home</a></li>  
+                    <li><a href="index.html#about" class="hover:text-orange-500 transition-colors duration-300">About</a></li>  
+                    <li><a href="register.html" class="text-orange-500 transition-colors duration-300">Registration</a></li>  
+                    <li><a href="index.html#media" class="hover:text-orange-500 transition-colors duration-300">Gallery</a></li>  
+                    <li><a href="index.html#merchandise" class="hover:text-orange-500 transition-colors duration-300">Blog</a></li>  
+                </ul>  
+            </div>  
+  
+            <div class="flex items-center space-x-4 md:space-x-6 shrink-0 z-50">  
+                <a href="#" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-700 text-white px-5 md:px-7 py-2 md:py-2.5 rounded-full font-extrabold shadow-lg transition-all transform hover:scale-105 active:scale-95 text-xs md:text-sm uppercase">  
+                    Register Now  
+                </a>  
+                <button id="menu-btn" class="block lg:hidden text-white focus:outline-none p-2" aria-label="Toggle Menu">  
+                    <i class="fas fa-bars text-2xl transition-transform duration-300" id="menu-icon"></i>  
+                </button>  
+            </div>  
+        </div>  
+  
+        <!-- Mobile Menu Panel -->  
+        <div id="mobile-menu" class="fixed inset-0 bg-blue-950/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">  
+            <ul class="flex flex-col space-y-6 text-center text-white font-semi-bold uppercase text-lg tracking-widest mb-8">  
+                <li><a href="index.html" class="mobile-link hover:text-orange-500 transition">Home</a></li>  
+                <li><a href="index.html#about" class="mobile-link hover:text-orange-500 transition">About</a></li>  
+                <li><a href="register.html" class="mobile-link text-orange-500 transition">Registration</a></li>  
+                <li><a href="index.html#media" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>  
+                <li><a href="index.html#merchandise" class="mobile-link hover:text-orange-500 transition">Blog</a></li>  
+            </ul>  
+            <div class="w-full max-w-[250px] px-4 sm:hidden">  
+                <a href="#" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-white py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
+                    <i class="fas fa-sign-in-alt mr-2 text-orange-500"></i> Log In  
+                </a>  
+            </div>  
+        </div>  
+    </nav>  
+  
+    <!-- HERO BANNER REGISTRATION -->  
+    <section class="relative h-[60vh] flex items-center justify-center text-white hero-register-gradient px-6">  
+        <div class="text-center max-w-4xl mt-16">  
+            <span class="inline-block px-4 py-1 bg-orange-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4">Official Portal</span>  
+            <h1 class="text-4xl md:text-7xl font-black italic leading-tight mb-2 tracking-[0.04em] uppercase">  
+                Event Registration  
+            </h1>  
+            <p class="text-base md:text-lg font-light tracking-wide max-w-md mx-auto opacity-90">  
+                Secure your slot today, challenge your limits and run for a sustainable future.  
+            </p>  
+        </div>  
+    </section>  
+  
+    <!-- EVENT INFORMATION CARD SECTION -->  
+    <section class="relative -mt-24 pb-12 px-4 z-20 max-w-5xl mx-auto">  
+        <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 p-6 md:p-8">  
+            <h3 class="text-2xl font-black italic text-blue-950 uppercase mb-6 flex items-center gap-3">  
+                <i class="fas fa-info-circle text-orange-600"></i> Event Details Quick Check  
+            </h3>  
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">  
+                <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50 flex items-center gap-4">  
+                    <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-600 shrink-0">  
+                        <i class="fas fa-calendar-alt text-xl"></i>  
+                    </div>  
+                    <div>  
+                        <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Date</p>  
+                        <p class="text-blue-950 font-black text-base uppercase">21 November 2026</p>  
+                    </div>  
+                </div>  
+                <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50 flex items-center gap-4">  
+                    <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 shrink-0">  
+                        <i class="fas fa-map-marker-alt text-xl"></i>  
+                    </div>  
+                    <div>  
+                        <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Location</p>  
+                        <p class="text-blue-950 font-black text-base uppercase">Tanjung Rhu, Langkawi</p>  
+                    </div>  
+                </div>  
+                <div class="p-4 bg-blue-50/50 rounded-2xl border border-blue-100/50 flex items-center gap-4">  
+                    <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-green-600 shrink-0">  
+                        <i class="fas fa-flag text-xl"></i>  
+                    </div>  
+                    <div>  
+                        <p class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Flag-off Time</p>  
+                        <p class="text-blue-950 font-black text-base uppercase">08:00 AM</p>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+  
+    <!-- MULTI-STEP REGISTRATION FORM SECTION -->  
+    <section class="py-12 px-4 max-w-4xl mx-auto">  
+        <!-- Progress Steps Indicator -->  
+        <div class="mb-12 flex justify-between items-center relative max-w-md mx-auto">  
+            <div class="absolute top-1/2 left-0 w-full h-1 bg-gray-200 -translate-y-1/2 z-0"></div>  
+            <div id="progress-bar-fill" class="absolute top-1/2 left-0 w-0 h-1 bg-orange-600 -translate-y-1/2 z-0 transition-all duration-300"></div>  
+              
+            <div class="step-dot z-10 w-8 h-8 rounded-full bg-orange-600 text-white font-bold flex items-center justify-center text-xs shadow-md">1</div>  
+            <div class="step-dot z-10 w-8 h-8 rounded-full bg-gray-200 text-gray-600 font-bold flex items-center justify-center text-xs shadow-md transition-all duration-300">2</div>  
+            <div class="step-dot z-10 w-8 h-8 rounded-full bg-gray-200 text-gray-600 font-bold flex items-center justify-center text-xs shadow-md transition-all duration-300">3</div>  
+        </div>  
+  
+        <!-- Main Form Container -->  
+        <form id="regForm" class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8 md:p-10 relative overflow-hidden">  
+              
+            <!-- STEP 1: PERSONAL & CONTACT DETAILS -->
+            <div class="form-step form-step-active space-y-6">
+                <div class="border-b border-gray-100 pb-4">
+                    <h2 class="text-2xl font-black italic text-blue-950 uppercase tracking-tight">Step 1: Personal & Contact Details</h2>
+                    <p class="text-gray-400 text-xs uppercase font-bold tracking-wider mt-1">Please fill in your primary information</p>
+                </div>
+
+                <!-- Personal Details Group -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Full Name (As in IC/Passport)</label>
+                        <input type="text" id="input-name" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="JOHAN BIN ABDULLAH">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">IC Number (12 Digits Only)</label>
+                        <!-- Menggunakan inputmode="numeric" dan maxlength untuk kawalan mobile/desktop -->
+                        <input type="text" id="input-ic" required inputmode="numeric" maxlength="12" pattern="\d{12}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="950101025555">
+                        <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">Format: YYMMDDXXXXXX (No dashes '-')</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Age (Auto-Calculated)</label>
+                        <input type="text" id="input-age" readonly class="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-orange-600 outline-none cursor-not-allowed" placeholder="Calculated from IC">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Gender</label>
+                        <select id="input-gender" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-bold text-gray-800 transition">
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">State of Residence (Negeri)</label>
+                        <select id="input-state" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-bold text-gray-800 transition">
+                            <option value="" disabled selected>SELECT STATE</option>
+                            <option value="JOHOR">JOHOR</option>
+                            <option value="KEDAH">KEDAH</option>
+                            <option value="KELANTAN">KELANTAN</option>
+                            <option value="MELAKA">MELAKA</option>
+                            <option value="NEGERI SEMBILAN">NEGERI SEMBILAN</option>
+                            <option value="PAHANG">PAHANG</option>
+                            <option value="PERAK">PERAK</option>
+                            <option value="PERLIS">PERLIS</option>
+                            <option value="PULAU PINANG">PULAU PINANG</option>
+                            <option value="SABAH">SABAH</option>
+                            <option value="SARAWAK">SARAWAK</option>
+                            <option value="SELANGOR">SELANGOR</option>
+                            <option value="TERENGGANU">TERENGGANU</option>
+                            <option value="W.P. KUALA LUMPUR">W.P. KUALA LUMPUR</option>
+                            <option value="W.P. LABUAN">W.P. LABUAN</option>
+                            <option value="W.P. PUTRAJAYA">W.P. PUTRAJAYA</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Contact Information Group -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Email Address</label>
+                        <input type="email" id="input-email" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="johan@email.com">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Phone Number</label>
+                        <input type="text" id="input-phone" required inputmode="numeric" maxlength="11" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="0123456789">
+                        <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">Numbers only (e.g., 0123456789)</p>
+                    </div>
+                </div>
+            </div>
+  
+            <!-- STEP 2: RACE, T-SHIRT & EMERGENCY -->  
+            <div class="form-step space-y-6">  
+                <div class="border-b border-gray-100 pb-4">  
+                    <h2 class="text-2xl font-black italic text-blue-950 uppercase tracking-tight">Step 2: Race & Kit Preferences</h2>  
+                    <p class="text-gray-400 text-xs uppercase font-bold tracking-wider mt-1">Select your category and emergency profile</p>  
+                </div>  
+  
+                <!-- Race Category Selection -->  
+                <div>  
+                    <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-3">Race Category Selection</label>  
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">  
+                        <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
+                            <input type="radio" name="category" value="10KM Men (RM 99.00)" checked class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <div class="pr-8">  
+                                <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">10KM RUN - MEN</span>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced • RM 99.00</span>  
+                            </div>  
+                        </label>  
+                        <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
+                            <input type="radio" name="category" value="10KM Women (RM 99.00)" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <div class="pr-8">  
+                                <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">10KM RUN - WOMEN</span>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced • RM 99.00</span>  
+                            </div>  
+                        </label>  
+                        <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
+                            <input type="radio" name="category" value="5KM Men (RM 69.00)" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <div class="pr-8">  
+                                <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">5KM FUN RUN - MEN</span>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy • RM 69.00</span>  
+                            </div>  
+                        </label>  
+                        <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
+                            <input type="radio" name="category" value="5KM Women (RM 69.00)" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <div class="pr-8">  
+                                <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">5KM FUN RUN - WOMEN</span>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy • RM 69.00</span>  
+                            </div>  
+                        </label>  
+                    </div>  
+                </div>  
+  
+                <!-- T-Shirt Size Selection -->  
+                <div class="pt-2">  
+                    <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Official T-Shirt Size (Microfiber)</label>  
+                    <select id="input-size" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-bold text-gray-800 transition">  
+                        <option>S (Chest 36")</option>  
+                        <option selected>M (Chest 38")</option>  
+                        <option>L (Chest 40")</option>  
+                        <option>XL (Chest 42")</option>  
+                        <option>XXL (Chest 44")</option>  
+                    </select>  
+                </div>  
+  
+                <!-- Emergency Contact Group -->  
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-gray-100">  
+                    <div>  
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Emergency Contact Name</label>  
+                        <input type="text" id="input-emname" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="AMINAH BINTI AHMAD">  
+                    </div>  
+                    <div>  
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Emergency Contact Phone</label>  
+                        <input type="tel" id="input-emphone" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="+60179876543">  
+                    </div>  
+                </div>  
+            </div>  
+  
+            <!-- STEP 3: DECLARATION & SUMMARY -->  
+            <div class="form-step space-y-6">  
+                <div class="border-b border-gray-100 pb-4">  
+                    <h2 class="text-2xl font-black italic text-blue-950 uppercase tracking-tight">Step 3: Declaration & Summary</h2>  
+                    <p class="text-gray-400 text-xs uppercase font-bold tracking-wider mt-1">Review your summary data and declaration</p>  
+                </div>  
+  
+                <!-- Health & Rules Declaration -->  
+                <div class="p-5 bg-orange-50 rounded-2xl border border-orange-100 space-y-3">  
+                    <h4 class="font-bold text-sm text-orange-800 uppercase tracking-wide flex items-center gap-2">  
+                        <i class="fas fa-heartbeat"></i> Health & Safety Declaration  
+                    </h4>  
+                    <p class="text-xs text-orange-950/80 leading-relaxed font-medium">  
+                        I hereby declare that I am physically fit and medically trained to participate in Langkawi Eco Run 2.0. I understand the risks involved and agree that the organizers will not be held liable for any mishaps, injuries, or losses during the course of the event.  
+                    </p>  
+                    <label class="flex items-start gap-3 pt-2 cursor-pointer">  
+                        <input type="checkbox" id="input-declare" required class="mt-0.5 accent-orange-600 rounded">  
+                        <span class="text-xs font-bold uppercase text-orange-950 select-none">I unconditionally agree to the terms, rules & health statement above.</span>  
+                    </label>  
+                </div>  
+  
+                <!-- Registration Summary Dashboard -->
+                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6 space-y-3">
+                    <h4 class="font-black italic text-base text-blue-950 uppercase tracking-tight border-b border-gray-200/60 pb-2">Review Confirmation Summary</h4>
+                    <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-xs font-bold uppercase tracking-wide">
+                        <div class="text-gray-400">Full Name:</div>
+                        <div id="summary-name" class="text-blue-950 text-right">-</div>
+                        
+                        <div class="text-gray-400">Identity IC & Age:</div>
+                        <div id="summary-ic-age" class="text-blue-950 text-right">-</div>
+
+                        <div class="text-gray-400">State of Residence:</div>
+                        <div id="summary-state" class="text-blue-950 text-right">-</div>
+                        
+                        <div class="text-gray-400">Chosen Category:</div>
+                        <div id="summary-cate" class="text-orange-600 text-right">-</div>
+                        
+                        <div class="text-gray-400">T-Shirt Size:</div>
+                        <div id="summary-size" class="text-blue-950 text-right">-</div>
+                    </div>
+                </div>
+  
+                <!-- Proceed to Payment Button Component -->  
+                <button type="submit" id="btn-payment" class="w-full bg-orange-600 hover:bg-orange-700 text-white font-black text-center py-4 rounded-xl shadow-lg uppercase tracking-widest text-sm transition transform active:scale-95 flex justify-center items-center gap-2">  
+                    <i class="fas fa-credit-card"></i> Proceed To Payment  
+                </button>  
+            </div>  
+  
+            <!-- FORM BUTTONS NAVIGATION BAR -->  
+            <div class="mt-8 pt-6 border-t border-gray-100 flex justify-between items-center">  
+                <button type="button" id="prevBtn" class="bg-blue-950 hover:bg-blue-900 text-white font-bold text-xs uppercase tracking-widest py-3 px-6 rounded-xl transition opacity-0 pointer-events-none">  
+                    <i class="fas fa-chevron-left mr-2"></i> Previous  
+                </button>  
+                <button type="button" id="nextBtn" class="bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs uppercase tracking-widest py-3 px-6 rounded-xl transition">  
+                    Next Step <i class="fas fa-chevron-right ml-2"></i>  
+                </button>  
+            </div>  
+        </form>  
+    </section>  
+  
+    <!-- FAQ ACCORDION SECTION -->  
+    <section class="py-20 px-6 bg-white border-t border-gray-100">  
+        <div class="max-w-4xl mx-auto">  
+            <div class="text-center mb-12">  
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">Registration FAQ</h2>  
+                <p class="text-gray-400 uppercase tracking-[0.2em] font-semi-bold mt-2 text-xs">Everything You Need To Know</p>  
+                <div class="w-16 h-1 bg-orange-600 mx-auto mt-3 rounded-full"></div>  
+            </div>  
+  
+            <div class="space-y-4">  
+                <!-- FAQ Item 1 -->  
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50/50 overflow-hidden transition-all">  
+                    <button class="faq-toggle w-full px-6 py-4 text-left font-black text-sm md:text-base text-blue-950 uppercase tracking-wide flex justify-between items-center group">  
+                        <span>Can I change my race category after completing registration?</span>  
+                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform group-hover:text-orange-500"></i>  
+                    </button>  
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">  
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">  
+                            No, categories cannot be swapped once payment is processed. Please verify your registration selection dashboard thoroughly before routing to checkout.  
+                        </p>  
+                    </div>  
+                </div>  
+  
+                <!-- FAQ Item 2 -->  
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50/50 overflow-hidden transition-all">  
+                    <button class="faq-toggle w-full px-6 py-4 text-left font-black text-sm md:text-base text-blue-950 uppercase tracking-wide flex justify-between items-center group">  
+                        <span>When and where can I collect my Race Kit items?</span>  
+                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform group-hover:text-orange-500"></i>  
+                    </button>  
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">  
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">  
+                            Race Pack collection booths will be operating at Tanjung Rhu, Langkawi from 19-20 November 2026. Bring along your registration confirmation voucher.  
+                        </p>  
+                    </div>  
+                </div>  
+  
+                <!-- FAQ Item 3 -->  
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50/50 overflow-hidden transition-all">  
+                    <button class="faq-toggle w-full px-6 py-4 text-left font-black text-sm md:text-base text-blue-950 uppercase tracking-wide flex justify-between items-center group">  
+                        <span>Is the registration fee refundable?</span>  
+                        <i class="fas fa-chevron-down text-xs text-gray-400 transition-transform group-hover:text-orange-500"></i>  
+                    </button>  
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">  
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">  
+                            All registration payments are final and non-refundable under all normal operating terms and environment rules.  
+                        </p>  
+                    </div>  
+                </div>  
+            </div>  
+        </div>  
+    </section>  
+  
+    <!-- FOOTER SECTION (Dikekalkan daripada website asal) -->  
+    <footer class="bg-blue-950 text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">  
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none"></div>  
+        <div class="absolute top-0 left-0 w-80 h-80 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>  
+  
+        <div class="max-w-7xl mx-auto px-6 relative z-10">  
+            <div class="border-b border-white/10 pb-12 mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">  
+                <div>  
+                    <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter bg-gradient-to-r from-white via-blue-100 to-orange-500 bg-clip-text text-transparent pr-4">  
+                        LANGKAWI ECO RUN 2.0  
+                    </h2>  
+                    <p class="text-blue-200/60 text-sm mt-2 max-w-md">Run for Langkawi. Stride for Sustainability.</p>  
+                </div>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-500 text-white font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-orange-600/20 hover:-translate-y-1 block shrink-0">  
+                    Register Now <i class="fas fa-arrow-right ml-2 text-[10px]"></i>  
+                </a>  
+            </div>  
+  
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Contact Us</h4>  
+                    <p class="text-blue-100/70 text-sm leading-relaxed">  
+                        For any enquiries regarding sponsorship, registration, or volunteer opportunities, please contact our official support team.  
+                    </p>  
+                    <div class="space-y-2 pt-2 text-sm text-blue-200/80">  
+                        <p class="flex items-center gap-3"><i class="fas fa-envelope text-orange-500 text-xs"></i> info@langkawiecorun.com</p>  
+                        <p class="flex items-center gap-3"><i class="fas fa-phone text-orange-500 text-xs"></i> +60 11-5895 8809</p>  
+                    </div>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Quick Links</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="index.html" class="hover:text-orange-400 transition-colors duration-200">Home</a></li>  
+                        <li><a href="index.html#categories" class="hover:text-orange-400 transition-colors duration-200">Race Categories</a></li>  
+                        <li><a href="index.html#merchandise" class="hover:text-orange-400 transition-colors duration-200">Official Merchandise</a></li>  
+                        <li><a href="index.html#media" class="hover:text-orange-400 transition-colors duration-200">Media Hub</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Race Info</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Rules & Regulations</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Race Kit Collection</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Event Schedule</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Frequently Asked FAQ</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Follow Our Hype</h4>  
+                    <p class="text-blue-100/70 text-sm">Stay updated with the latest news, announcements, and event updates through our official social media channels.</p>  
+                    <div class="flex gap-3 pt-2">  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 shadow-md"><i class="fab fa-facebook-f text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-pink-500 hover:to-purple-600 hover:border-transparent transition-all duration-300 shadow-md"><i class="fab fa-instagram text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-black hover:border-zinc-800 transition-all duration-300 shadow-md"><i class="fab fa-tiktok text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-red-600 hover:border-red-500 transition-all duration-300 shadow-md"><i class="fab fa-youtube text-sm"></i></a>  
+                    </div>  
+                </div>  
+            </div>  
+  
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-blue-200/40 font-medium">  
+                <p class="text-center sm:text-left">&copy; 2026 Langkawi Eco Run 2.0. All Rights Reserved. Designed by UKPA MPLBP.</p>  
+                <div class="flex gap-6">  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Privacy Policy</a>  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Terms of Service</a>  
+                </div>  
+            </div>  
+        </div>  
+    </footer>  
+  
+    <!-- JAVASCRIPT LOGIC -->  
+    <script>
+        // --- LOGIK PENAPISAN INPUT & PENGIRAAN UMUR AUTOMATIK ---
+        const icInput = document.getElementById('input-ic');
+        const phoneInput = document.getElementById('input-phone');
+        const emPhoneInput = document.getElementById('input-emphone'); // Merujuk kepada step 2 jika ada
+        const ageInput = document.getElementById('input-age');
+        const genderSelect = document.getElementById('input-gender');
+
+        // Fungsi menyekat input selain nombor (Regex)
+        const restrictToNumbers = (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        };
+
+        icInput.addEventListener('input', (e) => {
+            restrictToNumbers(e);
+            
+            const ic = e.target.value;
+            // Mula mengira jika digit IC cukup 12 angka
+            if (ic.length === 12) {
+                // Ambil 2 digit pertama untuk tahun lahir
+                let birthYearShort = parseInt(ic.substring(0, 2));
+                let birthMonth = parseInt(ic.substring(2, 4));
+                let birthDay = parseInt(ic.substring(4, 6));
+
+                // Dapatkan tahun semasa (Sistem mematuhi tahun semasa 2026)
+                const currentYear = 2026;
+                const currentYearShort = currentYear % 100; // 26
+
+                // Logik menentukan abad (Century) dilahirkan
+                // Jika 2 digit awal IC lebih besar dari tahun semasa (e.g. 95), bermakna lahir tahun 1995.
+                // Jika kurang atau sama (e.g. 05), bermakna lahir tahun 2005.
+                let fullBirthYear = (birthYearShort > currentYearShort) ? (1900 + birthYearShort) : (2000 + birthYearShort);
+
+                // Kira umur asas berdasarkan tahun
+                let age = currentYear - fullBirthYear;
+
+                // Paparkan umur pada input field
+                if (!isNaN(age) && age >= 0 && birthMonth <= 12 && birthDay <= 31) {
+                    ageInput.value = `${age} YEARS OLD`;
+                } else {
+                    ageInput.value = "INVALID IC";
+                }
+
+                // [BONUS] Auto-detect Jantina berdasarkan digit terakhir IC (Ganjil = Lelaki, Genap = Perempuan)
+                let lastDigit = parseInt(ic.charAt(11));
+                if (!isNaN(lastDigit)) {
+                    genderSelect.value = (lastDigit % 2 === 0) ? "FEMALE" : "MALE";
+                }
+            } else {
+                ageInput.value = ""; // Kosongkan umur jika digit tidak lengkap
+            }
+        });
+
+        // Terapkan sekatan nombor sahaja pada bahagian Telefon & Telefon Kecemasan
+        phoneInput.addEventListener('input', restrictToNumbers);
+        if(emPhoneInput) {
+            emPhoneInput.addEventListener('input', restrictToNumbers);
+        }
+    
+        // --- LOGIK MULTI-STEP FORM ---  
+        const steps = Array.from(document.querySelectorAll(".form-step"));  
+        const nextBtn = document.getElementById("nextBtn");  
+        const prevBtn = document.getElementById("prevBtn");  
+        const form = document.getElementById("regForm");  
+        const dots = document.querySelectorAll(".step-dot");  
+        const progressFill = document.getElementById("progress-bar-fill");  
+        let currentStep = 0;  
+  
+        const updateFormSteps = () => {  
+            steps.forEach((step, idx) => {  
+                step.classList.toggle("form-step-active", idx === currentStep);  
+            });  
+  
+            // Kemaskini Progress Dots  
+            dots.forEach((dot, idx) => {  
+                if(idx <= currentStep) {  
+                    dot.classList.add("bg-orange-600", "text-white");  
+                    dot.classList.remove("bg-gray-200", "text-gray-600");  
+                } else {  
+                    dot.classList.remove("bg-orange-600", "text-white");  
+                    dot.classList.add("bg-gray-200", "text-gray-600");  
+                }  
+            });  
+  
+            // Kemaskini Bar Progress  
+            const progressPercent = (currentStep / (steps.length - 1)) * 100;  
+            progressFill.style.width = `${progressPercent}%`;  
+  
+            // Kawalan Paparan Butang Navigasi  
+            if (currentStep === 0) {  
+                prevBtn.classList.add("opacity-0", "pointer-events-none");  
+            } else {  
+                prevBtn.classList.remove("opacity-0", "pointer-events-none");  
+            }  
+  
+            if (currentStep === steps.length - 1) {
+                nextBtn.innerHTML = 'Review Dashboard <i class="fas fa-eye ml-2"></i>';
+                nextBtn.classList.add("bg-blue-950", "hover:bg-blue-900");
+                nextBtn.classList.remove("bg-orange-600", "hover:bg-orange-700");
+                
+                // Mengisi data ke Summary Dashboard secara dinamik
+                const ageVal = document.getElementById("input-age").value || "N/A";
+                const icVal = document.getElementById("input-ic").value || "N/A";
+                
+                document.getElementById("summary-name").innerText = document.getElementById("input-name").value || "N/A";
+                document.getElementById("summary-ic-age").innerText = `${icVal} (${ageVal})`;
+                document.getElementById("summary-state").innerText = document.getElementById("input-state").value || "NOT SELECTED";
+                document.getElementById("summary-size").innerText = document.getElementById("input-size").value;
+                
+                const checkedRadio = document.querySelector('input[name="category"]:checked');
+                document.getElementById("summary-cate").innerText = checkedRadio ? checkedRadio.value : "None Selected";
+            }
+        };  
+  
+        nextBtn.addEventListener("click", () => {  
+            // Validasi input asas sebelum ke step seterusnya  
+            const activeInputs = steps[currentStep].querySelectorAll("input[required], select[required]");  
+            let valid = true;  
+            activeInputs.forEach(input => {  
+                if(!input.checkValidity()) {  
+                    input.reportValidity();  
+                    valid = false;  
+                }  
+            });  
+  
+            if (valid && currentStep < steps.length - 1) {  
+                currentStep++;  
+                updateFormSteps();  
+            }  
+        });  
+  
+        prevBtn.addEventListener("click", () => {  
+            if (currentStep > 0) {  
+                currentStep--;  
+                updateFormSteps();  
+            }  
+        });  
+  
+        form.addEventListener("submit", (e) => {  
+            e.preventDefault();  
+            const declaration = document.getElementById("input-declare");  
+            if(!declaration.checked) {  
+                alert("Sila tanda pengesahan deklarasi kesihatan anda terlebih dahulu.");  
+                return;  
+            }  
+            alert("Sistem mengesahkan maklumat pendaftaran! Anda akan dibawa ke gerbang pembayaran rasmi (Payment Gateway)...");  
+        });  
+  
+        // --- LOGIK ACCORDION FAQ ---  
+        document.querySelectorAll(".faq-toggle").forEach(button => {  
+            button.addEventListener("click", () => {  
+                const content = button.nextElementSibling;  
+                const icon = button.querySelector("i");  
+                  
+                button.classList.toggle("text-orange-500");  
+                icon.classList.toggle("rotate-180");  
+  
+                if (content.style.maxHeight && content.style.maxHeight !== "0px") {  
+                    content.style.maxHeight = "0px";  
+                } else {  
+                    content.style.maxHeight = content.scrollHeight + "px";  
+                }  
+            });  
+        });  
+  
+        // --- LOGIK MOBILE MENU (Navbar Asal) ---  
+        const menuBtn = document.getElementById('menu-btn');  
+        const mobileMenu = document.getElementById('mobile-menu');  
+        const menuIcon = document.getElementById('menu-icon');  
+        const mobileLinks = document.querySelectorAll('.mobile-link');  
+  
+        menuBtn.addEventListener('click', () => {  
+            const isOpen = mobileMenu.classList.contains('translate-y-0');  
+            if (!isOpen) {  
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                mobileMenu.classList.add('translate-y-0', 'opacity-100');  
+                menuIcon.classList.remove('fa-bars');  
+                menuIcon.classList.add('fa-times', 'rotate-90');  
+                document.body.classList.add('overflow-hidden');  
+            } else {  
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');  
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                menuIcon.classList.remove('fa-times', 'rotate-90');  
+                menuIcon.classList.add('fa-bars');  
+                document.body.classList.remove('overflow-hidden');  
+            }  
+        });  
+        mobileLinks.forEach(link => {  
+            link.addEventListener('click', () => menuBtn.click());  
+        });  
+    </script>  
+</body>  
+</html>  
