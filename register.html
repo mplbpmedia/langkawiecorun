@@ -37,7 +37,7 @@
                     <li><a href="index.html#about" class="hover:text-orange-500 transition-colors duration-300">About</a></li>  
                     <li><a href="register.html" class="text-orange-500 transition-colors duration-300">Registration</a></li>  
                     <li><a href="index.html#media" class="hover:text-orange-500 transition-colors duration-300">Gallery</a></li>  
-                    <li><a href="index.html#merchandise" class="hover:text-orange-500 transition-colors duration-300">Blog</a></li>  
+                    <li><a href="index.html#merchandise" class="hover:text-orange-500 transition-colors duration-300">Info</a></li>  
                 </ul>  
             </div>  
   
@@ -59,7 +59,7 @@
                 <li><a href="index.html#about" class="mobile-link hover:text-orange-500 transition">About</a></li>  
                 <li><a href="register.html" class="mobile-link text-orange-500 transition">Registration</a></li>  
                 <li><a href="index.html#media" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>  
-                <li><a href="index.html#merchandise" class="mobile-link hover:text-orange-500 transition">Blog</a></li>  
+                <li><a href="index.html#merchandise" class="mobile-link hover:text-orange-500 transition">Info</a></li>  
             </ul>  
             <div class="w-full max-w-[250px] px-4 sm:hidden">  
                 <a href="#" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-white py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
@@ -215,28 +215,28 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-3">Race Category Selection</label>  
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="10KM Men (RM 99.00)" checked class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="10km-men" checked class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">10KM RUN - MEN</span>  
                                 <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced • RM 99.00</span>  
                             </div>  
                         </label>  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="10KM Women (RM 99.00)" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="10km-women" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">10KM RUN - WOMEN</span>  
                                 <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced • RM 99.00</span>  
                             </div>  
                         </label>  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="5KM Men (RM 69.00)" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="5km-men" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">5KM FUN RUN - MEN</span>  
                                 <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy • RM 69.00</span>  
                             </div>  
                         </label>  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="5KM Women (RM 69.00)" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="5km-women" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">5KM FUN RUN - WOMEN</span>  
                                 <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy • RM 69.00</span>  
@@ -513,6 +513,24 @@
         if(emPhoneInput) {
             emPhoneInput.addEventListener('input', restrictToNumbers);
         }
+
+        // --- LOGIK AUTO-TICK KATEGORI BERDASARKAN URL PARAMETER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // 1. Ambil query parameter dari URL (contoh: ?category=10km-men)
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+
+            // 2. Jika parameter 'category' wujud di URL
+            if (categoryParam) {
+                // Cari radio button yang mempunyai nilai value yang sama dengan parameter
+                const targetRadio = document.querySelector(`input[name="category"][value="${categoryParam}"]`);
+                
+                if (targetRadio) {
+                    // Buat auto-tick pada radio button tersebut
+                    targetRadio.checked = true;
+                }
+            }
+        });
     
         // --- LOGIK MULTI-STEP FORM ---  
         const steps = Array.from(document.querySelectorAll(".form-step"));  
@@ -564,8 +582,22 @@
                 document.getElementById("summary-state").innerText = document.getElementById("input-state").value || "NOT SELECTED";
                 document.getElementById("summary-size").innerText = document.getElementById("input-size").value;
                 
+                // Cari radio yang di-tick
                 const checkedRadio = document.querySelector('input[name="category"]:checked');
-                document.getElementById("summary-cate").innerText = checkedRadio ? checkedRadio.value : "None Selected";
+                let displayCategory = "None Selected";
+                
+                // Tukar value kod kepada nama paparan rasmi yang cantik
+                if (checkedRadio) {
+                    const mapping = {
+                        '10km-men': '10KM RUN - MEN (RM 99.00)',
+                        '10km-women': '10KM RUN - WOMEN (RM 99.00)',
+                        '5km-men': '5KM FUN RUN - MEN (RM 69.00)',
+                        '5km-women': '5KM FUN RUN - WOMEN (RM 69.00)'
+                    };
+                    displayCategory = mapping[checkedRadio.value] || checkedRadio.value;
+                }
+                
+                document.getElementById("summary-cate").innerText = displayCategory;
             }
         };  
   
@@ -645,6 +677,26 @@
         mobileLinks.forEach(link => {  
             link.addEventListener('click', () => menuBtn.click());  
         });  
+
+        // Letak kod ni di paling bawah skali dalam tag <script>
+        const handleAutoTick = () => {
+            const params = new URLSearchParams(window.location.search);
+            const cat = params.get('category');
+            
+            if (cat) {
+                // Cari semua radio dengan name="category"
+                const radios = document.getElementsByName('category');
+                radios.forEach(radio => {
+                    if (radio.value === cat) {
+                        radio.checked = true;
+                        console.log("Auto-ticked: " + cat); // Untuk kau check kat inspect element
+                    }
+                });
+            }
+        };
+
+        // Jalankan fungsi bila page dah siap load
+        window.addEventListener('load', handleAutoTick);
     </script>  
 </body>  
 </html>  
