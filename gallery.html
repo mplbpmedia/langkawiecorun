@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ms" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Langkawi Eco Run 2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+        body { font-family: 'Oswald', sans-serif; }
+        .hero-gallery-gradient {
+            background:  
+                linear-gradient(to top, rgb(249, 250, 251) 0%, rgba(249, 250, 251, 0) 50%),   
+                linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),   
+                url('assets/images/Background_Hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* Menyembunyikan step form yang tidak aktif */  
+        .form-step { display: none; }  
+        .form-step-active { display: block; } 
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <!-- NAVBAR (Dikekalkan daripada website asal) -->  
+    <nav class="absolute top-0 left-0 w-full z-50 px-6 py-6">  
+        <div class="max-w-7xl mx-auto flex justify-between items-center relative">  
+            <div class="text-white font-black text-2xl italic leading-none tracking-tighter shrink-0 z-10">  
+                LANGKAWI<br><span class="tracking-[0.03em] opacity-100 uppercase">ECO RUN</span>  
+            </div>  
+              
+            <div class="hidden lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex items-center">  
+                <ul class="flex space-x-10 text-white font-semi-bold uppercase text-[13px] tracking-widest">  
+                    <li><a href="index.html" class="hover:text-orange-500 transition-colors duration-300">Home</a></li>  
+                    <li><a href="index.html#about" class="hover:text-orange-500 transition-colors duration-300">About</a></li>  
+                    <li><a href="register.html" class="hover:text-orange-500 transition-colors duration-300">Registration</a></li>  
+                    <li><a href="gallery.html" class="text-orange-500 transition-colors duration-300">Gallery</a></li>  
+                    <li><a href="index.html#merchandise" class="hover:text-orange-500 transition-colors duration-300">Info</a></li>  
+                </ul>  
+            </div>  
+  
+            <div class="flex items-center space-x-4 md:space-x-6 shrink-0 z-50">  
+                <a href="#" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-700 text-white px-5 md:px-7 py-2 md:py-2.5 rounded-full font-extrabold shadow-lg transition-all transform hover:scale-105 active:scale-95 text-xs md:text-sm uppercase">  
+                    Register Now  
+                </a>  
+                <button id="menu-btn" class="block lg:hidden text-white focus:outline-none p-2" aria-label="Toggle Menu">  
+                    <i class="fas fa-bars text-2xl transition-transform duration-300" id="menu-icon"></i>  
+                </button>  
+            </div>  
+        </div>  
+  
+        <!-- Mobile Menu Panel -->  
+        <div id="mobile-menu" class="fixed inset-0 bg-blue-950/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">  
+            <ul class="flex flex-col space-y-6 text-center text-white font-semi-bold uppercase text-lg tracking-widest mb-8">  
+                <li><a href="index.html" class="mobile-link hover:text-orange-500 transition">Home</a></li>  
+                <li><a href="index.html#about" class="mobile-link hover:text-orange-500 transition">About</a></li>  
+                <li><a href="register.html" class="mobile-link hover:text-orange-500 transition">Registration</a></li>  
+                <li><a href="gallery.html" class="mobile-link text-orange-500 transition">Gallery</a></li>  
+                <li><a href="index.html#merchandise" class="mobile-link hover:text-orange-500 transition">Info</a></li>  
+            </ul>  
+            <div class="w-full max-w-[250px] px-4 sm:hidden">  
+                <a href="#" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-white py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
+                    <i class="fas fa-sign-in-alt mr-2 text-orange-500"></i> Log In  
+                </a>  
+            </div>  
+        </div>  
+    </nav>  
+
+    <!-- HERO BANNER -->
+    <section class="relative h-[60vh] flex items-center justify-center text-white hero-gallery-gradient px-6">
+        <div class="text-center max-w-4xl mt-16">
+            <span class="inline-block px-4 py-1 bg-orange-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4">Media Hub</span>
+            <h1 class="text-4xl md:text-7xl font-black italic leading-tight mb-2 tracking-[0.04em] uppercase">
+                Captured Moments
+            </h1>
+            <p class="text-base md:text-lg font-light tracking-wide max-w-md mx-auto opacity-90">
+                Relive the sweat, the joy, and the sustainable strides of Langkawi Eco Run.
+            </p>
+        </div>
+    </section>
+
+    <!-- MAIN GALLERY CONTAINER -->
+    <section class="py-12 px-4 max-w-7xl mx-auto -mt-16 relative z-20">
+        
+        <!-- PHOTO GRID (10 GAMBAR FIXED - NO HOVER ICON) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4" id="gallery-grid">
+            
+            <!-- Gambar 1 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="10km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler01.JPG" alt="Run 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 2 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="5km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler02.JPG" alt="Run 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 3 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="racekit">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler03.JPG" alt="Run 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 4 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="10km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler04.JPG" alt="Run 4" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 5 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="5km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler05.JPG" alt="Run 5" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 6 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="10km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler06.JPG" alt="Run 6" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 7 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="racekit">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler07.JPG" alt="Run 7" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 8 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="5km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler08.JPG" alt="Run 8" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 9 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="10km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler09.JPG" alt="Run 9" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+            <!-- Gambar 10 -->
+            <div class="gallery-item cursor-pointer group relative overflow-hidden rounded-xl shadow-sm bg-white" data-category="5km">
+                <div class="overflow-hidden aspect-square bg-gray-200">
+                    <img src="assets/images/ler10.JPG" alt="Run 10" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- --- SECTION: IMBAS KEMBALI LANGKAWI ECO RUN 2025 --- -->
+        <div class="mt-20 bg-white border border-gray-100 rounded-3xl p-8 md:p-12 shadow-sm max-w-4xl mx-auto">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="h-1 w-12 bg-orange-600 rounded-full"></div>
+                <span class="text-orange-600 font-black text-xs uppercase tracking-[0.2em]">Post-Event Review</span>
+            </div>
+            
+            <h2 class="text-2xl md:text-4xl font-black italic text-blue-950 uppercase tracking-tight mb-6">
+                From Vision to Impact: Langkawi Eco Run 2025
+            </h2>
+            
+            <div class="text-gray-600 text-sm md:text-base space-y-4 font-normal tracking-wide leading-relaxed font-sans">
+                <p>
+                    <strong>Langkawi Eco Run 2025</strong> marked a historic milestone as the first edition fully organised by Majlis Perbandaran Langkawi Bandaraya Pelancongan (MPLBP). The event received an encouraging response, attracting approximately 480 participants from various states across Malaysia. Held under the theme <strong>“Stride for Sustainability”</strong>, the run was designed to promote environmental awareness, healthy living, and community engagement while supporting MPLBP’s vision of creating a “Cleaner, Greener, Smarter” Langkawi. Through the power of sports, participants were encouraged to embrace sustainable practices and contribute towards preserving the island’s natural beauty for future generations.
+                </p>
+                <p>
+                    The event successfully combined environmental responsibility with community empowerment. A <strong>No Plastic Bag</strong> initiative was implemented throughout the programme, while participants received unique finisher medals crafted from recycled wood materials, symbolising the commitment towards sustainability. To further enhance the experience, MPLBP organised an exciting lucky draw featuring more than 40 attractive prizes, including electronic devices, gadgets, and sports equipment. In addition, ten business booths were allocated to B40 entrepreneurs and local small-scale traders, providing valuable opportunities to generate income and showcase their products to visitors and participants.
+                </p>
+                <p>
+                    The overwhelmingly positive feedback received from participants reflected the success of Langkawi Eco Run 2025 as more than just a running event—it became a platform for promoting sustainability, supporting local communities, and fostering a healthier lifestyle. Encouraged by the strong response and numerous requests from runners to continue the programme, MPLBP is proud to bring back the event this year with even greater excitement, enhanced experiences, and new challenges through <strong>Langkawi Eco Run 2.0</strong>, continuing the journey towards a cleaner, greener, and smarter future.
+                </p>
+            </div>
+
+            <!-- Stats Ringkas 2025 -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-8 mt-8 border-t border-gray-100 text-center">
+                <div>
+                    <div class="text-2xl md:text-4xl font-black text-blue-950 italic">480+</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1">Total Runners</div>
+                </div>
+                <div>
+                    <div class="text-2xl md:text-4xl font-black text-orange-600 italic">80%</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1">Plastic Reduced</div>
+                </div>
+                <div class="col-span-2 sm:col-span-1">
+                    <div class="text-2xl md:text-4xl font-black text-blue-950 italic">RM 3,500+</div>
+                    <div class="text-[11px] font-bold text-gray-400 uppercase tracking-wider mt-1">Prize Pool</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LIGHTBOX MODAL POP-UP COMPONENT -->
+    <div id="lightbox-modal" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300 px-4">
+        <!-- Butang Pangkah (Tutup) -->
+        <button id="close-lightbox" class="absolute top-6 right-6 text-white text-3xl hover:text-orange-500 transition-all duration-300">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="max-w-4xl w-full flex flex-col items-center">
+            <!-- Paparan Gambar Besar -->
+            <img id="lightbox-img" src="" alt="Preview" class="max-h-[75vh] max-w-full rounded-lg object-contain shadow-2xl">
+            
+            <!-- Butang Download Solo -->
+            <div class="mt-6 flex justify-center w-full">
+                <a id="lightbox-download" href="#" download class="bg-orange-600 hover:bg-orange-700 text-white px-8 py-3 rounded-xl text-xs font-black uppercase tracking-widest shadow-lg transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2">
+                    <i class="fas fa-download text-sm"></i> Download High-Res
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION (Dikekalkan daripada website asal) -->  
+    <footer class="bg-blue-950 text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">  
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none"></div>  
+        <div class="absolute top-0 left-0 w-80 h-80 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>  
+  
+        <div class="max-w-7xl mx-auto px-6 relative z-10">  
+            <div class="border-b border-white/10 pb-12 mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">  
+                <div>  
+                    <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter bg-gradient-to-r from-white via-blue-100 to-orange-500 bg-clip-text text-transparent pr-4">  
+                        LANGKAWI ECO RUN 2.0  
+                    </h2>  
+                    <p class="text-blue-200/60 text-sm mt-2 max-w-md">Run for Langkawi. Stride for Sustainability.</p>  
+                </div>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-500 text-white font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-orange-600/20 hover:-translate-y-1 block shrink-0">  
+                    Register Now <i class="fas fa-arrow-right ml-2 text-[10px]"></i>  
+                </a>  
+            </div>  
+  
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Contact Us</h4>  
+                    <p class="text-blue-100/70 text-sm leading-relaxed">  
+                        For any enquiries regarding sponsorship, registration, or volunteer opportunities, please contact our official support team.  
+                    </p>  
+                    <div class="space-y-2 pt-2 text-sm text-blue-200/80">  
+                        <p class="flex items-center gap-3"><i class="fas fa-envelope text-orange-500 text-xs"></i> info@langkawiecorun.com</p>  
+                        <p class="flex items-center gap-3"><i class="fas fa-phone text-orange-500 text-xs"></i> +60 11-5895 8809</p>  
+                    </div>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Quick Links</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="index.html" class="hover:text-orange-400 transition-colors duration-200">Home</a></li>  
+                        <li><a href="index.html#categories" class="hover:text-orange-400 transition-colors duration-200">Race Categories</a></li>  
+                        <li><a href="index.html#merchandise" class="hover:text-orange-400 transition-colors duration-200">Official Merchandise</a></li>  
+                        <li><a href="index.html#media" class="hover:text-orange-400 transition-colors duration-200">Media Hub</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Race Info</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Rules & Regulations</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Race Kit Collection</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Event Schedule</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Frequently Asked FAQ</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Follow Our Hype</h4>  
+                    <p class="text-blue-100/70 text-sm">Stay updated with the latest news, announcements, and event updates through our official social media channels.</p>  
+                    <div class="flex gap-3 pt-2">  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 shadow-md"><i class="fab fa-facebook-f text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-pink-500 hover:to-purple-600 hover:border-transparent transition-all duration-300 shadow-md"><i class="fab fa-instagram text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-black hover:border-zinc-800 transition-all duration-300 shadow-md"><i class="fab fa-tiktok text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-red-600 hover:border-red-500 transition-all duration-300 shadow-md"><i class="fab fa-youtube text-sm"></i></a>  
+                    </div>  
+                </div>  
+            </div>  
+  
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-blue-200/40 font-medium">  
+                <p class="text-center sm:text-left">&copy; 2026 Langkawi Eco Run 2.0. All Rights Reserved. Designed by UKPA MPLBP.</p>  
+                <div class="flex gap-6">  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Privacy Policy</a>  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Terms of Service</a>  
+                </div>  
+            </div>  
+        </div>  
+    </footer>  
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- LOGIK FILTER CATEGORY ---
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const galleryItems = document.querySelectorAll(".gallery-item");
+
+        filterButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                // Tukar butang aktif
+                filterButtons.forEach(btn => btn.classList.remove("active", "bg-orange-600", "text-white"));
+                filterButtons.forEach(btn => btn.classList.add("bg-white", "text-blue-950"));
+                
+                button.classList.add("active", "bg-orange-600", "text-white");
+                button.classList.remove("bg-white", "text-blue-950");
+
+                const filterValue = button.getAttribute("data-filter");
+
+                galleryItems.forEach(item => {
+                    if (filterValue === "all" || item.getAttribute("data-category") === filterValue) {
+                        item.classList.remove("hidden");
+                    } else {
+                        item.classList.add("hidden");
+                    }
+                });
+            });
+        });
+
+        // --- LOGIK LIGHTBOX PREVIEW ---
+        // Ambil elemen modal lightbox (Pastikan ID sepadan dengan HTML bawah)
+        const lightbox = document.getElementById("lightbox-modal");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxDownload = document.getElementById("lightbox-download");
+        const closeLightbox = document.getElementById("close-lightbox");
+
+        // Gantikan kod click event asal dengan yang bersih ini:
+        galleryItems.forEach(item => {
+            item.addEventListener("click", () => {
+                const imgSrc = item.querySelector("img").src;
+
+                lightboxImg.src = imgSrc;
+                lightboxDownload.href = imgSrc; // Sediakan gambar untuk di-download
+
+                // Buka Pop-up
+                lightbox.classList.remove("opacity-0", "pointer-events-none");
+            });
+        });
+
+        closeLightbox.addEventListener("click", () => {
+            lightbox.classList.add("opacity-0", "pointer-events-none");
+        });
+
+        // Tutup modal jika klik luar dari kawasan gambar
+        lightbox.addEventListener("click", (e) => {
+            if(e.target === lightbox) {
+                lightbox.classList.add("opacity-0", "pointer-events-none");
+            }
+        });
+
+        // --- LOGIK MOBILE MENU (Navbar Asal) ---  
+        const menuBtn = document.getElementById('menu-btn');  
+        const mobileMenu = document.getElementById('mobile-menu');  
+        const menuIcon = document.getElementById('menu-icon');  
+        const mobileLinks = document.querySelectorAll('.mobile-link');  
+  
+        menuBtn.addEventListener('click', () => {  
+            const isOpen = mobileMenu.classList.contains('translate-y-0');  
+            if (!isOpen) {  
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                mobileMenu.classList.add('translate-y-0', 'opacity-100');  
+                menuIcon.classList.remove('fa-bars');  
+                menuIcon.classList.add('fa-times', 'rotate-90');  
+                document.body.classList.add('overflow-hidden');  
+            } else {  
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');  
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                menuIcon.classList.remove('fa-times', 'rotate-90');  
+                menuIcon.classList.add('fa-bars');  
+                document.body.classList.remove('overflow-hidden');  
+            }  
+        });  
+        mobileLinks.forEach(link => {  
+            link.addEventListener('click', () => menuBtn.click());  
+        });  
+
+    </script>
+</body>
+</html>
