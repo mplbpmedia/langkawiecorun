@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Information | Langkawi Eco Run 2.0</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+        body { font-family: 'Oswald', sans-serif; }
+        .hero-info-gradient {
+            background:  
+                linear-gradient(to top, rgb(249, 250, 251) 0%, rgba(249, 250, 251, 0) 50%),   
+                linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),   
+                url('assets/images/Background_Hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+         /* Menyembunyikan step form yang tidak aktif */  
+        .form-step { display: none; }  
+        .form-step-active { display: block; } 
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <!-- NAVBAR LAYER -->  
+    <nav class="absolute top-0 left-0 w-full z-50 px-6 py-6">  
+        <div class="max-w-7xl mx-auto flex justify-between items-center relative">  
+            <!-- Logo Brand -->
+            <div class="text-white font-black text-2xl italic leading-none tracking-tighter shrink-0 z-10">  
+                LANGKAWI<br><span class="tracking-[0.03em] opacity-100 uppercase">ECO RUN</span>  
+            </div>  
+              
+            <!-- Desktop Navigation Links -->
+            <div class="hidden lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex items-center">  
+                <ul class="flex space-x-10 text-white font-semi-bold uppercase text-[13px] tracking-widest">  
+                    <li><a href="index.html" class="hover:text-orange-500 transition-colors duration-300">Home</a></li>  
+                    <li><a href="index.html#about" class="hover:text-orange-500 transition-colors duration-300">About</a></li>  
+                    <li><a href="register.html" class="hover:text-orange-500 transition-colors duration-300">Registration</a></li>  
+                    <li><a href="gallery.html" class="hover:text-orange-500 transition-colors duration-300">Gallery</a></li>  
+                    <li><a href="info.html" class="text-orange-500 transition-colors duration-300">Info</a></li>  
+                </ul>  
+            </div>  
+  
+            <!-- Action Buttons Group (Right) -->
+            <div class="flex items-center space-x-4 md:space-x-6 shrink-0 z-50">  
+                <a href="#" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-700 text-white px-5 md:px-7 py-2 md:py-2.5 rounded-full font-extrabold shadow-lg transition-all transform hover:scale-105 active:scale-95 text-xs md:text-sm uppercase">  
+                    Register Now  
+                </a>  
+                <!-- Mobile Hamburger Button -->
+                <button id="menu-btn" class="block lg:hidden text-white focus:outline-none p-2" aria-label="Toggle Menu">  
+                    <i class="fas fa-bars text-2xl transition-transform duration-300" id="menu-icon"></i>  
+                </button>  
+            </div>  
+        </div>  
+  
+        <!-- Mobile Menu Navigation Panel -->  
+        <div id="mobile-menu" class="fixed inset-0 bg-blue-950/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">  
+            <ul class="flex flex-col space-y-6 text-center text-white font-semi-bold uppercase text-lg tracking-widest mb-8">  
+                <li><a href="index.html" class="mobile-link hover:text-orange-500 transition">Home</a></li>  
+                <li><a href="index.html#about" class="mobile-link hover:text-orange-500 transition">About</a></li>  
+                <li><a href="register.html" class="mobile-link hover:text-orange-500 transition">Registration</a></li>  
+                <li><a href="gallery.html" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>  
+                <li><a href="info.html" class="mobile-link text-orange-500 transition">Info</a></li>  
+            </ul>  
+            <div class="w-full max-w-[250px] px-4 sm:hidden">  
+                <a href="#" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-orange-500 py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
+                    <i class="fas fa-sign-in-alt mr-2 text-orange-500"></i> Log In  
+                </a>  
+            </div>  
+        </div>  
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative h-screen flex items-center justify-center text-white hero-info-gradient px-6">  
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10 text-center">  
+              
+            <!-- Subheading di atas (Sama seperti gaya Gallery Hub) -->
+            <span class="inline-block px-4 py-1 bg-orange-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4">
+                Participant Guide
+            </span>  
+  
+            <!-- Main Heading (Sama konsep & kelas seperti GALLERY) -->
+            <h1 class="text-4xl md:text-7xl font-black italic leading-tight mb-2 tracking-[0.04em] uppercase">  
+                RACE <span class="text-orange-600">INFO</span>  
+            </h1>  
+  
+            <!-- Paragraph Description -->
+            <p class="text-base md:text-lg font-light tracking-wide max-w-md mx-auto opacity-90">  
+                Everything you need to know before you hit the trail. Prepare yourself for an epic run in nature.
+            </p>  
+  
+            <!-- Scroll Indicator Icon (Kekal lompat-lompat) -->
+            <div class="mt-16 flex flex-col items-center gap-2 text-white/50">
+                <span class="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll to explore</span>
+                <i class="fas fa-chevron-down animate-bounce text-orange-600 mt-1"></i>
+            </div>
+        </div>  
+    </section>
+
+    <!-- SECTION: RACE MAP & CATEGORIES -->
+    <section id="race-map" class="relative -mt-24 pb-12 py-8 px-4 z-20 max-w-5xl mx-auto">
+        <div class="max-w-7xl mx-auto relative z-10">
+            
+            <!-- Section Header (Sama konsep dengan Index Page) -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">
+                    Race Route & Categories
+                </h2>
+                <p class="text-gray-500 uppercase tracking-[0.2em] font-semi-bold mt-2 text-xs md:text-sm">
+                    Explore your trail and conquer the challenge
+                </p>
+                <div class="w-20 h-1.5 bg-orange-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Tab Switcher Buttons (10KM vs 5KM) -->
+            <div class="flex justify-center mb-5">
+                <div class="bg-gray-100 p-1.5 rounded-full flex gap-2 border border-gray-200/50 shadow-inner">
+                    <button id="tab-10km" onclick="switchCategory('10km')" class="px-8 py-3 rounded-full font-black italic text-sm uppercase tracking-widest transition-all duration-300 bg-orange-600 text-white shadow-md">
+                        <i class="fas fa-running mr-2"></i> 10KM Category
+                    </button>
+                    <button id="tab-5km" onclick="switchCategory('5km')" class="px-8 py-3 rounded-full font-black italic text-sm uppercase tracking-widest transition-all duration-300 text-blue-950 hover:text-orange-600">
+                        <i class="fas fa-walking mr-2"></i> 5KM Category
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content Grid (Split-Screen Desktop) -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+                
+                <!-- LEFT COLUMN: MAP DISPLAY (60% Width) -->
+                <div class="lg:col-span-7 bg-gray-50 p-4 rounded-[32px] border border-gray-100 shadow-sm flex flex-col justify-between group">
+                    <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-gray-200 border border-gray-200">
+                        
+                        <!-- 10KM Map Container (Active by default) -->
+                        <div id="map-container-10km" class="w-full h-full transition-all duration-500 transform opacity-100 scale-100 block">
+                            <!-- Nota: Ganti src gambar ini dengan fail peta realistik 10KM anda nanti -->
+                            <img src="assets/images/map_10km.jpg" alt="10KM Race Route Map" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute top-4 left-4 bg-blue-950/90 text-white backdrop-blur-md px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider border border-white/10">
+                                <span class="w-2 h-2 rounded-full bg-blue-500 inline-block mr-2 animate-pulse"></span> Tanjung Rhu Route
+                            </div>
+                        </div>
+
+                        <!-- 5KM Map Container (Hidden by default) -->
+                        <div id="map-container-5km" class="w-full h-full transition-all duration-500 transform opacity-0 scale-95 hidden">
+                            <!-- Nota: Ganti src gambar ini dengan fail peta realistik 5KM anda nanti -->
+                            <img src="assets/images/map_5km.jpg" alt="5KM Race Route Map" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                            <div class="absolute top-4 left-4 bg-blue-950/90 text-white backdrop-blur-md px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider border border-white/10">
+                                <span class="w-2 h-2 rounded-full bg-orange-500 inline-block mr-2 animate-pulse"></span> Eco Run Route
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Bottom Map Info Bar -->
+                    <div class="mt-4 p-4 bg-white rounded-2xl border border-gray-100 flex flex-wrap justify-between items-center gap-4">
+                        <p class="text-xs text-gray-500 font-medium max-w-md">
+                            <i class="fas fa-info-circle text-orange-600 mr-1.5"></i> Maps presented above are interactive design concepts. Fun run route designed for community participation and enjoyment.
+                        </p>
+                        <a id="download-map-link" href="assets/images/map_10km.jpg" download class="bg-blue-950 hover:bg-orange-600 text-white px-5 py-2.5 rounded-xl font-bold uppercase tracking-widest text-[11px] transition-all shadow-md flex items-center gap-2">
+                            <i class="fas fa-download text-xs"></i> Download HQ Map
+                        </a>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: ROUTE METRICS & INFORMATION (5% Width) -->
+                <div class="lg:col-span-5 flex flex-col justify-between py-6">
+                    
+                    <!-- 10KM Route Info Details -->
+                    <div id="details-10km" class="space-y-6 transition-all duration-500 block">
+                        <!-- Route Statistics Cards -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-5 group hover:bg-white hover:shadow-xl transition-all duration-300">
+                                <div class="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white mb-3">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">Flag-off Time</span>
+                                <span class="text-xl font-black text-blue-950 italic uppercase">08:15 AM</span>
+                            </div>
+                            <div class="bg-green-50 border border-green-100 rounded-2xl p-5 group hover:bg-white hover:shadow-xl transition-all duration-300">
+                                <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white mb-3">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">Cut-Off Time</span>
+                                <span class="text-xl font-black text-blue-950 italic uppercase">2.5 Hours</span>
+                            </div>
+                        </div>
+
+                        <!-- Technical Route Details List -->
+                        <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.02)] space-y-4">
+                            <h3 class="font-black italic text-lg text-blue-950 uppercase tracking-tight pb-3 border-b border-gray-100">
+                                10KM Technical Route Specification
+                            </h3>
+                            
+                            <!-- Detail Item 1 -->
+                            <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                                <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs shrink-0 mt-0.5">WS</div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-blue-950 uppercase leading-none">Water Stations (WS)</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Located at KM 2.5, KM 5.0, and KM 7.5. Isotonic drinks available at WS 2.</p>
+                                </div>
+                            </div>
+
+                            <!-- Detail Item 2 -->
+                            <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs shrink-0 mt-0.5">MD</div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-blue-950 uppercase leading-none">Medical Checkpoints</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Stationed medics with ambulance readiness at KM 5.0 and the main Finish Line.</p>
+                                </div>
+                            </div>
+
+                            <!-- Detail Item 3 -->
+                            <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                                <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs shrink-0 mt-0.5"><i class="fas fa-seedling text-[10px]"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-blue-950 uppercase leading-none">Eco Litter Zones</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Strict green zones. Trash pockets are provided 50m after every water station.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 5KM Route Info Details -->
+                    <div id="details-5km" class="space-y-6 transition-all duration-500 hidden">
+                        <!-- Route Statistics Cards -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-orange-50 border border-orange-100 rounded-2xl p-5 group hover:bg-white hover:shadow-xl transition-all duration-300">
+                                <div class="w-10 h-10 bg-orange-600 rounded-xl flex items-center justify-center text-white mb-3">
+                                    <i class="fas fa-flag"></i>
+                                </div>
+                                <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">Flag-off Time</span>
+                                <span class="text-xl font-black text-blue-950 italic uppercase">08:00 AM</span>
+                            </div>
+                            <div class="bg-green-50 border border-green-100 rounded-2xl p-5 group hover:bg-white hover:shadow-xl transition-all duration-300">
+                                <div class="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white mb-3">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                                <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">Cut-Off Time</span>
+                                <span class="text-xl font-black text-blue-950 italic uppercase">1.5 Hours</span>
+                            </div>
+                        </div>
+
+                        <!-- Technical Route Details List -->
+                        <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.02)] space-y-4">
+                            <h3 class="font-black italic text-lg text-blue-950 uppercase tracking-tight pb-3 border-b border-gray-100">
+                                5KM Fun Run Route Specification
+                            </h3>
+                            
+                            <!-- Detail Item 1 -->
+                            <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                                <div class="w-8 h-8 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs shrink-0 mt-0.5">WS</div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-blue-950 uppercase leading-none">Water Station (WS)</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Located midway at KM 2.5. Standard mineral water cups provided.</p>
+                                </div>
+                            </div>
+
+                            <!-- Detail Item 2 -->
+                            <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                                <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs shrink-0 mt-0.5">MD</div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-blue-950 uppercase leading-none">Medical Checkpoint</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Main medical emergency tent stationed permanently at the start/finish zone.</p>
+                                </div>
+                            </div>
+
+                            <!-- Detail Item 3 -->
+                            <div class="flex items-start gap-4 p-2 rounded-xl hover:bg-gray-50 transition-colors">
+                                <div class="w-8 h-8 rounded-lg bg-green-100 flex items-center justify-center text-green-600 font-bold text-xs shrink-0 mt-0.5"><i class="fas fa-camera text-[10px]"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-sm text-blue-950 uppercase leading-none">Scenic Photo Spots</h4>
+                                    <p class="text-xs text-gray-400 mt-1">Includes beautiful beachfront pathways perfect for family run pictures.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: RACE KIT COLLECTION -->
+    <section id="race-kit" class="py-10 pb-20 border-t border-white px-6 bg-gray-100 relative">
+        <div class="max-w-7xl mx-auto pt-10">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">
+                    Race Kit Collection
+                </h2>
+                <p class="text-gray-500 uppercase tracking-[0.2em] font-semi-bold mt-2 text-xs md:text-sm">
+                    Collect your race pack and gear up for the run
+                </p>
+                <div class="w-20 h-1.5 bg-orange-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Two-Sided Content Layout Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- LEFT SIDE: COLLECTION TIMELINE & DETAILS (7 Columns) -->
+                <div class="lg:col-span-7 space-y-6">
+                    <h3 class="font-black italic text-xl text-blue-950 uppercase tracking-tight mb-4 flex items-center gap-3">
+                        <i class="fas fa-calendar-alt text-orange-600"></i> Collection Schedule
+                    </h3>
+
+                    <!-- Day 1 Card -->
+                    <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center">
+                        <div class="bg-orange-600 text-white p-4 rounded-2xl font-black text-center min-w-[100px] w-full md:w-48 italic uppercase shrink-0">
+                            <span class="block text-xs opacity-80 font-bold tracking-wider">Day 1</span>
+                            <span class="block text-2xl leading-none my-1">Thursday</span>
+                            <span class="block text-[11px] opacity-90 tracking-widest">19 Nov 2026</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="bg-blue-50 text-blue-600 border border-blue-100 rounded-full px-3 py-1 font-bold text-[10px] uppercase tracking-wider inline-block">Session 1</span>
+                            <h4 class="font-extrabold text-lg text-blue-950 uppercase leading-tight">10:00 AM – 04:00 PM</h4>
+                            <p class="text-xs text-gray-400 flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt text-orange-600"></i> Dataran Tanjung Rhu, Langkawi
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Day 2 Card -->
+                    <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-sm hover:-translate-y-1 transition-all duration-300 flex flex-col md:flex-row gap-6 items-start md:items-center">
+                        <div class="bg-blue-950 text-white p-4 rounded-2xl font-black text-center min-w-[100px] w-full md:w-48 italic uppercase shrink-0">
+                            <span class="block text-xs opacity-80 font-bold tracking-wider">Day 2</span>
+                            <span class="block text-2xl leading-none my-1">Friday</span>
+                            <span class="block text-[11px] opacity-90 tracking-widest">20 Nov 2026</span>
+                        </div>
+                        <div class="space-y-2">
+                            <span class="bg-orange-50 text-orange-600 border border-orange-100 rounded-full px-3 py-1 font-bold text-[10px] uppercase tracking-wider inline-block">Session 2 (Final)</span>
+                            <h4 class="font-extrabold text-lg text-blue-950 uppercase leading-tight">09:00 AM – 05:00 PM</h4>
+                            <p class="text-xs text-gray-400 flex items-center gap-2">
+                                <i class="fas fa-map-marker-alt text-orange-600"></i> Dataran Tanjung Rhu, Langkawi
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Important Notice Alert -->
+                    <div class="bg-orange-500/5 border border-orange-500/20 rounded-2xl p-5 flex items-start gap-4">
+                        <i class="fas fa-exclamation-triangle text-orange-600 text-lg mt-0.5"></i>
+                        <div>
+                            <h5 class="font-bold text-sm text-blue-950 uppercase">Strict Reminder</h5>
+                            <p class="text-xs text-gray-500 mt-1 leading-relaxed">
+                                No race kit collection will be allowed on the event day itself (Saturday, 21 Nov 2026). Please ensure you or a designated representative collects your pack within the sessions stated above.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDE: REQUIREMENTS & CHECKLIST (5 Columns) -->
+                <div class="lg:col-span-5 bg-white border border-gray-100 rounded-[32px] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.02)] space-y-6">
+                    <div>
+                        <h3 class="font-black italic text-xl text-blue-950 uppercase tracking-tight">
+                            What To Bring
+                        </h3>
+                        <p class="text-xs text-gray-400 mt-1">
+                            Present these items during verification to claim your kit.
+                        </p>
+                    </div>
+
+                    <!-- Checklist Items Group -->
+                    <div class="space-y-4">
+                        <!-- Item 1 -->
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="text-xs font-bold text-blue-950 uppercase tracking-wide">Confirmation Email / QR Code</span>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-xl border border-gray-100">
+                            <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-xs shrink-0">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <span class="text-xs font-bold text-blue-950 uppercase tracking-wide">Identification Card (IC) / Passport</span>
+                        </div>
+
+                        <!-- Item 3: Conditional Rep Template -->
+                        <div class="p-3 bg-gray-50 rounded-xl border border-gray-100 space-y-3">
+                            <div class="flex items-center gap-4">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs shrink-0">
+                                    <i class="fas fa-user-friends"></i>
+                                </div>
+                                <span class="text-xs font-bold text-blue-950 uppercase tracking-wide">Collecting for a friend?</span>
+                            </div>
+                            <p class="text-[11px] text-gray-400 pl-10 leading-normal">
+                                Representatives must present a copy of the runner's IC and a signed Authorization Letter.
+                            </p>
+                            
+                            <!-- Download Button for Rep Form -->
+                            <div class="pl-10">
+                                <a href="assets/docs/Authorization_Letter.pdf" download class="inline-flex items-center gap-2 text-xs font-black italic uppercase text-orange-600 hover:text-orange-700 tracking-wider transition-colors">
+                                    <i class="fas fa-file-download"></i> Download Authorization Form
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="border-gray-100">
+
+                    <!-- What's Inside the Kit Badge Grid -->
+                    <div class="space-y-3">
+                        <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider block">Inside Your Race Pack:</span>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-100 text-blue-950 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border border-gray-200/40"><i class="fas fa-tshirt text-orange-600 mr-1"></i> Event Jersey</span>
+                            <span class="bg-gray-100 text-blue-950 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border border-gray-200/40"><i class="fas fa-id-badge text-orange-600 mr-1"></i> Race Bib & Snacks</span>
+                            <span class="bg-gray-100 text-blue-950 text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-lg border border-gray-200/40"><i class="fas fa-bag-shopping text-orange-600 mr-1"></i> Drawstring Bag</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: EVENT SCHEDULE (TIMELINE) -->
+    <section id="schedule" class="py-20 px-6 bg-white border-t border-gray-100 relative overflow-hidden">
+        <!-- Sudut Hiasan Geometrik untuk Estetika Sukan -->
+        <div class="absolute bottom-0 left-0 translate-y-1/4 -translate-x-1/4 w-80 h-80 bg-orange-50 rounded-full blur-3xl opacity-60"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10">
+            
+            <!-- Section Header -->
+            <div class="text-center mb-20">
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">
+                    Event Schedule
+                </h2>
+                <p class="text-gray-500 uppercase tracking-[0.2em] font-semi-bold mt-2 text-xs md:text-sm">
+                    Race Day Timeline • Saturday, 21 November 2026
+                </p>
+                <div class="w-20 h-1.5 bg-orange-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Vertical Timeline Structure -->
+            <div class="relative border-l-2 border-gray-200 ml-4 md:ml-32 space-y-12 pb-4">
+                
+                <!-- TIMELINE ITEM 1: Arrive & Assembly -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <!-- Penunjuk Masa di Sebelah Kiri (Desktop Only) -->
+                    <div class="hidden md:block absolute right-full mr-12 top-0 text-right min-w-[100px]">
+                        <span class="font-black italic text-xl text-blue-950 block leading-none">06:30 AM</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Gate Open</span>
+                    </div>
+                    <!-- Titik Penunjuk pada Garisan -->
+                    <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-blue-950 group-hover:border-orange-600 transition-colors duration-300 z-10"></div>
+                    <!-- Kad Kandungan Atur Cara -->
+                    <div class="bg-gray-50 border border-gray-100 p-5 rounded-2xl shadow-sm group-hover:bg-white group-hover:shadow-md transition-all duration-300">
+                        <span class="inline-block md:hidden font-black italic text-sm text-orange-600 uppercase mb-1">06:30 AM</span>
+                        <h4 class="font-extrabold text-base text-blue-950 uppercase flex items-center gap-2">
+                            <i class="fas fa-users text-orange-600 text-sm"></i> Arrival of Runners & Assembly
+                        </h4>
+                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                            Baggage drop counter opens at the main venue tent. Runners are advised to arrive early for security checks.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TIMELINE ITEM 2: Warm-up Session -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="hidden md:block absolute right-full mr-12 top-0 text-right min-w-[100px]">
+                        <span class="font-black italic text-xl text-blue-950 block leading-none">07:00 AM</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Pre-Race</span>
+                    </div>
+                    <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-blue-950 group-hover:border-orange-600 transition-colors duration-300 z-10"></div>
+                    <div class="bg-gray-50 border border-gray-100 p-5 rounded-2xl shadow-sm group-hover:bg-white group-hover:shadow-md transition-all duration-300">
+                        <span class="inline-block md:hidden font-black italic text-sm text-orange-600 uppercase mb-1">07:00 AM</span>
+                        <h4 class="font-extrabold text-base text-blue-950 uppercase flex items-center gap-2">
+                            <i class="fas fa-heartbeat text-orange-600 text-sm"></i> Official Eco Warm-Up Zumba
+                        </h4>
+                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                            Join our fitness instructors at the main stage for a dynamic stretching and warm-up session to prepare your muscles.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TIMELINE ITEM 3: 10KM Flag-off -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="hidden md:block absolute right-full mr-12 top-0 text-right min-w-[100px]">
+                        <span class="font-black italic text-xl text-orange-600 block leading-none">08:00 AM</span>
+                        <span class="text-[10px] uppercase font-bold text-orange-500 tracking-wider">Gun Start</span>
+                    </div>
+                    <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-orange-600 z-10 animate-pulse"></div>
+                    <div class="bg-orange-600/5 border border-orange-500/20 p-5 rounded-2xl shadow-sm group-hover:bg-white group-hover:border-orange-500 group-hover:shadow-md transition-all duration-300">
+                        <span class="inline-block md:hidden font-black italic text-sm text-orange-600 uppercase mb-1">08:00 AM</span>
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h4 class="font-black text-base text-blue-950 uppercase flex items-center gap-2">
+                                <i class="fas fa-flag-checkered text-orange-600 text-sm"></i> 5KM Category Flag-Off
+                            </h4>
+                            <span class="bg-orange-600 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Fun Run</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                            Eco Fun Run flag-off session. Great for family, casual runners, and nature photography lovers.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TIMELINE ITEM 4: 5KM Flag-off -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="hidden md:block absolute right-full mr-12 top-0 text-right min-w-[100px]">
+                        <span class="font-black italic text-xl text-orange-600 block leading-none">08:15 AM</span>
+                        <span class="text-[10px] uppercase font-bold text-orange-500 tracking-wider">Gun Start</span>
+                    </div>
+                    <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-orange-600 z-10"></div>
+                    <div class="bg-orange-600/5 border border-orange-500/20 p-5 rounded-2xl shadow-sm group-hover:bg-white group-hover:border-orange-500 group-hover:shadow-md transition-all duration-300">
+                        <span class="inline-block md:hidden font-black italic text-sm text-orange-600 uppercase mb-1">08:15 AM</span>
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <h4 class="font-black text-base text-blue-950 uppercase flex items-center gap-2">
+                                <i class="fas fa-shoe-prints text-orange-600 text-sm transform -rotate-45"></i> 10KM Run Flag-Off
+                            </h4>
+                            <span class="bg-blue-950 text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Competitive</span>
+                        </div>
+                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                            The competitive challenge begins as runners pass through the Start Arch timing mat.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- TIMELINE ITEM 5: Prize Giving & Closing -->
+                <div class="relative pl-8 md:pl-12 group">
+                    <div class="hidden md:block absolute right-full mr-12 top-0 text-right min-w-[100px]">
+                        <span class="font-black italic text-xl text-blue-950 block leading-none">10:30 AM</span>
+                        <span class="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Ceremony</span>
+                    </div>
+                    <div class="absolute -left-[11px] top-1.5 w-5 h-5 rounded-full bg-white border-4 border-blue-950 group-hover:border-orange-600 transition-colors duration-300 z-10"></div>
+                    <div class="bg-gray-50 border border-gray-100 p-5 rounded-2xl shadow-sm group-hover:bg-white group-hover:shadow-md transition-all duration-300">
+                        <span class="inline-block md:hidden font-black italic text-sm text-orange-600 uppercase mb-1">10:00 AM</span>
+                        <h4 class="font-extrabold text-base text-blue-950 uppercase flex items-center gap-2">
+                            <i class="fas fa-trophy text-orange-600 text-sm"></i> Prize Giving & Lucky Draw
+                        </h4>
+                        <p class="text-xs text-gray-400 mt-1 leading-relaxed">
+                            Celebration of top podium winners for the 10KM category followed by our eco-friendly lucky draw session. Event officially concludes at 11:30 AM.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION: FINAL CTA (READY TO STRIDE) -->
+    <section class="py-20 px-6 bg-blue-950 text-white text-center relative overflow-hidden">
+        <!-- Elemen Abstrak Hijau/Oren Latar Belakang -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-orange-600/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10 space-y-6">
+            <h2 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter">
+                READY TO <span class="text-orange-500">STRIDE?</span>
+            </h2>
+            <p class="text-gray-400 text-sm md:text-base max-w-lg mx-auto tracking-widest font-medium uppercase leading-relaxed opacity-90">
+                Slots are filling up fast. Secure your entry today and be part of Langkawi's greenest sports event.
+            </p>
+            <div class="pt-4 flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="register.html" class="w-auto sm:w-auto bg-orange-600 hover:bg-orange-700 text-white px-8 py-3.5 rounded-full font-black italic text-sm uppercase tracking-widest shadow-lg transition-all transform hover:scale-105 active:scale-95">
+                    <i class="fas fa-running mr-2"></i> Register Now
+                </a>
+                <a href="assets/docs/Official_Handbook.pdf" download class="w-auto sm:w-auto bg-white/5 border border-white/20 backdrop-blur-sm hover:bg-white/10 hover:border-white text-white px-8 py-3.5 rounded-full font-black italic text-sm uppercase tracking-widest shadow-md transition-all transform hover:scale-105 active:scale-95">
+                    <i class="fas fa-download mr-2"></i> Event Handbook
+                </a>
+            </div>
+        </div>
+    </section>
+
+     <!-- FOOTER SECTION (Dikekalkan daripada website asal) -->
+    <footer class="bg-blue-950 text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">  
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none"></div>  
+        <div class="absolute top-0 left-0 w-80 h-80 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>  
+  
+        <div class="max-w-7xl mx-auto px-6 relative z-10"> 
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Contact Us</h4>  
+                    <p class="text-blue-100/70 text-sm leading-relaxed">  
+                        For any enquiries regarding sponsorship, registration, or volunteer opportunities, please contact our official support team.  
+                    </p>  
+                    <div class="space-y-2 pt-2 text-sm text-blue-200/80">  
+                        <p class="flex items-center gap-3"><i class="fas fa-envelope text-orange-500 text-xs"></i> info@langkawiecorun.com</p>  
+                        <p class="flex items-center gap-3"><i class="fas fa-phone text-orange-500 text-xs"></i> +60 11-5895 8809</p>  
+                    </div>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Quick Links</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="index.html" class="hover:text-orange-400 transition-colors duration-200">Home</a></li>  
+                        <li><a href="index.html#categories" class="hover:text-orange-400 transition-colors duration-200">Race Categories</a></li>  
+                        <li><a href="index.html#merchandise" class="hover:text-orange-400 transition-colors duration-200">Official Merchandise</a></li>  
+                        <li><a href="index.html#media" class="hover:text-orange-400 transition-colors duration-200">Media Hub</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Race Info</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Rules & Regulations</a></li>  
+                        <li><a href="info.html#race-kit" class="hover:text-orange-400 transition-colors duration-200">Race Kit Collection</a></li>  
+                        <li><a href="info.html#schedule" class="hover:text-orange-400 transition-colors duration-200">Event Schedule</a></li>  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Frequently Asked FAQ</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Follow Our Hype</h4>  
+                    <p class="text-blue-100/70 text-sm">Stay updated with the latest news, announcements, and event updates through our official social media channels.</p>  
+                    <div class="flex gap-3 pt-2">  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 shadow-md"><i class="fab fa-facebook-f text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-pink-500 hover:to-purple-600 hover:border-transparent transition-all duration-300 shadow-md"><i class="fab fa-instagram text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-black hover:border-zinc-800 transition-all duration-300 shadow-md"><i class="fab fa-tiktok text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-red-600 hover:border-red-500 transition-all duration-300 shadow-md"><i class="fab fa-youtube text-sm"></i></a>  
+                    </div>  
+                </div>  
+            </div>  
+  
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-blue-200/40 font-medium">  
+                <p class="text-center sm:text-left">&copy; 2026 Langkawi Eco Run 2.0. All Rights Reserved. Designed by UKPA MPLBP.</p>  
+                <div class="flex gap-6">  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Privacy Policy</a>  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Terms of Service</a>  
+                </div>  
+            </div>  
+        </div>  
+    </footer>  
+
+    <!-- LOGIK TAB SWITCHER JAVASCRIPT -->
+    <script>
+        function switchCategory(category) {
+            // Ambil Element Butang, Peta dan Informasi Detail
+            const tab10 = document.getElementById('tab-10km');
+            const tab5 = document.getElementById('tab-5km');
+            const map10 = document.getElementById('map-container-10km');
+            const map5 = document.getElementById('map-container-5km');
+            const details10 = document.getElementById('details-10km');
+            const details5 = document.getElementById('details-5km');
+            const downloadLink = document.getElementById('download-map-link');
+
+            if (category === '10km') {
+                // Tukar status butang aktif (10KM)
+                tab10.className = "px-8 py-3 rounded-full font-black italic text-sm uppercase tracking-widest transition-all duration-300 bg-orange-600 text-white shadow-md";
+                tab5.className = "px-8 py-3 rounded-full font-black italic text-sm uppercase tracking-widest transition-all duration-300 text-blue-950 hover:text-orange-600";
+                
+                // Paparkan Elemen 10KM (Buka Sekat)
+                map10.classList.remove('opacity-0', 'scale-95', 'hidden');
+                map10.classList.add('opacity-100', 'scale-100', 'block');
+                details10.classList.remove('hidden');
+                details10.classList.add('block');
+
+                // Sembunyikan Elemen 5KM
+                map5.classList.remove('opacity-100', 'scale-100', 'block');
+                map5.classList.add('opacity-0', 'scale-95', 'hidden');
+                details5.classList.remove('block');
+                details5.classList.add('hidden');
+
+                // Tukar Laluan Muat Turun Fail Gambar
+                downloadLink.href = "assets/images/map_10km.jpg";
+            } else {
+                // Tukar status butang aktif (5KM)
+                tab5.className = "px-8 py-3 rounded-full font-black italic text-sm uppercase tracking-widest transition-all duration-300 bg-orange-600 text-white shadow-md";
+                tab10.className = "px-8 py-3 rounded-full font-black italic text-sm uppercase tracking-widest transition-all duration-300 text-blue-950 hover:text-orange-600";
+                
+                // Paparkan Elemen 5KM (Buka Sekat)
+                map5.classList.remove('opacity-0', 'scale-95', 'hidden');
+                map5.classList.add('opacity-100', 'scale-100', 'block');
+                details5.classList.remove('hidden');
+                details5.classList.add('block');
+
+                // Sembunyikan Elemen 10KM
+                map10.classList.remove('opacity-100', 'scale-100', 'block');
+                map10.classList.add('opacity-0', 'scale-95', 'hidden');
+                details10.classList.remove('block');
+                details10.classList.add('hidden');
+
+                // Tukar Laluan Muat Turun Fail Gambar
+                downloadLink.href = "assets/images/map_5km.jpg";
+            }
+        }
+    </script>
+
+    <!-- CORE INTERACTION SCRIPT -->
+    <script>
+        // Logic for Mobile Navigation Menu Panel
+        const menuBtn = document.getElementById('menu-btn');  
+        const mobileMenu = document.getElementById('mobile-menu');  
+        const menuIcon = document.getElementById('menu-icon');  
+        const mobileLinks = document.querySelectorAll('.mobile-link');  
+  
+        menuBtn.addEventListener('click', () => {  
+            const isOpen = mobileMenu.classList.contains('translate-y-0');  
+            if (!isOpen) {  
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                mobileMenu.classList.add('translate-y-0', 'opacity-100');  
+                menuIcon.classList.remove('fa-bars');  
+                menuIcon.classList.add('fa-times', 'rotate-90');  
+                document.body.classList.add('overflow-hidden');  
+            } else {  
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');  
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                menuIcon.classList.remove('fa-times', 'rotate-90');  
+                menuIcon.classList.add('fa-bars');  
+                document.body.classList.remove('overflow-hidden');  
+            }  
+        });  
+        mobileLinks.forEach(link => {  
+            link.addEventListener('click', () => menuBtn.click());  
+        });
+    </script>
+</body>
+</html>
