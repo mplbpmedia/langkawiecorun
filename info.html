@@ -6,6 +6,8 @@
     <title>Event Information | Langkawi Eco Run 2.0</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF Library untuk jana PDF terus dari browser -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <!-- Font Awesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -396,11 +398,67 @@
                                 Representatives must present a copy of the runner's IC and a signed Authorization Letter.
                             </p>
                             
-                            <!-- Download Button for Rep Form -->
-                            <div class="pl-10">
-                                <a href="assets/docs/Authorization_Letter.pdf" download class="inline-flex items-center gap-2 text-xs font-black italic uppercase text-orange-600 hover:text-orange-700 tracking-wider transition-colors">
-                                    <i class="fas fa-file-download"></i> Download Authorization Form
-                                </a>
+                            <!-- BUTANG TRIGGER (Letak di tempat butang download asal) -->
+                            <button onclick="openAuthModal()" class="bg-orange-650 hover:bg-orange-700 bg-orange-600 text-white px-6 py-3 rounded-full font-black italic text-xs uppercase tracking-widest transition transform hover:scale-105 active:scale-95 inline-flex items-center gap-2">
+                                <i class="fas fa-file-download"></i> Get Authorization Form
+                            </button>
+
+                            <!-- MODAL PANEL OVERLAY (Isi Maklumat & Preview) -->
+                            <div id="authModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+                                <div class="bg-slate-900 border border-white/10 rounded-2xl w-full max-w-lg p-6 space-y-6 max-h-[90vh] overflow-y-auto relative selection:bg-orange-600 selection:text-white">
+                                    
+                                    <!-- Close Button -->
+                                    <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white text-sm uppercase font-black tracking-widest font-mono">
+                                        [ Close × ]
+                                    </button>
+
+                                    <!-- Header -->
+                                    <div class="space-y-1">
+                                        <span class="text-orange-500 font-extrabold text-[10px] tracking-[0.3em] uppercase block">Digital Document Generator</span>
+                                        <h3 class="text-white text-2xl font-black italic uppercase tracking-tighter">AUTHORIZATION <span class="text-orange-600">FORM</span></h3>
+                                        <p class="text-xs text-gray-400">Fill in the details to generate your official printed handover letter.</p>
+                                    </div>
+
+                                    <hr class="border-white/5">
+
+                                    <!-- Form Input fields -->
+                                    <div class="space-y-4 font-sans text-xs">
+                                        <!-- Runner Details Group -->
+                                        <div class="space-y-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                            <h4 class="text-white font-bold uppercase tracking-wider text-[11px] text-orange-500">1. Runner Details (Original Ticket Owner)</h4>
+                                            <div>
+                                                <label class="block text-gray-400 mb-1 uppercase tracking-widest font-medium">Full Name (As in IC/Passport)</label>
+                                                <input type="text" id="runnerName" placeholder="e.g. AMIRUL BIN AZIZ" class="w-full bg-slate-950 border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-orange-500 uppercase">
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-400 mb-1 uppercase tracking-widest font-medium">IC / Passport Number</label>
+                                                <input type="text" id="runnerIC" placeholder="e.g. 95081202XXXX" class="w-full bg-slate-950 border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-orange-500 uppercase">
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-400 mb-1 uppercase tracking-widest font-medium">Race Bib Number / Confirmation ID</label>
+                                                <input type="text" id="runnerBib" placeholder="e.g. LE2-10432" class="w-full bg-slate-950 border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-orange-500 uppercase">
+                                            </div>
+                                        </div>
+
+                                        <!-- Proxy Details Group -->
+                                        <div class="space-y-3 bg-white/5 p-4 rounded-xl border border-white/5">
+                                            <h4 class="text-white font-bold uppercase tracking-wider text-[11px] text-green-500">2. Proxy Details (The Person Collecting)</h4>
+                                            <div>
+                                                <label class="block text-gray-400 mb-1 uppercase tracking-widest font-medium">Proxy Full Name</label>
+                                                <input type="text" id="proxyName" placeholder="e.g. SITI BINTI ARSHAD" class="w-full bg-slate-950 border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-orange-500 uppercase">
+                                            </div>
+                                            <div>
+                                                <label class="block text-gray-400 mb-1 uppercase tracking-widest font-medium">Proxy IC / Passport Number</label>
+                                                <input type="text" id="proxyIC" placeholder="e.g. 96110502XXXX" class="w-full bg-slate-950 border border-white/10 rounded-lg p-2.5 text-white focus:outline-none focus:border-orange-500 uppercase">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Action Button -->
+                                    <button onclick="generatePDF()" class="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-xl font-black italic text-sm uppercase tracking-widest shadow-lg transition transform active:scale-95 flex items-center justify-center gap-2">
+                                        <i class="fas fa-file-pdf"></i> Generate & Download PDF
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -603,7 +661,7 @@
                 <div class="space-y-4">  
                     <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Race Info</h4>  
                     <ul class="space-y-2 text-sm text-blue-100/70">  
-                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Rules & Regulations</a></li>  
+                        <li><a href="rules.html" class="hover:text-orange-400 transition-colors duration-200">Rules & Regulations</a></li>  
                         <li><a href="info.html#race-kit" class="hover:text-orange-400 transition-colors duration-200">Race Kit Collection</a></li>  
                         <li><a href="info.html#schedule" class="hover:text-orange-400 transition-colors duration-200">Event Schedule</a></li>  
                         <li><a href="faq.html" class="hover:text-orange-400 transition-colors duration-200">Frequently Asked FAQ</a></li>  
@@ -713,6 +771,146 @@
         mobileLinks.forEach(link => {  
             link.addEventListener('click', () => menuBtn.click());  
         });
+
+        // Fungsi borang Authorization
+        function openAuthModal() {
+            document.getElementById('authModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Lock background scroll
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Unlock background scroll
+        }
+
+        // Fungsi Utama: Jana PDF guna jsPDF
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'p',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            // Ambil data input dari user
+            const runnerName = document.getElementById('runnerName').value.toUpperCase() || '____________________';
+            const runnerIC = document.getElementById('runnerIC').value.toUpperCase() || '____________________';
+            const runnerBib = document.getElementById('runnerBib').value.toUpperCase() || '____________________';
+            const proxyName = document.getElementById('proxyName').value.toUpperCase() || '____________________';
+            const proxyIC = document.getElementById('proxyIC').value.toUpperCase() || '____________________';
+
+            // --- REKA BENTUK PDF (BRANDED & PREMIUM) ---
+            
+            // 1. Header & Garisan Hype
+            doc.setFillColor(15, 23, 42); // Slate-900 background top bar
+            doc.rect(0, 0, 210, 35, 'F');
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(22);
+            doc.text("LANGKAWI ECO RUN 2.0", 15, 18);
+            
+            doc.setFillColor(234, 88, 12); // Orange Accent Line
+            doc.rect(15, 24, 45, 2, 'F');
+            
+            doc.setTextColor(200, 200, 200);
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(9);
+            doc.text("OFFICIAL RACE KIT COLLECTION AUTHORIZATION LETTER", 15, 30);
+
+            // 2. Tarikh & Info Acara
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            doc.setFont('Helvetica', 'bold');
+            doc.text("Date of Issue:", 15, 50);
+            doc.setFont('Helvetica', 'normal');
+            doc.text(new Date().toLocaleDateString('en-GB'), 42, 50);
+
+            // 3. Isi Kandungan Surat Rasmi
+            doc.setFont('Helvetica', 'bold');
+            doc.setFontSize(12);
+            doc.text("LETTER OF AUTHORIZATION / DECLARATION", 15, 65);
+            
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(10.5);
+            
+            let bodyText = `I, the undersigned participant of Langkawi Eco Run 2.0, hereby authorize the proxy named below to collect my official Race Kit (including race bib, event t-shirt, and drawstring bag) on my behalf.`;
+            let splitBody = doc.splitTextToSize(bodyText, 180);
+            doc.text(splitBody, 15, 75);
+
+            // 4. Petak Maklumat Pelari (Runner)
+            doc.setDrawColor(230, 230, 230);
+            doc.setFillColor(248, 250, 252);
+            doc.rect(15, 90, 180, 32, 'FD');
+            
+            doc.setFont('Helvetica', 'bold');
+            doc.setTextColor(234, 88, 12); // Orange title
+            doc.text("SECTION A: RUNNER DETAILS (ORIGINAL OWNER)", 20, 97);
+            
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            doc.text(`Full Name: ${runnerName}`, 20, 105);
+            doc.text(`IC / Passport No: ${runnerIC}`, 20, 112);
+            doc.text(`Bib ID / Conf. No: ${runnerBib}`, 20, 119);
+
+            // 5. Petak Maklumat Wakil (Proxy)
+            doc.setFillColor(248, 250, 252); // <--- KITA TAMBAH INI UNTUK RESET WARNA ISI KOTAK JADI PUTIH/KELABU SEMULA
+            doc.setDrawColor(230, 230, 230); // Set warna border kelabu cair
+            doc.rect(15, 130, 180, 26, 'FD');
+            
+            doc.setFont('Helvetica', 'bold');
+            doc.setTextColor(22, 163, 74); // Green title untuk Section B
+            doc.text("SECTION B: APPOINTED PROXY DETAILS", 20, 137);
+            
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            doc.text(`Proxy Full Name: ${proxyName}`, 20, 145);
+            doc.text(`Proxy IC / Passport: ${proxyIC}`, 20, 151);
+
+            // 6. Terma & Syarat Penyerahan
+            doc.setTextColor(100, 100, 100);
+            doc.setFont('Helvetica', 'italic');
+            doc.setFontSize(9);
+            let termsText = "Terms: The proxy must present this printed form along with a photocopy/digital copy of the Runner's IC/Passport during collection. The organizer holds no responsibility for any items lost or misplaced once handed over to the authorized proxy.";
+            let splitTerms = doc.splitTextToSize(termsText, 180);
+            doc.text(splitTerms, 15, 165);
+
+            // 7. Ruangan Tanda Tangan Fizikal (Untuk dicetak & ditandatangan)
+            doc.setFont('Helvetica', 'bold');
+            doc.setTextColor(50, 50, 50);
+            doc.setFontSize(10);
+            
+            // Tanda tangan Runner
+            doc.line(15, 210, 80, 210); // Garisan tanda tangan 1
+            doc.text("Signature of Runner", 15, 215);
+            doc.setFont('Helvetica', 'normal');
+            doc.text("Date: _______________", 15, 220);
+
+            // Tanda tangan Proxy
+            doc.setFont('Helvetica', 'bold');
+            doc.line(130, 210, 195, 210); // Garisan tanda tangan 2
+            doc.text("Signature of Appointed Proxy", 130, 215);
+            doc.setFont('Helvetica', 'normal');
+            doc.text("Date: _______________", 130, 220);
+
+            // 8. Footer Nota Hijau Komuniti
+            doc.setFillColor(240, 253, 244);
+            doc.setDrawColor(22, 163, 74);
+            doc.rect(15, 245, 180, 15, 'FD');
+            doc.setTextColor(21, 128, 61);
+            doc.setFont('Helvetica', 'bold');
+            doc.text("ENVIRONMENTAL NOTE:", 20, 254);
+            doc.setFont('Helvetica', 'normal');
+            doc.setFontSize(9.5);
+            doc.text("Please print this document on recycled paper if possible. Keep Langkawi clean!", 63, 254);
+
+            // Muat turun fail PDF secara automatik
+            doc.save(`LER2026-Authorization-${runnerName.replace(/\s+/g, '_')}.pdf`);
+            
+            // Tutup modal lepas download
+            closeAuthModal();
+        }
+        
     </script>
 </body>
 </html>
