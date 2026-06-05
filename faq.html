@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | Langkawi Eco Run 2.0</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+        body { font-family: 'Oswald', sans-serif; }
+        .hero-info-gradient {
+            background:  
+                linear-gradient(to top, rgb(249, 250, 251) 0%, rgba(249, 250, 251, 0) 50%),   
+                linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)),   
+                url('assets/images/Background_Hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+         /* Menyembunyikan step form yang tidak aktif */  
+        .form-step { display: none; }  
+        .form-step-active { display: block; } 
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+
+    <!-- NAVBAR LAYER -->  
+    <nav class="absolute top-0 left-0 w-full z-50 px-6 py-6">  
+        <div class="max-w-7xl mx-auto flex justify-between items-center relative">  
+            <!-- Logo Brand -->
+            <div class="text-white font-black text-2xl italic leading-none tracking-tighter shrink-0 z-10">  
+                LANGKAWI<br><span class="tracking-[0.03em] opacity-100 uppercase">ECO RUN</span>  
+            </div>  
+              
+            <!-- Desktop Navigation Links -->
+            <div class="hidden lg:absolute lg:left-1/2 lg:-translate-x-1/2 lg:flex items-center">  
+                <ul class="flex space-x-10 text-white font-semi-bold uppercase text-[13px] tracking-widest">  
+                    <li><a href="index.html" class="hover:text-orange-500 transition-colors duration-300">Home</a></li>  
+                    <li><a href="index.html#about" class="hover:text-orange-500 transition-colors duration-300">About</a></li>  
+                    <li><a href="register.html" class="hover:text-orange-500 transition-colors duration-300">Registration</a></li>  
+                    <li><a href="gallery.html" class="hover:text-orange-500 transition-colors duration-300">Gallery</a></li>  
+                    <li><a href="info.html" class="hover:text-orange-500 transition-colors duration-300">Info</a></li>  
+                </ul>  
+            </div>  
+  
+            <!-- Action Buttons Group (Right) -->
+            <div class="flex items-center space-x-4 md:space-x-6 shrink-0 z-50">  
+                <a href="#" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-700 text-white px-5 md:px-7 py-2 md:py-2.5 rounded-full font-extrabold shadow-lg transition-all transform hover:scale-105 active:scale-95 text-xs md:text-sm uppercase">  
+                    Register Now  
+                </a>  
+                <!-- Mobile Hamburger Button -->
+                <button id="menu-btn" class="block lg:hidden text-white focus:outline-none p-2" aria-label="Toggle Menu">  
+                    <i class="fas fa-bars text-2xl transition-transform duration-300" id="menu-icon"></i>  
+                </button>  
+            </div>  
+        </div>  
+  
+        <!-- Mobile Menu Navigation Panel -->  
+        <div id="mobile-menu" class="fixed inset-0 bg-blue-950/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">  
+            <ul class="flex flex-col space-y-6 text-center text-white font-semi-bold uppercase text-lg tracking-widest mb-8">  
+                <li><a href="index.html" class="mobile-link hover:text-orange-500 transition">Home</a></li>  
+                <li><a href="index.html#about" class="mobile-link hover:text-orange-500 transition">About</a></li>  
+                <li><a href="register.html" class="mobile-link hover:text-orange-500 transition">Registration</a></li>  
+                <li><a href="gallery.html" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>  
+                <li><a href="info.html" class="mobile-link hover:text-orange-500 transition">Info</a></li>  
+            </ul>  
+            <div class="w-full max-w-[250px] px-4 sm:hidden">  
+                <a href="#" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-orange-500 py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
+                    <i class="fas fa-sign-in-alt mr-2 text-orange-500"></i> Log In  
+                </a>  
+            </div>  
+        </div>  
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative h-screen flex items-center justify-center text-white hero-info-gradient px-6">  
+        <div class="max-w-7xl mx-auto px-6 w-full relative z-10 text-center">  
+              
+            <!-- Subheading di atas (Sama seperti gaya Gallery Hub) -->
+            <span class="inline-block px-4 py-1 bg-orange-600 text-white text-xs font-bold uppercase tracking-[0.2em] rounded-full mb-4">
+                Help Center
+            </span>  
+  
+            <!-- Main Heading (Sama konsep & kelas seperti GALLERY) -->
+            <h1 class="text-4xl md:text-7xl font-black italic leading-tight mb-2 tracking-[0.04em] uppercase">  
+                FREQUENTLY ASKED <span class="text-orange-600">QUESTIONS</span>  
+            </h1>  
+  
+            <!-- Paragraph Description -->
+            <p class="text-base md:text-lg font-light tracking-wide max-w-md mx-auto opacity-90">  
+                Got questions? We've got answers. Find quick solutions regarding registration, race kits, rules, and event day logistics.
+            </p>  
+  
+            <!-- Scroll Indicator Icon (Kekal lompat-lompat) -->
+            <div class="mt-16 flex flex-col items-center gap-2 text-white/50">
+                <span class="text-[10px] uppercase tracking-[0.3em] font-bold">Scroll to explore</span>
+                <i class="fas fa-chevron-down animate-bounce text-orange-600 mt-1"></i>
+            </div>
+        </div>  
+    </section>
+
+    <!-- SECTION: FAQ ACCORDION -->
+    <section id="race-map" class="relative -mt-24 pb-12 py-8 px-4 z-20 max-w-5xl mx-auto">
+        <div class="max-w-7xl mx-auto relative z-10">
+            
+            <!-- Section Header (Sama konsep komuniti) -->
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">
+                    Community Runner's Guide
+                </h2>
+                <p class="text-gray-500 uppercase tracking-[0.2em] font-bold mt-2 text-xs md:text-sm">
+                    General Information • Frequently Asked Questions (FAQ)
+                </p>
+                <div class="w-20 h-1.5 bg-orange-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- ACCORDION CONTAINER (20 QUESTIONS ENTIRELY IN ENGLISH) -->
+            <div class="space-y-4">
+
+                <!-- --- CATEGORY 1: REGISTRATION & CATEGORIES (Q1 - 5) --- -->
+                <div class="text-orange-600 font-black italic text-lg uppercase tracking-wider mt-8 mb-2 pl-2">
+                    <i class="fas fa-id-card mr-2"></i> 1. Registration & Categories
+                </div>
+
+                <!-- Q1 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">1. Can I change my race category (e.g., 10KM to 5KM) after payment is made?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Unfortunately, category changes are not allowed once registration is confirmed. This helps our community committee smoothly manage t-shirt size orders and bib number allocations.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">2. Is there an age limit for the 5KM Fun Run category?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            There is no age limit! The 5KM category is fully family-friendly. Children under 12 must be accompanied by a registered parent or guardian. Baby strollers are also highly welcome on the route.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">3. I chose the wrong t-shirt size during registration. Can I change it?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Any t-shirt size amendments can only be requested via email within 3 days of your registration. After this grace period, your jersey will be printed strictly according to your initial choice.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">4. If I cannot attend, can I transfer my slot to a friend?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Yes, slot transfers are allowed up to 2 weeks before the event. Participant information can be updated by contacting our support team via WhatsApp.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q5 (NEW ADDITION) -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">5. Will I get a refund if I decide to cancel my participation?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            All event registrations are non-refundable. If you can't make it, we highly suggest utilizing our slot transfer option to pass your entry ticket to a friend instead.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- --- CATEGORY 2: RACE KIT COLLECTION (Q6 - 10) --- -->
+                <div class="text-orange-600 font-black italic text-lg uppercase tracking-wider mt-8 mb-2 pl-2">
+                    <i class="fas fa-box-open mr-2"></i> 2. Race Kit Collection
+                </div>
+
+                <!-- Q6 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">6. Can the organizers mail my Race Kit directly to my home?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            As a grassroots community run, we do not provide courier services. All race kits must be collected physically at the designated venue on Thursday and Friday prior to race day.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q7 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">7. I am working on those days. Can a representative collect the Race Kit for me?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Absolutely! Your representative must present your confirmation email (QR Code) and a signed Authorization Letter which can be easily downloaded on our Info Page.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q8 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">8. Is there a race kit collection counter open on Saturday morning (Race Day)?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            No. Registration and collection booths close completely on Friday evening so our volunteer team can fully shift their focus to final track and site preparations for Saturday morning.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q9 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">9. What items are included inside my Race Pack?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Every registered runner receives a Drawstring Bag containing your Official Running Jersey, a Race Bib, snacks and mineral water.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q10 (NEW ADDITION) -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">10. Can I exchange my jersey size during the Race Kit Collection days?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Jersey size exchanges on collection days are subject to left-over stock availability only. To avoid disappointment, please check your size carefully during online registration.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- --- CATEGORY 3: EVENT DAY & LOGISTICS (Q11 - 15) --- -->
+                <div class="text-orange-600 font-black italic text-lg uppercase tracking-wider mt-8 mb-2 pl-2">
+                    <i class="fas fa-map-marked-alt mr-2"></i> 3. Event Day & Logistics
+                </div>
+
+                <!-- Q11 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">11. Where is the main parking area located, and are there fees?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Open parking space is available completely FREE of charge around the main venue (Dataran Tanjung Rhu, Langkawi). Please arrive early before 6:30 AM to avoid local traffic bottlenecks.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q12 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">12. Is there a Baggage Drop station available for runners?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Yes, a complimentary baggage storage tent opens at 6:30 AM. Please refrain from storing high-value belongings like laptops, heavy cash, or expensive jewelry. Pihak urus setia is not liable for structural loss.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q13 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">13. Am I required to wear the official Langkawi Eco Run jersey during the run?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            We strongly encourage you to wear it to amplify the eco-community spirit! However, the only ABSOLUTELY MANDATORY item to display prominently at all times is your Official Race Bib.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q14 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">14. What happens if it rains heavily or a storm occurs on race morning?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            In case of light drizzle, the run continues. If extreme weather hits (lightning or severe wind), the flag-off will be temporarily delayed for safety under civil defense/police guidance.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q15 (NEW ADDITION) -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">15. Are there water stations along the running tracks?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Yes, hydration points are stationed roughly every 2KM to 5KM. They will serve mineral water and basic energy drinks to ensure all community runners stay safely hydrated.
+                        </p>
+                    </div>
+                </div>
+
+
+                <!-- --- CATEGORY 4: SUSTAINABILITY & FACILITIES (Q16 - 20) --- -->
+                <div class="text-orange-600 font-black italic text-lg uppercase tracking-wider mt-8 mb-2 pl-2">
+                    <i class="fas fa-leaf mr-2"></i> 4. Sustainability & Eco Rules
+                </div>
+
+                <!-- Q16 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">16. What exactly is the rule regarding "Eco Litter Zones"?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            To honor our green mission, throwing plastic cups, bottles or energy gel packets casually on village paths is strictly prohibited. Waste must be dropped into trash meshes located 50m after each water station.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q17 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">17. Will all finishers receive an official Finisher Medal?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Yes! Every single runner in both 5KM and 10KM formats who crosses the finish arch before the official Cut-Off Time will receive a high-quality medal made of eco-recycled materials.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q18 -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">18. What should I do if I experience a medical emergency on the track?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            Stop running immediately and alert the closest track marshall (identified by neon green vests). Mobile medics on motorbikes are patrolling the route constantly to provide aid.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q19 (NEW ADDITION) -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">19. Can I bring my pet along for the 5KM Fun Run track?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            For the collective safety and comfort of all village runners, pets are not allowed on the active running tracks. Let's keep it clean and comfortable for everyone!
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Q20 (NEW ADDITION) -->
+                <div class="faq-item border border-gray-100 rounded-2xl bg-gray-50 overflow-hidden transition-all duration-300">
+                    <button class="faq-toggle w-full px-6 py-5 flex justify-between items-center text-left focus:outline-none">
+                        <span class="font-extrabold text-blue-950 text-sm md:text-base tracking-wide">20. Are certificates provided for finishing the community eco run?</span>
+                        <i class="fas fa-chevron-down text-orange-600 transition-transform duration-300 ml-4 shrink-0"></i>
+                    </button>
+                    <div class="faq-answer max-h-0 overflow-hidden transition-all duration-300 ease-in-out bg-white">
+                        <p class="p-6 text-xs md:text-sm text-gray-500 leading-relaxed font-medium">
+                            No, certificates are not provided for this event. No physical prints will be distributed, saving paper and staying true to our green ethos!
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+    </section>
+
+    <!-- SECTION: FINAL CTA (STILL HAVE QUESTIONS?) -->
+    <section class="py-20 px-6 bg-blue-950 text-white text-center relative overflow-hidden">
+        <!-- Elemen Abstrak Hijau/Oren Latar Belakang -->
+        <div class="absolute top-0 left-0 w-64 h-64 bg-orange-600/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-64 h-64 bg-green-600/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+
+        <div class="max-w-4xl mx-auto relative z-10 space-y-6">
+            <h2 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter">
+                STILL HAVE <span class="text-orange-500">QUESTIONS?</span>
+            </h2>
+            <p class="text-gray-400 text-sm md:text-base max-w-lg mx-auto tracking-widest font-medium leading-relaxed opacity-90">
+                If your question isn’t listed here, don’t worry. Our support team is ready to assist you. Feel free to contact us via WhatsApp for further enquiries and assistance.
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER SECTION (Dikekalkan daripada website asal) -->  
+    <footer class="bg-blue-950 text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">  
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none"></div>  
+        <div class="absolute top-0 left-0 w-80 h-80 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>  
+  
+        <div class="max-w-7xl mx-auto px-6 relative z-10">  
+            <div class="border-b border-white/10 pb-12 mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">  
+                <div>  
+                    <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter bg-gradient-to-r from-white via-blue-100 to-orange-500 bg-clip-text text-transparent pr-4">  
+                        LANGKAWI ECO RUN 2.0  
+                    </h2>  
+                    <p class="text-blue-200/60 text-sm mt-2 max-w-md">Run for Langkawi. Stride for Sustainability.</p>  
+                </div>  
+                <a href="register.html" class="bg-orange-600 hover:bg-orange-500 text-white font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-orange-600/20 hover:-translate-y-1 block shrink-0">  
+                    Register Now <i class="fas fa-arrow-right ml-2 text-[10px]"></i>  
+                </a>  
+            </div>  
+  
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Contact Us</h4>  
+                    <p class="text-blue-100/70 text-sm leading-relaxed">  
+                        For any enquiries regarding sponsorship, registration, or volunteer opportunities, please contact our official support team.  
+                    </p>  
+                    <div class="space-y-2 pt-2 text-sm text-blue-200/80">  
+                        <p class="flex items-center gap-3"><i class="fas fa-envelope text-orange-500 text-xs"></i> info@langkawiecorun.com</p>  
+                        <p class="flex items-center gap-3"><i class="fas fa-phone text-orange-500 text-xs"></i> +60 11-5895 8809</p>  
+                    </div>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Quick Links</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="index.html" class="hover:text-orange-400 transition-colors duration-200">Home</a></li>  
+                        <li><a href="index.html#categories" class="hover:text-orange-400 transition-colors duration-200">Race Categories</a></li>  
+                        <li><a href="index.html#merchandise" class="hover:text-orange-400 transition-colors duration-200">Official Merchandise</a></li>  
+                        <li><a href="index.html#media" class="hover:text-orange-400 transition-colors duration-200">Media Hub</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Race Info</h4>  
+                    <ul class="space-y-2 text-sm text-blue-100/70">  
+                        <li><a href="#" class="hover:text-orange-400 transition-colors duration-200">Rules & Regulations</a></li>  
+                        <li><a href="info.html#race-kit" class="hover:text-orange-400 transition-colors duration-200">Race Kit Collection</a></li>  
+                        <li><a href="info.html#schedule" class="hover:text-orange-400 transition-colors duration-200">Event Schedule</a></li>  
+                        <li><a href="faq.html" class="hover:text-orange-400 transition-colors duration-200">Frequently Asked FAQ</a></li>  
+                    </ul>  
+                </div>  
+  
+                <div class="space-y-4">  
+                    <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Follow Our Hype</h4>  
+                    <p class="text-blue-100/70 text-sm">Stay updated with the latest news, announcements, and event updates through our official social media channels.</p>  
+                    <div class="flex gap-3 pt-2">  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-blue-600 hover:border-blue-500 transition-all duration-300 shadow-md"><i class="fab fa-facebook-f text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-gradient-to-tr hover:from-yellow-500 hover:via-pink-500 hover:to-purple-600 hover:border-transparent transition-all duration-300 shadow-md"><i class="fab fa-instagram text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-black hover:border-zinc-800 transition-all duration-300 shadow-md"><i class="fab fa-tiktok text-sm"></i></a>  
+                        <a href="#" class="w-10 h-10 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center text-white hover:bg-red-600 hover:border-red-500 transition-all duration-300 shadow-md"><i class="fab fa-youtube text-sm"></i></a>  
+                    </div>  
+                </div>  
+            </div>  
+  
+            <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-blue-200/40 font-medium">  
+                <p class="text-center sm:text-left">&copy; 2026 Langkawi Eco Run 2.0. All Rights Reserved. Designed by UKPA MPLBP.</p>  
+                <div class="flex gap-6">  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Privacy Policy</a>  
+                    <a href="#" class="hover:text-blue-200 transition-colors">Terms of Service</a>  
+                </div>  
+            </div>  
+        </div>  
+    </footer>  
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<!-- Posisi fixed, z-50 memastikan ia sentiasa duduk di lapisan paling atas sekali -->
+<a href="https://wa.me/601158958809?text=Hi%20Admin%20Langkawi%20Eco%20Run!%20Saya%20nak%20tanya%20tentang..." 
+   target="_blank" 
+   rel="noopener noreferrer"
+   class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(37,211,102,0.4)] hover:shadow-[0_15px_40px_rgba(37,211,102,0.6)] border-2 border-white/20 transition-all duration-300 hover:-translate-y-2 group animate-[float_3s_ease-in-out_infinite]"
+   title="Hubungi Kami Melalui WhatsApp">
+    
+    <!-- Efek Pulse Bulatan Belakang (Glow Ring) -->
+    <span class="absolute inset-0 rounded-full bg-[#25D366]/40 animate-ping pointer-events-none scale-105"></span>
+    
+    <!-- Ikon WhatsApp FontAwesome -->
+    <i class="fab fa-whatsapp text-2xl md:text-3xl relative z-10 transition-transform duration-300 group-hover:scale-110"></i>
+</a>
+
+<!-- Tambah CSS keyframes ini di dalam tag <style> sedia ada anda -->
+<style>
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+</style>
+
+    <!-- CORE INTERACTION SCRIPT -->
+    <script>
+        // Logic for Mobile Navigation Menu Panel
+        const menuBtn = document.getElementById('menu-btn');  
+        const mobileMenu = document.getElementById('mobile-menu');  
+        const menuIcon = document.getElementById('menu-icon');  
+        const mobileLinks = document.querySelectorAll('.mobile-link');  
+  
+        menuBtn.addEventListener('click', () => {  
+            const isOpen = mobileMenu.classList.contains('translate-y-0');  
+            if (!isOpen) {  
+                mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                mobileMenu.classList.add('translate-y-0', 'opacity-100');  
+                menuIcon.classList.remove('fa-bars');  
+                menuIcon.classList.add('fa-times', 'rotate-90');  
+                document.body.classList.add('overflow-hidden');  
+            } else {  
+                mobileMenu.classList.remove('translate-y-0', 'opacity-100');  
+                mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');  
+                menuIcon.classList.remove('fa-times', 'rotate-90');  
+                menuIcon.classList.add('fa-bars');  
+                document.body.classList.remove('overflow-hidden');  
+            }  
+        });  
+        mobileLinks.forEach(link => {  
+            link.addEventListener('click', () => menuBtn.click());  
+        });
+    
+        // ACCORDION ENGINE JAVASCRIPT
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const item = this.parentElement;
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+
+                    // Semak jika item ini sudah terbuka
+                    const isOpen = item.classList.contains('faq-active');
+
+                    // TUTUP SEMUA ITEM YANG SEDANG TERBUKA (UX Terbaik)
+                    document.querySelectorAll('.faq-item').forEach(el => {
+                        el.classList.remove('faq-active', 'border-orange-500/30', 'bg-white');
+                        el.classList.add('bg-gray-50', 'border-gray-100');
+                        el.querySelector('.faq-answer').style.maxHeight = '0px';
+                        el.querySelector('.faq-toggle i').classList.remove('rotate-180');
+                    });
+
+                    // JIKA SEBELUM INI TUTUP, BUKA ITEM YANG DIKLIK
+                    if (!isOpen) {
+                        item.classList.add('faq-active', 'border-orange-500/30', 'bg-white');
+                        item.classList.remove('bg-gray-50', 'border-gray-100');
+                        answer.style.maxHeight = answer.scrollHeight + 'px';
+                        icon.classList.add('rotate-180');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
