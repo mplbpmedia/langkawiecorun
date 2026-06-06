@@ -458,7 +458,7 @@
         // =====================================================
 
         // ⚠️ SILA GANTIKAN URL DI BAWAH DENGAN URL WORKER ANDA YANG SEBENAR!
-        const API_URL = "https://langkawi-eco-api.username.workers.dev"; 
+        const API_URL = "https://langkawi-eco-api.mplbp-media.workers.dev"; 
 
         // --- LOGIK PENAPISAN INPUT & PENGIRAAN UMUR AUTOMATIK ---
         const icInput = document.getElementById('input-ic');
@@ -660,40 +660,64 @@
                 e.preventDefault();  
                 
                 const declaration = document.getElementById("input-declare");  
-                if(!declaration.checked) {  
+                if(declaration && !declaration.checked) {  
                     alert("Sila tanda pengesahan deklarasi kesihatan anda terlebih dahulu.");  
                     return;  
                 }  
 
-                if (!receiptInput.files || receiptInput.files.length === 0) {
+                if (!receiptInput || !receiptInput.files || receiptInput.files.length === 0) {
                     alert("Sila muat naik gambar/fail resit pembayaran anda untuk melengkapkan pendaftaran.");
                     return;
                 }
 
                 // Tukar rupa butang submit jadi Loading
                 const submitBtn = document.getElementById("btn-submit-registration");
-                const originalBtnText = submitBtn.innerHTML;
-                submitBtn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> Menghantar Data Pendaftaran...';
-                submitBtn.disabled = true;
+                let originalBtnText = "SUBMIT REGISTRATION";
+                if (submitBtn) {
+                    originalBtnText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> Menghantar Data Pendaftaran...';
+                    submitBtn.disabled = true;
+                }
 
                 // Pecahkan pemetaan kategori mengikut standard pangkalan data D1 kita (5KM atau 10KM)
-                const checkedRadio = document.querySelector('input[name="category"]:checked').value;
-                const databaseCategory = checkedRadio.startsWith('10km') ? '10KM' : '5KM';
+                const checkedRadio = document.querySelector('input[name="category"]:checked');
+                if (!checkedRadio) {
+                    alert("Sila pilih kategori larian terlebih dahulu.");
+                    if (submitBtn) { submitBtn.innerHTML = originalBtnText; submitBtn.disabled = false; }
+                    return;
+                }
+                const databaseCategory = checkedRadio.value.startsWith('10km') ? '10KM' : '5KM';
+
+                // Ambil data dengan selamat (Guna toleransi jika ID salah)
+                const getName = document.getElementById("input-name")?.value || "";
+                const getIc = document.getElementById("input-ic")?.value || "";
+                const getEmail = document.getElementById("input-email")?.value || "";
+                const getPhone = document.getElementById("input-phone")?.value || "";
+                const getGender = document.getElementById("input-gender")?.value || "MALE";
+                const getAge = document.getElementById("input-age")?.value || "0";
+                
+                // 💡 PEMBETULAN UTAMA: Fail asal anda menggunakan ID 'input-state-select', bukan 'input-state'
+                const getState = document.getElementById("input-state-select")?.value || "NOT SELECTED";
+                
+                const getSize = document.getElementById("input-size")?.value || "M";
+                const getEmName = document.getElementById("input-emname")?.value || "";
+                const getEmPhone = document.getElementById("input-emphone")?.value || "";
+                const getPassword = document.getElementById("input-password")?.value || "Langkawi2026";
 
                 // Kumpul semua data pendaftaran ke bentuk objek JSON
                 const payloadData = {
-                    name: document.getElementById("input-name").value,
-                    ic: document.getElementById("input-ic").value,
-                    email: document.getElementById("input-email").value,
-                    phone: document.getElementById("input-phone").value,
-                    gender: document.getElementById("input-gender").value,
-                    age: document.getElementById("input-age").value,
-                    state: document.getElementById("input-state").value,
+                    name: getName,
+                    ic: getIc,
+                    email: getEmail,
+                    phone: getPhone,
+                    gender: getGender,
+                    age: getAge,
+                    state: getState,
                     category: databaseCategory,
-                    tshirt_size: document.getElementById("input-size").value,
-                    emergency_name: document.getElementById("input-emname").value,
-                    emergency_phone: document.getElementById("input-emphone").value,
-                    password: document.getElementById("input-password").value
+                    tshirt_size: getSize,
+                    emergency_name: getEmName,
+                    emergency_phone: getEmPhone,
+                    password: getPassword
                 };
 
                 try {
@@ -709,11 +733,7 @@
                     const result = await response.json();
 
                     if (response.ok && result.success) {
-                        // Berjaya simpan rekod asas dalam database D1!
                         alert("Pendaftaran Berjaya Disimpan!\n\nAkaun dashboard anda telah dicipta secara automatik menggunakan No. IC dan Kata Laluan anda.");
-                        
-                        // Nota fasa seterusnya: Di sini kita akan tambah kod muat naik resit ke R2 Storage
-                        // Buat masa sekarang, kita reset borang sebagai tanda fasa 2 sukses!
                         form.reset();
                         window.location.reload();
                     } else {
@@ -725,8 +745,10 @@
                     alert("Ralat: Gagal menghubungi pelayan API. Sila pastikan internet anda aktif.");
                 } finally {
                     // Kembalikan butang ke bentuk asal
-                    submitBtn.innerHTML = originalBtnText;
-                    submitBtn.disabled = false;
+                    if (submitBtn) {
+                        submitBtn.innerHTML = originalBtnText;
+                        submitBtn.disabled = false;
+                    }
                 }
             });
         }
