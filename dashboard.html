@@ -44,7 +44,7 @@
                     <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                     <span id="payment-status" class="font-black text-blue-950 uppercase text-lg">Loading...</span>
                 </div>
-                <button class="text-[10px] font-bold uppercase text-orange-600 border border-orange-200 py-3 rounded-xl hover:bg-orange-50 transition">View Digital Receipt</button>
+                <button id="btn-view-receipt" class="text-[10px] font-bold uppercase text-orange-600 border border-orange-200 py-3 rounded-xl hover:bg-orange-50 transition">View Digital Receipt</button>
             </div>
 
             <div class="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm">
@@ -124,6 +124,22 @@
                         el.innerText = value;
                     } else {
                         console.warn(`Elemen dengan id="${id}" tidak dijumpai dalam HTML.`);
+                    }
+
+                // Panggil Resit URL
+                const receiptUrl = user.receipt_url;
+                const btnReceipt = document.getElementById("btn-view-receipt");
+                if (receiptUrl) {
+                        btnReceipt.onclick = () => {
+                            // Jika receiptUrl adalah path, tambah domain (cth: https://bucket.r2.dev/)
+                            // Jika ia sudah full URL, terus guna receiptUrl
+                            window.open(receiptUrl, '_blank'); 
+                        };
+                    } else {
+                        // Jika tiada resit (masih pending/null)
+                        btnReceipt.innerText = "No Receipt Uploaded";
+                        btnReceipt.disabled = true;
+                        btnReceipt.classList.add("opacity-50", "cursor-not-allowed");
                     }
                 };
 
