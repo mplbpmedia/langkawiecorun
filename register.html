@@ -140,12 +140,12 @@
                         <input type="text" id="input-name" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="JOHAN BIN ABDULLAH">  
                     </div>  
                     <div>  
-                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">IC Number (12 Digits Only)</label>  
-                        <input type="text" id="input-ic" required inputmode="numeric" maxlength="12" pattern="\d{12}" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="950101025555">  
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">ID Number (IC / Passport)</label>  
+                        <input type="text" id="input-ic" name="age" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="e.g. 950101025555 or A1234567">  
                     </div>  
                     <div>  
                         <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Age (Auto-Calculated)</label>  
-                        <input type="text" id="input-age" readonly class="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-orange-600 outline-none cursor-not-allowed" placeholder="Calculated from IC">  
+                        <input type="number" id="input-age" class="w-full bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-sm font-bold text-orange-600 outline-none cursor-not-allowed" placeholder="Calculated from IC">  
                     </div>  
                     <div>  
                         <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Gender</label>  
@@ -523,35 +523,34 @@
             e.target.value = e.target.value.replace(/[^0-9]/g, '');  
         };  
   
-        if (icInput) {  
-            icInput.addEventListener('input', (e) => {  
-                restrictToNumbers(e);  
+        if (icInput) {
+            icInput.addEventListener('input', (e) => {
+                const ic = e.target.value;
                   
-                const ic = e.target.value;  
-                if (ic.length === 12) {  
-                    let birthYearShort = parseInt(ic.substring(0, 2));  
-                    let birthMonth = parseInt(ic.substring(2, 4));  
-                    let birthDay = parseInt(ic.substring(4, 6));  
-  
-                    const currentYear = 2026;  
+                const isIC = /^\d{12}$/.test(ic);  
+                if (isIC) {
+                    let birthYearShort = parseInt(ic.substring(0, 2));
+                    let birthMonth = parseInt(ic.substring(2, 4));
+                    let birthDay = parseInt(ic.substring(4, 6));
+
+                    const currentYear = 2026;
                     const currentYearShort = currentYear % 100;   
-  
-                    let fullBirthYear = (birthYearShort > currentYearShort) ? (1900 + birthYearShort) : (2000 + birthYearShort);  
-                    let age = currentYear - fullBirthYear;  
-  
-                    if (!isNaN(age) && age >= 0 && birthMonth <= 12 && birthDay <= 31) {  
-                        // 💡 PEMBETULAN: Set nilai integer murni agar sepadan dengan tipe INTEGER D1 Database
-                        ageInput.value = age;  
-                    } else {  
-                        ageInput.value = "INVALID";  
-                    }  
-  
-                    let lastDigit = parseInt(ic.charAt(11));  
-                    if (!isNaN(lastDigit) && genderSelect) {  
-                        genderSelect.value = (lastDigit % 2 === 0) ? "FEMALE" : "MALE";  
-                    }  
+
+                    let fullBirthYear = (birthYearShort > currentYearShort) ? (1900 + birthYearShort) : (2000 + birthYearShort);
+                    let age = currentYear - fullBirthYear;
+
+                    if (!isNaN(age) && age >= 0 && birthMonth >= 1 && birthMonth <= 12 && birthDay >= 1 && birthDay <= 31) {
+                        ageInput.value = age;
+                    } else {
+                        ageInput.value = "INVALID";
+                    }
+
+                    let lastDigit = parseInt(ic.charAt(11));
+                    if (!isNaN(lastDigit) && genderSelect) {
+                        genderSelect.value = (lastDigit % 2 === 0) ? "FEMALE" : "MALE";
+                    }
                 } else {  
-                    ageInput.value = "";   
+                    // ageInput.value = "";   
                 }  
             });  
         }  
