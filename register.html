@@ -41,7 +41,7 @@
             </div>  
   
             <div class="flex items-center space-x-4 md:space-x-6 shrink-0 z-50">  
-                <a href="#" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>  
+                <a href="login.html" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>  
                 <a href="register.html" class="bg-orange-600 hover:bg-orange-700 text-white px-5 md:px-7 py-2 md:py-2.5 rounded-full font-extrabold shadow-lg transition-all transform hover:scale-105 active:scale-95 text-xs md:text-sm uppercase">  
                     Register Now  
                 </a>  
@@ -60,7 +60,7 @@
                 <li><a href="info.html" class="mobile-link hover:text-orange-500 transition">Info</a></li>  
             </ul>  
             <div class="w-full max-w-[250px] px-4 sm:hidden">  
-                <a href="#" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-orange-500 py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
+                <a href="login.html" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-orange-500 py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">  
                     <i class="fas fa-sign-in-alt mr-2 text-orange-500"></i> Log In  
                 </a>  
             </div>  
@@ -285,6 +285,60 @@
                         </div>  
                     </div>  
                 </div>  
+
+        <div id="payment-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+            <div class="absolute inset-0 bg-blue-950/80 backdrop-blur-sm transition-opacity"></div>
+            <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative overflow-hidden transform scale-95 transition-all duration-300">
+                
+                <div class="bg-blue-950 p-6 flex justify-between items-center">
+                    <div>
+                        <h3 class="text-xl font-black italic text-white uppercase tracking-tight">Payment Details</h3>
+                        <p class="text-blue-200 text-xs uppercase font-bold tracking-wider">Langkawi Eco Run 2.0</p>
+                    </div>
+                    <button id="btn-close-modal" class="text-white/70 hover:text-white transition">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+
+                <div class="p-6 md:p-8">
+                    <div class="bg-orange-600 rounded-2xl p-4 mb-8 text-center text-white">
+                        <p class="text-[10px] uppercase font-black opacity-80">Total Amount Payable</p>
+                        <h2 id="modal-payment-amount" class="text-3xl font-black italic uppercase">RM 0.00</h2>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl p-6 bg-gray-50">
+                            <img src="assets/images/payment_qr.png" alt="DuitNow QR" class="w-full max-w-[200px] object-contain mb-3" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=LangkawiEcoRunPayment'">
+                            <span class="text-[10px] font-bold text-gray-500 uppercase">Scan to Pay</span>
+                        </div>
+
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-xs font-black text-blue-950 uppercase mb-3 border-b pb-2">Bank Transfer</h4>
+                                <div class="text-[11px] text-gray-600 space-y-1">
+                                    <p><strong>Bank:</strong> Maybank</p>
+                                    <p><strong>Account:</strong> 562100123456</p>
+                                    <p><strong>Name:</strong> Langkawi Eco Run</p>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-black text-blue-950 uppercase mb-3 border-b pb-2">Steps</h4>
+                                <ul class="text-[11px] text-gray-600 space-y-2 list-decimal list-inside">
+                                    <li>Scan QR/Transfer amount.</li>
+                                    <li>Save transaction receipt.</li>
+                                    <li>Close this window.</li>
+                                    <li>Upload receipt to proceed.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="btn-done-modal" class="w-full mt-8 bg-blue-950 hover:bg-orange-600 text-white font-black py-4 rounded-xl transition uppercase tracking-widest text-sm">
+                        I Have Made Payment
+                    </button>
+                </div>
+            </div>
+        </div>
   
                 <button type="button" id="btn-open-payment" class="w-full bg-blue-950 hover:bg-blue-900 text-white font-black text-center py-4 rounded-xl shadow-lg uppercase tracking-widest text-sm transition transform active:scale-95 flex justify-center items-center gap-2">  
                     <i class="fas fa-qrcode"></i> View Payment QR & Details  
@@ -622,8 +676,6 @@
             btnOpenPayment.addEventListener('click', () => {  
                 updateModalAmount();  
                 paymentModal.classList.remove('opacity-0', 'pointer-events-none');  
-                paymentModal.querySelector('.transform').classList.remove('scale-95');  
-                paymentModal.querySelector('.transform').classList.add('scale-100');  
             });  
         }  
   
@@ -651,121 +703,89 @@
         }  
   
         // 🚀 PENGENDALIAN SUBMIT KEMBALI KE WORKERS LIVE URL
-        if (form) {  
-            form.addEventListener("submit", async (e) => {  
-                e.preventDefault();  
-                  
-                const declaration = document.getElementById("input-declare");  
-                if(declaration && !declaration.checked) {  
-                    alert("Sila tanda pengesahan deklarasi kesihatan anda terlebih dahulu.");  
-                    return;  
-                }  
-      
-                if (!receiptInput.files || receiptInput.files.length === 0) {  
-                    alert("Sila muat naik resit pembayaran anda untuk melengkapkan pendaftaran.");  
-                    return;  
-                }  
-  
-                const submitBtn = document.getElementById("btn-submit-registration");  
-                let originalBtnText = "Submit Registration";  
-                if (submitBtn) {  
-                    originalBtnText = submitBtn.innerHTML;  
-                    submitBtn.innerHTML = '<i class="fas fa-spinner animate-spin"></i> Sedang Memproses...';  
-                    submitBtn.disabled = true;  
-                }  
-  
-                // Alamat URL API Cloudflare Worker kau
-                const API_URL = "https://langkawi-eco-api.mplbp-media.workers.dev";  
-                
-                // ⚠️ MASUKKAN MAKLUMAT SUPABASE KAU DI SINI:
-                const SUPABASE_URL = "https://iddtihcgnucpgwrjxuzt.supabase.co"; 
-                const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZHRpaGNnbnVjcGd3cmp4dXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjM0ODUsImV4cCI6MjA5NjI5OTQ4NX0.CTx2yf_TmMuamhcUiBQ7bNy2uhxiij9aM483Zc1G7rs"; 
-  
-                try {
-                    // -------------------------------------------------------
-                    // FASA A: UPLOAD GAMBAR RESIT KE SUPABASE STORAGE DAHULU
-                    // -------------------------------------------------------
-                    const fileReceipt = receiptInput.files[0];
-                    
-                    // Kita namakan fail secara unik guna No. IC dan masa semasa untuk elak nama bertindih
-                    const icVal = document.getElementById("input-ic")?.value || "unknown";
-                    const fileExtension = fileReceipt.name.split('.').pop();
-                    const uniqueFileName = `${icVal}_${Date.now()}.${fileExtension}`;
+        if (form) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
 
-                    // URL endpoint khas untuk upload file ke bucket bernama 'receipts'
-                    const supabaseUploadUrl = `${SUPABASE_URL}/storage/v1/object/receipts/${uniqueFileName}`;
+            // 1. VALIDASI
+            const receiptInput = document.getElementById('input-receipt');
+            const icVal = document.getElementById("input-ic").value;
+            if (!receiptInput.files.length) { alert("Sila muat naik resit bayaran anda."); return; }
 
-                    const supabaseResponse = await fetch(supabaseUploadUrl, {
-                        method: "POST",
-                        headers: {
-                            "Authorization": `Bearer ${SUPABASE_KEY}`,
-                            "apikey": SUPABASE_KEY,
-                            "Content-Type": fileReceipt.type
-                        },
-                        body: fileReceipt // Hantar fail terus dalam bentuk binary data stream
+            const submitBtn = document.getElementById("btn-submit-registration");
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'Sedang Memproses...';
+            submitBtn.disabled = true;
+
+            const SUPABASE_URL = "https://iddtihcgnucpgwrjxuzt.supabase.co";
+            const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZHRpaGNnbnVjcGd3cmp4dXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjM0ODUsImV4cCI6MjA5NjI5OTQ4NX0.CTx2yf_TmMuamhcUiBQ7bNy2uhxiij9aM483Zc1G7rs";
+
+            const file = receiptInput.files[0];
+            const fileName = `${icVal}_${Date.now()}.jpg`;
+
+            try {
+                // FASA A: UPLOAD (GUNA FORMDATA UNTUK KESTABILAN)
+                const formData = new FormData();
+                formData.append('file', file);
+
+                const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${SUPABASE_KEY}`,
+                        "apikey": SUPABASE_KEY
+                        // JANGAN LETAK CONTENT-TYPE, BROWSER AKAN AUTO SET UNTUK FORMDATA
+                    },
+                    body: file 
+                });
+
+                if (!uploadResponse.ok) throw new Error("Gagal upload ke Mahsuri Cloudbase " + uploadResponse.statusText);
+
+                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/receipts/${fileName}`;
+
+                // FASA B: SUBMIT KE WORKER
+                const payload = {
+                    name: document.getElementById("input-name").value,
+                    ic: icVal,
+                    email: document.getElementById("input-email").value,
+                    phone: document.getElementById("input-phone").value,
+                    gender: document.getElementById("input-gender").value,
+                    age: parseInt(document.getElementById("input-age").value),
+                    state: document.getElementById("input-state").value,
+                    category: document.querySelector('input[name="category"]:checked')?.value.split('-')[0].toUpperCase(),
+                    tshirt_size: document.getElementById("input-size").value,
+                    emergency_name: document.getElementById("input-emname").value,
+                    emergency_phone: document.getElementById("input-emphone").value,
+                    password: document.getElementById("input-password").value,
+                    receipt_url: imageUrl
+                };
+
+                const workerResponse = await fetch("https://langkawi-eco-api.mplbp-media.workers.dev/api/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!workerResponse.ok) {
+                    const err = await workerResponse.json();
+                    // JIKA WORKER GAGAL, PADAM GAMBAR TADI
+                    await fetch(`${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`, {
+                        method: "DELETE",
+                        headers: { "Authorization": `Bearer ${SUPABASE_KEY}`, "apikey": SUPABASE_KEY }
                     });
+                    throw new Error(err.error || "Pendaftaran gagal di database.");
+                }
 
-                    if (!supabaseResponse.ok) {
-                        const errData = await supabaseResponse.json();
-                        throw new Error("Gagal simpan resit ke Supabase: " + (errData.message || "Ralat Storan"));
-                    }
+                alert("Pendaftaran Berjaya!");
+                window.location.reload();
 
-                    // Kerana bucket kita 'Public', ini adalah cara buat link url kekal untuk gambar tersebut:
-                    const uploadedImageUrl = `${SUPABASE_URL}/storage/v1/object/public/receipts/${uniqueFileName}`;
-
-                    // -------------------------------------------------------
-                    // FASA B: KUMPUL DATA TEKS & SELITKAN LINK RESIT SUPABASE TADI
-                    // -------------------------------------------------------
-                    const checkedRadio = document.querySelector('input[name="category"]:checked');  
-                    const databaseCategory = checkedRadio && checkedRadio.value.startsWith('10km') ? '10KM' : '5KM';  
-  
-                    const payloadData = {  
-                        name: document.getElementById("input-name")?.value || "",  
-                        ic: icVal,  
-                        email: document.getElementById("input-email")?.value || "",  
-                        phone: document.getElementById("input-phone")?.value || "",  
-                        gender: document.getElementById("input-gender")?.value || "MALE",  
-                        age: parseInt(document.getElementById("input-age")?.value) || 0,  
-                        state: document.getElementById("input-state")?.value || "NOT SELECTED",  
-                        category: databaseCategory,  
-                        tshirt_size: document.getElementById("input-size")?.value || "M",  
-                        emergency_name: document.getElementById("input-emname")?.value || "",  
-                        emergency_phone: document.getElementById("input-emphone")?.value || "",  
-                        password: document.getElementById("input-password")?.value || "Langkawi2026",
-                        receipt_url: uploadedImageUrl // Masukkan link Supabase ke dalam JSON
-                    };  
-  
-                    // -------------------------------------------------------
-                    // FASA C: HANTAR KESELURUHAN DATA KEPADA CLOUDFLARE WORKER KAU
-                    // -------------------------------------------------------
-                    const response = await fetch(`${API_URL}/api/register`, {  
-                        method: "POST",  
-                        headers: {  
-                            "Content-Type": "application/json"  
-                        },  
-                        body: JSON.stringify(payloadData)  
-                    });  
-  
-                    const result = await response.json();  
-  
-                    if (response.ok && result.success) {  
-                        alert("Pendaftaran Berjaya!\n\nRekod anda telah disimpan dalam database D1 dan gambar resit selamat disimpan di Supabase Storage.");  
-                        form.reset();  
-                        window.location.reload();  
-                    } else {  
-                        alert("Gagal Mendaftar: " + (result.error || "Sila semak semula maklumat."));  
-                    }  
-                } catch (error) {  
-                    console.error("Error:", error);  
-                    alert("Ralat Sistem: " + error.message);  
-                } finally {  
-                    if (submitBtn) {  
-                        submitBtn.innerHTML = originalBtnText;  
-                        submitBtn.disabled = false;  
-                    }  
-                }  
-            });  
-        }
+            } catch (err) {
+                alert("Ralat: " + err.message);
+            } finally {
+                submitBtn.innerHTML = originalBtnText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
 
         // --- LOGIK ACCORDION FAQ ---  
         document.querySelectorAll(".faq-toggle").forEach(button => {  

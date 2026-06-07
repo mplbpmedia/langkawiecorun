@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Langkawi Eco Run 2.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+        body { font-family: 'Oswald', sans-serif; }
+        .hero-register-gradient {
+            background: 
+                linear-gradient(to top, rgb(249, 250, 251) 0%, rgba(249, 250, 251, 0) 50%), 
+                linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+                url('assets/images/Background_Hero.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="hero-register-gradient min-h-screen flex items-center justify-center p-6">
+
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8 border-t-4 border-orange-600 relative">
+        
+        <a href="index.html" class="absolute top-4 left-4 text-gray-400 hover:text-blue-950 transition">
+            <i class="fas fa-home text-xl"></i>
+        </a>
+
+        <div class="text-center mb-8 mt-6">
+            <h1 class="text-3xl font-bold text-blue-950 uppercase tracking-tighter">Participant Login</h1>
+            <p class="text-gray-500 text-sm mt-2 uppercase tracking-widest">Langkawi Eco Run 2.0</p>
+        </div>
+
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label class="block text-blue-950 text-sm font-bold uppercase mb-2">Email Address</label>
+                <input type="email" id="email" required class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none transition">
+            </div>
+            <div>
+                <label class="block text-blue-950 text-sm font-bold uppercase mb-2">Password</label>
+                <input type="password" id="password" required class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-orange-500 outline-none transition">
+            </div>
+            
+            <button type="submit" id="btn-login" class="w-full bg-blue-950 hover:bg-black text-white font-black py-4 rounded-xl shadow-lg uppercase tracking-widest transition transform hover:-translate-y-1">
+                Access Dashboard
+            </button>
+        </form>
+
+        <div class="mt-8 flex flex-col gap-3 text-center">
+            <button onclick="history.back()" class="text-gray-500 hover:text-orange-600 text-sm font-bold uppercase tracking-widest transition">
+                <i class="fas fa-arrow-left mr-2"></i> Go Back
+            </button>
+            <div class="text-sm text-gray-400">
+                Not registered yet? <a href="register.html" class="text-orange-600 font-bold hover:underline">Register Now</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-login');
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const data = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            try {
+                const response = await fetch("https://langkawi-eco-api.mplbp-media.workers.dev/api/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if(response.ok) {
+                    localStorage.setItem("sessionId", result.sessionId);
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Error: " + (result.error || "Login failed"));
+                    btn.innerText = "Access Dashboard";
+                    btn.disabled = false;
+                }
+            } catch (err) {
+                alert("Ralat server: " + err.message);
+                btn.innerText = "Access Dashboard";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
