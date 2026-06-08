@@ -17,6 +17,72 @@
             background-size: cover;
             background-position: center;
         }
+        
+        /* Admin access button styles */
+        .admin-access-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 24px 0 16px;
+        }
+        .admin-access-divider::before,
+        .admin-access-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, #e5e7eb, transparent);
+        }
+        .admin-access-divider span {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #9ca3af;
+            white-space: nowrap;
+        }
+        
+        .admin-access-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #172554 100%);
+            border: 1px solid #1e40af;
+            border-radius: 12px;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .admin-access-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(234, 88, 12, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        .admin-access-btn:hover::before {
+            left: 100%;
+        }
+        .admin-access-btn:hover {
+            background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+            border-color: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(234, 88, 12, 0.3);
+        }
+        .admin-access-btn i {
+            font-size: 14px;
+        }
     </style>
 </head>
 <body class="hero-register-gradient min-h-screen flex items-center justify-center p-6">
@@ -55,6 +121,19 @@
                 Not registered yet? <a href="register.html" class="text-orange-600 font-bold hover:underline">Register Now</a>
             </div>
         </div>
+
+        <!-- ═══════════════════════════════════════
+             ADMIN ACCESS SECTION (BARU)
+        ═══════════════════════════════════════ -->
+        <div class="admin-access-divider">
+            <span>Staff Access</span>
+        </div>
+        
+        <a href="admin_login.html" class="admin-access-btn">
+            <i class="fas fa-shield-alt"></i>
+            Admin Command Center
+        </a>
+
     </div>
 
     <script>
