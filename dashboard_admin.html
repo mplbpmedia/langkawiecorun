@@ -793,6 +793,41 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+        
+        /* 🌟 NEW STYLES FOR REGISTRATION PHASE BADGE 🌟 */
+        .phase-badge-early {
+            background: linear-gradient(135deg, #ea580c, #c2410c);
+            color: white;
+            border: none;
+        }
+        .phase-badge-normal {
+            background: rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.9);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .fee-card {
+            background: linear-gradient(135deg, #fef3c7, #ffedd5);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .fee-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #92400e;
+        }
+        .fee-amount {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 800;
+            color: #ea580c;
+        }
+        
         .receipt-btn {
             display: flex;
             align-items: center;
@@ -888,24 +923,15 @@
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
         ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
 
-        /* ═══════════════════════════════════════
-           RESPONSIVE BREAKPOINTS
-        ═══════════════════════════════════════ */
-        
-        /* Tablet landscape */
         @media (max-width: 1280px) {
             .kpi-grid { grid-template-columns: repeat(2, 1fr); }
             .analytics-grid { grid-template-columns: repeat(2, 1fr); }
         }
-
-        /* Tablet portrait */
         @media (max-width: 1024px) {
             :root { --sidebar-w: 240px; }
             .content { padding: 20px; }
             .topbar { padding: 12px 20px; }
         }
-
-        /* Mobile - Sidebar becomes slide-in drawer */
         @media (max-width: 900px) {
             #sidebar {
                 position: fixed;
@@ -916,73 +942,38 @@
                 min-width: 280px;
             }
             #sidebar.open { transform: translateX(0); }
-            
             .hamburger-btn { display: flex; }
-            
             .analytics-grid { grid-template-columns: 1fr; }
-            
             .topbar-title { font-size: 1rem; }
             .btn-primary span, .btn-secondary span { display: none; }
             .btn-primary, .btn-secondary { padding: 9px 12px; }
         }
-
-        /* Small mobile */
         @media (max-width: 640px) {
             :root { --sidebar-w: 85vw; }
             #sidebar { width: 85vw; min-width: 85vw; max-width: 320px; }
-            
             .content { padding: 16px; }
             .topbar { padding: 10px 16px; gap: 8px; }
             .topbar-title { font-size: 0.95rem; }
-            
             .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
             .kpi-card { padding: 14px 16px; }
             .kpi-value { font-size: 1.5rem; }
-            .kpi-label { font-size: 9px; }
-            .kpi-icon { font-size: 1.8rem; right: 12px; }
-            
-            .urgent-banner { padding: 10px 14px; gap: 10px; }
-            .urgent-banner-text p { font-size: 12px; }
-            .urgent-banner-text span { font-size: 10px; }
-            
             .filter-row { gap: 8px; }
             .search-box { min-width: 100%; order: -1; }
             .select-filter { width: 100%; min-width: 100%; }
-            
-            .table-card-header { padding: 12px 16px; flex-direction: column; align-items: flex-start; gap: 6px; }
-            .table-card-header > div:last-child { display: none; }
-            
-            th, td { padding: 10px 12px; font-size: 12px; }
-            th:first-child, td:first-child { padding-left: 16px; }
-            th:last-child, td:last-child { padding-right: 16px; }
-            
-            .participant-avatar { width: 28px; height: 28px; font-size: 10px; }
-            .participant-name { font-size: 12px; }
-            .participant-id { font-size: 9px; }
-            
             #drawer-panel { width: 100%; }
             .drawer-header { padding: 18px 20px; }
             .drawer-body { padding: 18px 20px; }
             .drawer-actions { padding: 14px 20px; }
-            .profile-name { font-size: 1.1rem; }
         }
-
-        /* Very small mobile */
         @media (max-width: 380px) {
             .kpi-grid { grid-template-columns: 1fr; }
-            .kpi-value { font-size: 1.6rem; }
-            .filter-tab { padding: 6px 10px; font-size: 10px; }
         }
     </style>
 </head>
 <body>
 
-<!-- Mobile sidebar overlay -->
 <div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
-<!-- ══════════════════════════════════════════════
-     SIDEBAR
-══════════════════════════════════════════════ -->
 <aside id="sidebar">
     <div class="sidebar-brand">
         <h2>LER <span>2.0</span></h2>
@@ -990,24 +981,21 @@
     </div>
 
     <p class="nav-section-label">Overview</p>
-    <button class="nav-link" onclick="setView('overview')">
-        <i class="fas fa-chart-line"></i> Dashboard
-    </button>
     <button class="nav-link active" onclick="setView('participants')">
         <i class="fas fa-users"></i> Participants
         <span class="nav-badge" id="sidebar-pending-count">—</span>
     </button>
-    <button class="nav-link" onclick="setView('analytics')">
+    <a href="admin_analytics.html" class="nav-link">
         <i class="fas fa-chart-bar"></i> Analytics
-    </button>
+    </a>
 
     <p class="nav-section-label">Operations</p>
-    <button class="nav-link" onclick="setView('payments')">
+    <a href="admin_payments.html" class="nav-link">
         <i class="fas fa-receipt"></i> Payments
-    </button>
-    <button class="nav-link" onclick="setView('bibs')">
+    </a>
+    <a href="admin_bibs.html" class="nav-link">
         <i class="fas fa-tag"></i> Bib Numbers
-    </button>
+    </a>
 
     <div class="sidebar-footer">
         <div class="sidebar-clock">
@@ -1036,12 +1024,7 @@
     </div>
 </aside>
 
-<!-- ══════════════════════════════════════════════
-     MAIN
-══════════════════════════════════════════════ -->
 <div id="main">
-
-    <!-- TOP BAR -->
     <div class="topbar">
         <div class="topbar-left">
             <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
@@ -1063,10 +1046,7 @@
         </div>
     </div>
 
-    <!-- CONTENT -->
     <div class="content">
-
-        <!-- KPI CARDS -->
         <div class="kpi-grid">
             <div class="kpi-card accent-orange">
                 <div class="kpi-label">Total Participants</div>
@@ -1102,7 +1082,6 @@
             </div>
         </div>
 
-        <!-- URGENT BANNER -->
         <div class="urgent-banner hidden" id="urgent-banner">
             <i class="fas fa-exclamation-triangle"></i>
             <div class="urgent-banner-text">
@@ -1112,7 +1091,6 @@
             <div class="urgent-count" id="urgent-count-pill">— Pending</div>
         </div>
 
-        <!-- ANALYTICS ROW -->
         <div class="analytics-grid" id="analytics-section">
             <div class="chart-card">
                 <div class="chart-title"><i class="fas fa-venus-mars" style="color:var(--orange)"></i> Gender Distribution</div>
@@ -1137,7 +1115,6 @@
             </div>
         </div>
 
-        <!-- FILTER ROW -->
         <div class="filter-row">
             <div class="search-box">
                 <i class="fas fa-search"></i>
@@ -1162,7 +1139,6 @@
             </select>
         </div>
 
-        <!-- TABLE -->
         <div class="table-card">
             <div class="table-card-header">
                 <div class="table-meta">
@@ -1188,29 +1164,17 @@
                         </tr>
                     </thead>
                     <tbody id="participant-table">
-                        <tr>
-                            <td colspan="8">
-                                <div class="empty-state">
-                                    <i class="fas fa-circle-notch fa-spin"></i>
-                                    <p>Loading participants...</p>
-                                </div>
-                            </td>
-                        </tr>
+                        <tr><td colspan="8"><div class="empty-state"><i class="fas fa-circle-notch fa-spin"></i><p>Loading participants...</p></div></td></tr>
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════════
-     DETAIL DRAWER
-══════════════════════════════════════════════ -->
+<!-- DRAWER -->
 <div id="drawer-overlay">
     <div id="drawer-panel">
-
         <div class="drawer-header" style="position:relative;">
             <h3>Participant Details</h3>
             <p id="d-reg-id-header">— Loading —</p>
@@ -1220,7 +1184,6 @@
         </div>
 
         <div class="drawer-body">
-
             <div class="participant-profile-card">
                 <div class="profile-name" id="d-name">—</div>
                 <div class="profile-email" id="d-email">—</div>
@@ -1228,7 +1191,15 @@
                     <span class="profile-chip" id="d-category">—</span>
                     <span class="profile-chip" id="d-gender-chip">—</span>
                     <span class="profile-chip" id="d-tshirt-chip">—</span>
+                    <!-- 🌟 NEW: Registration Phase Chip 🌟 -->
+                    <span class="profile-chip" id="d-phase-chip">—</span>
                 </div>
+            </div>
+
+            <!-- 🌟 NEW: Fee Card - Display Registration Fee 🌟 -->
+            <div class="fee-card">
+                <span class="fee-label"><i class="fas fa-money-bill-wave"></i> Registration Fee</span>
+                <span class="fee-amount" id="d-fee">—</span>
             </div>
 
             <div class="drawer-section">
@@ -1249,6 +1220,11 @@
                     <div class="info-row">
                         <span class="info-key">Phone</span>
                         <span class="info-val" id="d-phone">—</span>
+                    </div>
+                    <!-- 🌟 NEW: Registration Phase & Fee in Info Block 🌟 -->
+                    <div class="info-row">
+                        <span class="info-key">Registration Phase</span>
+                        <span class="info-val" id="d-phase-text">—</span>
                     </div>
                 </div>
             </div>
@@ -1295,7 +1271,6 @@
                 <div class="drawer-section-label">Admin Notes</div>
                 <textarea id="admin-notes" placeholder="e.g. Receipt blurry, pending re-upload..."></textarea>
             </div>
-
         </div>
 
         <div class="drawer-actions">
@@ -1306,35 +1281,25 @@
                 <i class="fas fa-times"></i> Reject
             </button>
         </div>
-
     </div>
 </div>
 
-
-<!-- ══════════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════════ -->
 <script>
-// ── CONSTANTS ──────────────────────────────────
 const API_BASE = "https://langkawi-eco-api.mplbp-media.workers.dev/api/admin";
 const AVATAR_COLORS = ['#172554','#1d4ed8','#ea580c','#16a34a','#7c3aed','#0f766e','#b45309','#be123c'];
 const DAYS_BM = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
 const MONTHS_BM = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
 
-// ── STATE ──────────────────────────────────────
 let allParticipants = [];
 let filteredParticipants = [];
 let currentRegId = null;
 let activeStatusFilter = 'ALL';
 let chartGender = null, chartCategory = null, chartStatus = null;
 
-// ── UTILITIES ──────────────────────────────────
 function getInitials(name) {
     if (!name) return '?';
     const parts = name.trim().split(/\s+/);
-    return parts.length >= 2
-        ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-        : parts[0].substring(0, 2).toUpperCase();
+    return parts.length >= 2 ? (parts[0][0] + parts[parts.length-1][0]).toUpperCase() : parts[0].substring(0,2).toUpperCase();
 }
 
 function avatarColor(name) {
@@ -1351,16 +1316,12 @@ function badgeHTML(status) {
     return `<span class="status-badge ${cls}">${label}</span>`;
 }
 
-function safeText(v) {
-    return v ? String(v).replace(/</g,'&lt;').replace(/>/g,'&gt;') : '—';
-}
+function safeText(v) { return v ? String(v).replace(/</g,'&lt;').replace(/>/g,'&gt;') : '—'; }
 
-// ── MOBILE SIDEBAR TOGGLE ──────────────────────
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     const isOpen = sidebar.classList.contains('open');
-    
     if (isOpen) {
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
@@ -1372,83 +1333,59 @@ function toggleSidebar() {
     }
 }
 
-// Close sidebar when clicking nav links on mobile
 document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        if (window.innerWidth <= 900) {
-            toggleSidebar();
-        }
-    });
+    link.addEventListener('click', () => { if (window.innerWidth <= 900) toggleSidebar(); });
 });
 
-// ── CLOCK WIDGET ───────────────────────────────
 function updateClock() {
     const now = new Date();
-    const hh = String(now.getHours()).padStart(2, '0');
-    const mm = String(now.getMinutes()).padStart(2, '0');
-    const ss = String(now.getSeconds()).padStart(2, '0');
-    const dayName = DAYS_BM[now.getDay()];
-    const date = String(now.getDate()).padStart(2, '0');
-    const month = MONTHS_BM[now.getMonth()];
-    const year = now.getFullYear();
-    
+    const hh = String(now.getHours()).padStart(2,'0');
+    const mm = String(now.getMinutes()).padStart(2,'0');
+    const ss = String(now.getSeconds()).padStart(2,'0');
     document.getElementById('clock-hm').textContent = `${hh}:${mm}`;
     document.getElementById('clock-s').textContent = `:${ss}`;
-    document.getElementById('clock-date').textContent = `${dayName}, ${date} ${month} ${year}`;
+    document.getElementById('clock-date').textContent = `${DAYS_BM[now.getDay()]}, ${String(now.getDate()).padStart(2,'0')} ${MONTHS_BM[now.getMonth()]} ${now.getFullYear()}`;
 }
 
-// ── CONFIRMATION DIALOG ────────────────────────
 function showConfirmDialog(title, message, onConfirm) {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(23,37,84,0.6);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;';
-    
     const dialog = document.createElement('div');
     dialog.style.cssText = 'background:white;border-radius:20px;padding:28px;max-width:400px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);';
-    
     dialog.innerHTML = `
         <div style="text-align:center;margin-bottom:20px;">
             <div style="width:64px;height:64px;margin:0 auto 16px;background:linear-gradient(135deg,#fef3c7,#fed7aa);border-radius:50%;display:flex;align-items:center;justify-content:center;">
                 <i class="fas fa-exclamation-triangle" style="font-size:28px;color:#ea580c"></i>
             </div>
-            <h3 style="font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;margin:0 0 8px;text-transform:uppercase;letter-spacing:0.03em;">${title}</h3>
-            <p style="font-size:13px;color:#64748b;margin:0;line-height:1.6;">${message}</p>
+            <h3 style="font-family:'Oswald',sans-serif;font-size:1.3rem;font-weight:700;margin:0 0 8px;text-transform:uppercase;">${title}</h3>
+            <p style="font-size:13px;color:#64748b;margin:0;">${message}</p>
         </div>
         <div style="display:flex;gap:10px;">
-            <button id="cancel-btn" style="flex:1;padding:12px;background:#f1f5f9;color:#1e293b;border:1px solid #e8ecf2;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;">Batal</button>
-            <button id="confirm-btn" style="flex:1;padding:12px;background:#ea580c;color:white;border:none;border-radius:12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;">Sahkan</button>
+            <button id="cancel-btn" style="flex:1;padding:12px;background:#f1f5f9;color:#1e293b;border:1px solid #e8ecf2;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;">Batal</button>
+            <button id="confirm-btn" style="flex:1;padding:12px;background:#ea580c;color:white;border:none;border-radius:12px;font-size:12px;font-weight:700;cursor:pointer;">Sahkan</button>
         </div>
     `;
-    
     overlay.appendChild(dialog);
     document.body.appendChild(overlay);
-    
-    const cancelBtn = dialog.querySelector('#cancel-btn');
-    const confirmBtn = dialog.querySelector('#confirm-btn');
-    const closeDialog = () => { document.body.removeChild(overlay); };
-    
-    cancelBtn.onclick = closeDialog;
-    confirmBtn.onclick = () => { closeDialog(); onConfirm(); };
+    document.getElementById('cancel-btn').onclick = () => document.body.removeChild(overlay);
+    document.getElementById('confirm-btn').onclick = () => { document.body.removeChild(overlay); onConfirm(); };
 }
 
-// ── FETCH & RENDER ─────────────────────────────
 async function fetchParticipants() {
     const tbody = document.getElementById('participant-table');
     tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-circle-notch fa-spin"></i><p>Loading participants...</p></div></td></tr>`;
-
     try {
         const res = await fetch(`${API_BASE}/participants`);
         if (!res.ok) throw new Error(`Server error ${res.status}`);
         const data = await res.json();
         allParticipants = data;
-
         updateKPIs();
         updateFilterCounts();
         populateCategoryFilter();
         renderCharts();
         applyFilters();
-
     } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="8"><div class="error-state"><i class="fas fa-exclamation-circle"></i><p>Failed to connect to database.<br><small style="color:var(--muted)">${err.message}</small></p></div></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8"><div class="error-state"><i class="fas fa-exclamation-circle"></i><p>Failed to connect.<br><small>${err.message}</small></p></div></td></tr>`;
     }
 }
 
@@ -1456,97 +1393,53 @@ function renderTable(data) {
     const tbody = document.getElementById('participant-table');
     document.getElementById('showing-count').textContent = data.length;
     document.getElementById('total-count').textContent = allParticipants.length;
-
     if (data.length === 0) {
         tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><i class="fas fa-search"></i><p>No participants match the current filters.</p></div></td></tr>`;
         return;
     }
-
     tbody.innerHTML = data.map(p => {
-        const initials  = getInitials(p.full_name);
-        const color     = avatarColor(p.full_name);
-        const bib       = p.bib_number;
-        const bibHTML   = bib
-            ? `<span class="bib-display">${safeText(bib)}</span>`
-            : `<span class="bib-unassigned"><i class="fas fa-exclamation" style="font-size:9px"></i> Not Assigned</span>`;
-        const notesTxt  = p.admin_notes
-            ? `<span title="${safeText(p.admin_notes)}">${safeText(p.admin_notes).substring(0, 28)}${p.admin_notes.length > 28 ? '…' : ''}</span>`
-            : `<span style="color:#cbd5e1;font-style:italic">None</span>`;
-
-        return `
-        <tr>
-            <td>
-                <div class="participant-cell">
-                    <div class="participant-avatar" style="background:${color}">${initials}</div>
-                    <div>
-                        <div class="participant-name">${safeText(p.full_name)}</div>
-                        <div class="participant-id">${safeText(p.reg_id)}</div>
-                    </div>
-                </div>
-            </td>
+        const initials = getInitials(p.full_name);
+        const color = avatarColor(p.full_name);
+        const bib = p.bib_number;
+        const bibHTML = bib ? `<span class="bib-display">${safeText(bib)}</span>` : `<span class="bib-unassigned"><i class="fas fa-exclamation" style="font-size:9px"></i> Not Assigned</span>`;
+        const notesTxt = p.admin_notes ? `<span title="${safeText(p.admin_notes)}">${safeText(p.admin_notes).substring(0,28)}${p.admin_notes.length>28?'…':''}</span>` : `<span style="color:#cbd5e1;font-style:italic">None</span>`;
+        return `<tr>
+            <td><div class="participant-cell"><div class="participant-avatar" style="background:${color}">${initials}</div><div><div class="participant-name">${safeText(p.full_name)}</div><div class="participant-id">${safeText(p.reg_id)}</div></div></div></td>
             <td style="font-size:12px;font-weight:500;">${safeText(p.category)}</td>
-            <td>
-                <div class="bib-cell" id="bib-cell-${safeText(p.reg_id)}">
-                    <div class="bib-view" id="bib-view-${safeText(p.reg_id)}" style="display:flex;align-items:center;gap:6px;">
-                        ${bibHTML}
-                        <button class="bib-edit-btn" onclick="startBibEdit('${safeText(p.reg_id)}')" title="Edit Bib Number">
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                    </div>
-                    <div class="bib-input-wrapper" id="bib-edit-${safeText(p.reg_id)}">
-                        <input class="bib-input" type="number" id="bib-input-${safeText(p.reg_id)}"
-                               value="${bib || ''}" placeholder="000" min="1" max="9999"
-                               onkeydown="if(event.key==='Enter')saveBib('${safeText(p.reg_id)}');if(event.key==='Escape')cancelBibEdit('${safeText(p.reg_id)}');">
-                        <button class="bib-save-btn" onclick="saveBib('${safeText(p.reg_id)}')">Save</button>
-                        <button class="bib-cancel-btn" onclick="cancelBibEdit('${safeText(p.reg_id)}')">✕</button>
-                    </div>
-                </div>
-            </td>
+            <td><div class="bib-cell" id="bib-cell-${safeText(p.reg_id)}"><div class="bib-view" id="bib-view-${safeText(p.reg_id)}" style="display:flex;align-items:center;gap:6px;">${bibHTML}<button class="bib-edit-btn" onclick="startBibEdit('${safeText(p.reg_id)}')" title="Edit Bib Number"><i class="fas fa-pencil-alt"></i></button></div><div class="bib-input-wrapper" id="bib-edit-${safeText(p.reg_id)}"><input class="bib-input" type="number" id="bib-input-${safeText(p.reg_id)}" value="${bib || ''}" placeholder="000" min="1" max="9999" onkeydown="if(event.key==='Enter')saveBib('${safeText(p.reg_id)}');if(event.key==='Escape')cancelBibEdit('${safeText(p.reg_id)}');"><button class="bib-save-btn" onclick="saveBib('${safeText(p.reg_id)}')">Save</button><button class="bib-cancel-btn" onclick="cancelBibEdit('${safeText(p.reg_id)}')">✕</button></div></div></td>
             <td style="font-size:12px;font-family:monospace;font-weight:600;">${safeText(p.tshirt_size)}</td>
             <td style="font-size:12px;color:var(--muted);">${safeText(p.phone)}</td>
             <td>${badgeHTML(p.payment_status)}</td>
             <td style="font-size:12px;">${notesTxt}</td>
-            <td>
-                <button class="action-btn" onclick="viewDetails('${safeText(p.reg_id)}')">Details</button>
-            </td>
+            <td><button class="action-btn" onclick="viewDetails('${safeText(p.reg_id)}')">Details</button></td>
         </tr>`;
     }).join('');
 }
 
-// ── KPI & COUNTS ───────────────────────────────
 function updateKPIs() {
-    const total    = allParticipants.length;
+    const total = allParticipants.length;
     const verified = allParticipants.filter(p => p.payment_status === 'VERIFIED').length;
-    const pending  = allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
-    const noBib    = allParticipants.filter(p => !p.bib_number || p.bib_number === '—').length;
-
-    document.getElementById('kpi-total').textContent    = total;
+    const pending = allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
+    const noBib = allParticipants.filter(p => !p.bib_number || p.bib_number === '—').length;
+    document.getElementById('kpi-total').textContent = total;
     document.getElementById('kpi-verified').textContent = verified;
-    document.getElementById('kpi-pending').textContent  = pending;
-    document.getElementById('kpi-bibs').textContent     = noBib;
-
-    const pct = total > 0 ? Math.round((verified/total)*100) : 0;
-    document.getElementById('kpi-verified-pct').textContent  = `${pct}% confirmed`;
-    document.getElementById('kpi-bibs-sub').textContent      = `${noBib} not assigned`;
+    document.getElementById('kpi-pending').textContent = pending;
+    document.getElementById('kpi-bibs').textContent = noBib;
+    document.getElementById('kpi-verified-pct').textContent = `${total>0?Math.round(verified/total*100):0}% confirmed`;
+    document.getElementById('kpi-bibs-sub').textContent = `${noBib} not assigned`;
     document.getElementById('sidebar-pending-count').textContent = pending;
-
     const banner = document.getElementById('urgent-banner');
-    if (pending > 0) {
-        banner.classList.remove('hidden');
-        document.getElementById('urgent-count-pill').textContent = `${pending} Pending`;
-    } else {
-        banner.classList.add('hidden');
-    }
+    if (pending > 0) { banner.classList.remove('hidden'); document.getElementById('urgent-count-pill').textContent = `${pending} Pending`; }
+    else { banner.classList.add('hidden'); }
 }
 
 function updateFilterCounts() {
-    const all      = allParticipants.length;
-    const pending  = allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
+    const all = allParticipants.length;
+    const pending = allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
     const verified = allParticipants.filter(p => p.payment_status === 'VERIFIED').length;
     const rejected = allParticipants.filter(p => p.payment_status === 'REJECTED').length;
-
-    document.getElementById('tab-count-all').textContent      = all;
-    document.getElementById('tab-count-pending').textContent  = pending;
+    document.getElementById('tab-count-all').textContent = all;
+    document.getElementById('tab-count-pending').textContent = pending;
     document.getElementById('tab-count-verified').textContent = verified;
     document.getElementById('tab-count-rejected').textContent = rejected;
 }
@@ -1554,19 +1447,11 @@ function updateFilterCounts() {
 function populateCategoryFilter() {
     const sel = document.getElementById('category-filter');
     const cats = [...new Set(allParticipants.map(p => p.category).filter(Boolean))].sort();
-    
     let html = `<option value="ALL">All Categories</option>`;
-    cats.forEach(c => {
-        html += `<optgroup label="── ${c} ──">`;
-        html += `<option value="${c}">All ${c}</option>`;
-        html += `<option value="${c}::MALE">${c} — Male</option>`;
-        html += `<option value="${c}::FEMALE">${c} — Female</option>`;
-        html += `</optgroup>`;
-    });
+    cats.forEach(c => { html += `<optgroup label="── ${c} ──"><option value="${c}">All ${c}</option><option value="${c}::MALE">${c} — Male</option><option value="${c}::FEMALE">${c} — Female</option></optgroup>`; });
     sel.innerHTML = html;
 }
 
-// ── FILTERS ────────────────────────────────────
 function setStatusTab(btn) {
     document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
@@ -1575,64 +1460,31 @@ function setStatusTab(btn) {
 }
 
 function applyFilters() {
-    const search    = document.getElementById('searchInput').value.toLowerCase().trim();
+    const search = document.getElementById('searchInput').value.toLowerCase().trim();
     const catFilter = document.getElementById('category-filter').value;
-
     filteredParticipants = allParticipants.filter(p => {
-        const matchSearch = !search ||
-            (p.full_name       || '').toLowerCase().includes(search) ||
-            (p.reg_id          || '').toLowerCase().includes(search) ||
-            (String(p.bib_number) || '').toLowerCase().includes(search) ||
-            (p.ic_or_passport  || '').toLowerCase().includes(search);
-        
-        const matchStatus = activeStatusFilter === 'ALL' ||
-            (activeStatusFilter === 'PENDING'
-                ? (!p.payment_status || p.payment_status === 'PENDING')
-                : p.payment_status === activeStatusFilter);
-        
+        const matchSearch = !search || (p.full_name||'').toLowerCase().includes(search) || (p.reg_id||'').toLowerCase().includes(search) || (String(p.bib_number)||'').toLowerCase().includes(search) || (p.ic_or_passport||'').toLowerCase().includes(search);
+        const matchStatus = activeStatusFilter === 'ALL' || (activeStatusFilter === 'PENDING' ? (!p.payment_status || p.payment_status === 'PENDING') : p.payment_status === activeStatusFilter);
         let matchCategory = true;
         if (catFilter !== 'ALL') {
-            if (catFilter.includes('::')) {
-                const [cat, gender] = catFilter.split('::');
-                matchCategory = (p.category === cat) && 
-                                ((p.gender || '').toUpperCase() === gender);
-            } else {
-                matchCategory = p.category === catFilter;
-            }
+            if (catFilter.includes('::')) { const [cat, gender] = catFilter.split('::'); matchCategory = (p.category === cat) && ((p.gender||'').toUpperCase() === gender); }
+            else { matchCategory = p.category === catFilter; }
         }
-        
         return matchSearch && matchStatus && matchCategory;
     });
-
     renderTable(filteredParticipants);
 }
 
-// ── BIB NUMBER MANAGEMENT ──────────────────────
 async function saveBibToAPI(regId, bibValue) {
-    const res = await fetch(`${API_BASE}/update-bib`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reg_id: regId, bib_number: bibValue })
-    });
-    
-    if (!res.ok) {
-        const errData = await res.json().catch(() => ({}));
-        throw new Error(errData.error || 'Gagal menyimpan nombor bib');
-    }
-    
+    const res = await fetch(`${API_BASE}/update-bib`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reg_id: regId, bib_number: bibValue }) });
+    if (!res.ok) { const errData = await res.json().catch(()=>({})); throw new Error(errData.error || 'Gagal menyimpan nombor bib'); }
     const p = allParticipants.find(x => x.reg_id === regId);
     if (p) p.bib_number = bibValue;
 }
 
 function syncBibUI(regId, bibValue) {
-    if (currentRegId === regId) {
-        const drawerBibVal = document.getElementById('d-bib-val');
-        const drawerBibInput = document.getElementById('d-bib-input');
-        if (drawerBibVal) drawerBibVal.textContent = bibValue;
-        if (drawerBibInput) drawerBibInput.value = bibValue;
-    }
-    updateKPIs();
-    applyFilters();
+    if (currentRegId === regId) { document.getElementById('d-bib-val').textContent = bibValue; document.getElementById('d-bib-input').value = bibValue; }
+    updateKPIs(); applyFilters();
 }
 
 function validateBib(bibValue) {
@@ -1645,79 +1497,38 @@ function validateBib(bibValue) {
 async function saveBib(regId) {
     const inputEl = document.getElementById(`bib-input-${regId}`);
     if (!inputEl) return;
-    
     const bibValue = inputEl.value.trim();
     const validationError = validateBib(bibValue);
-    
-    if (validationError) {
-        alert(validationError);
-        inputEl.focus();
-        inputEl.select();
-        return;
-    }
-    
+    if (validationError) { alert(validationError); inputEl.focus(); inputEl.select(); return; }
     const saveBtn = inputEl.nextElementSibling;
     const originalHTML = saveBtn.innerHTML;
     saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    saveBtn.disabled = true;
-    inputEl.disabled = true;
-    
+    saveBtn.disabled = true; inputEl.disabled = true;
     try {
         await saveBibToAPI(regId, bibValue);
         saveBtn.innerHTML = '<i class="fas fa-check"></i>';
         saveBtn.style.background = '#16a34a';
         setTimeout(() => syncBibUI(regId, bibValue), 600);
-    } catch (err) {
-        alert('Ralat menyimpan bib: ' + err.message);
-        saveBtn.innerHTML = originalHTML;
-        saveBtn.style.background = '';
-        saveBtn.disabled = false;
-        inputEl.disabled = false;
-        inputEl.focus();
-    }
+    } catch (err) { alert('Ralat menyimpan bib: ' + err.message); saveBtn.innerHTML = originalHTML; saveBtn.style.background = ''; saveBtn.disabled = false; inputEl.disabled = false; inputEl.focus(); }
 }
 
 async function saveBibFromDrawer() {
     if (!currentRegId) { alert('Tiada peserta dipilih.'); return; }
-    
     const inputEl = document.getElementById('d-bib-input');
     const bibValue = inputEl.value.trim();
     const validationError = validateBib(bibValue);
-    
-    if (validationError) {
-        alert(validationError);
-        inputEl.focus();
-        inputEl.select();
-        return;
-    }
-    
+    if (validationError) { alert(validationError); inputEl.focus(); inputEl.select(); return; }
     const saveBtn = inputEl.nextElementSibling;
     const originalHTML = saveBtn.innerHTML;
     saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-    saveBtn.disabled = true;
-    inputEl.disabled = true;
-    
+    saveBtn.disabled = true; inputEl.disabled = true;
     try {
         await saveBibToAPI(currentRegId, bibValue);
         saveBtn.innerHTML = '<i class="fas fa-check"></i>';
         saveBtn.style.background = '#16a34a';
         document.getElementById('d-bib-val').textContent = bibValue;
-        
-        setTimeout(() => {
-            updateKPIs();
-            applyFilters();
-            saveBtn.innerHTML = 'Save';
-            saveBtn.style.background = '';
-            saveBtn.disabled = false;
-            inputEl.disabled = false;
-        }, 800);
-    } catch (err) {
-        alert('Ralat menyimpan bib: ' + err.message);
-        saveBtn.innerHTML = originalHTML;
-        saveBtn.style.background = '';
-        saveBtn.disabled = false;
-        inputEl.disabled = false;
-    }
+        setTimeout(() => { updateKPIs(); applyFilters(); saveBtn.innerHTML = 'Save'; saveBtn.style.background = ''; saveBtn.disabled = false; inputEl.disabled = false; }, 800);
+    } catch (err) { alert('Ralat menyimpan bib: ' + err.message); saveBtn.innerHTML = originalHTML; saveBtn.style.background = ''; saveBtn.disabled = false; inputEl.disabled = false; }
 }
 
 function startBibEdit(regId) {
@@ -1741,30 +1552,56 @@ function cancelBibEdit(regId) {
     if (input && p) input.value = p.bib_number || '';
 }
 
-// ── DRAWER ─────────────────────────────────────
+// 🌟 UPDATED: viewDetails with Registration Phase & Fee 🌟
 function viewDetails(regId) {
     const p = allParticipants.find(x => x.reg_id === regId);
     if (!p) return;
     currentRegId = p.reg_id;
-
     document.getElementById('d-reg-id-header').textContent = `ID: ${p.reg_id}`;
-    document.getElementById('d-name').textContent     = p.full_name || '—';
-    document.getElementById('d-email').textContent    = p.email     || '—';
-    document.getElementById('d-ic').textContent       = p.ic_or_passport || '—';
-    document.getElementById('d-gender-chip').textContent  = p.gender  || '—';
-    document.getElementById('d-age').textContent      = p.age        || '—';
-    document.getElementById('d-state').textContent    = p.state      || '—';
-    document.getElementById('d-phone').textContent    = p.phone      || '—';
-    document.getElementById('d-em-name').textContent  = p.emergency_name  || '—';
+    document.getElementById('d-name').textContent = p.full_name || '—';
+    document.getElementById('d-email').textContent = p.email || '—';
+    document.getElementById('d-ic').textContent = p.ic_or_passport || '—';
+    document.getElementById('d-gender-chip').textContent = p.gender || '—';
+    document.getElementById('d-age').textContent = p.age || '—';
+    document.getElementById('d-state').textContent = p.state || '—';
+    document.getElementById('d-phone').textContent = p.phone || '—';
+    document.getElementById('d-em-name').textContent = p.emergency_name || '—';
     document.getElementById('d-em-phone').textContent = p.emergency_phone || '—';
-    document.getElementById('d-category').textContent = p.category   || '—';
-    document.getElementById('d-tshirt-chip').textContent  = `Size: ${p.tshirt_size || '—'}`;
-    document.getElementById('admin-notes').value      = p.admin_notes || '';
-
+    document.getElementById('d-category').textContent = p.category || '—';
+    document.getElementById('d-tshirt-chip').textContent = `Size: ${p.tshirt_size || '—'}`;
+    document.getElementById('admin-notes').value = p.admin_notes || '';
+    
+    // 🌟 NEW: Registration Phase Display 🌟
+    const phase = p.registration_phase || 'Regular';
+    const phaseChip = document.getElementById('d-phase-chip');
+    const phaseText = document.getElementById('d-phase-text');
+    if (phaseChip) {
+        phaseChip.textContent = phase;
+        if (phase === 'Early Bird') {
+            phaseChip.classList.add('phase-badge-early');
+            phaseChip.classList.remove('phase-badge-normal');
+        } else {
+            phaseChip.classList.add('phase-badge-normal');
+            phaseChip.classList.remove('phase-badge-early');
+        }
+    }
+    if (phaseText) phaseText.textContent = phase;
+    
+    // 🌟 NEW: Fee Display 🌟
+    const fee = p.registration_fee;
+    const feeElement = document.getElementById('d-fee');
+    if (feeElement) {
+        if (fee && fee > 0) {
+            feeElement.textContent = `RM ${parseFloat(fee).toFixed(2)}`;
+        } else {
+            feeElement.textContent = '—';
+        }
+    }
+    
     const bibVal = p.bib_number || '—';
-    document.getElementById('d-bib-val').textContent  = bibVal;
-    document.getElementById('d-bib-input').value      = p.bib_number || '';
-
+    document.getElementById('d-bib-val').textContent = bibVal;
+    document.getElementById('d-bib-input').value = p.bib_number || '';
+    
     const receiptBtn = document.getElementById('btn-view-receipt');
     if (p.receipt_r2_key) {
         receiptBtn.href = p.receipt_r2_key;
@@ -1772,7 +1609,6 @@ function viewDetails(regId) {
     } else {
         receiptBtn.style.display = 'none';
     }
-
     resetActionButtons();
     openDrawer();
 }
@@ -1780,186 +1616,95 @@ function viewDetails(regId) {
 function resetActionButtons() {
     const verifyBtn = document.getElementById('btn-verify');
     const rejectBtn = document.getElementById('btn-reject');
-    verifyBtn.disabled = false;
-    rejectBtn.disabled = false;
-    verifyBtn.classList.remove('btn-loading');
-    rejectBtn.classList.remove('btn-loading');
+    verifyBtn.disabled = false; rejectBtn.disabled = false;
+    verifyBtn.classList.remove('btn-loading'); rejectBtn.classList.remove('btn-loading');
     verifyBtn.innerHTML = '<i class="fas fa-check"></i> Verify';
     rejectBtn.innerHTML = '<i class="fas fa-times"></i> Reject';
-    verifyBtn.style.background = '#16a34a';
-    rejectBtn.style.background = '#dc2626';
+    verifyBtn.style.background = '#16a34a'; rejectBtn.style.background = '#dc2626';
 }
 
 function openDrawer() {
     const overlay = document.getElementById('drawer-overlay');
     overlay.style.display = 'flex';
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => overlay.classList.add('visible'));
-    });
+    requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('visible')));
     document.body.style.overflow = 'hidden';
 }
 
 function closeDrawer() {
     const overlay = document.getElementById('drawer-overlay');
     overlay.classList.remove('visible');
-    overlay.addEventListener('transitionend', function handler() {
-        overlay.style.display = 'none';
-        overlay.removeEventListener('transitionend', handler);
-    });
+    overlay.addEventListener('transitionend', function handler() { overlay.style.display = 'none'; overlay.removeEventListener('transitionend', handler); });
     document.body.style.overflow = '';
     currentRegId = null;
 }
 
-document.getElementById('drawer-overlay').addEventListener('click', (e) => {
-    if (e.target.id === 'drawer-overlay') closeDrawer();
-});
+document.getElementById('drawer-overlay').addEventListener('click', (e) => { if (e.target.id === 'drawer-overlay') closeDrawer(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
 
-// ── UPDATE STATUS ──────────────────────────────
 async function updateStatus(status) {
     const notes = document.getElementById('admin-notes').value;
     const title = status === 'VERIFIED' ? 'Sahkan Peserta' : 'Tolak Peserta';
-    const message = status === 'VERIFIED' 
-        ? 'Adakah anda pasti mahu <strong>SAHKAN</strong> pembayaran peserta ini?'
-        : 'Adakah anda pasti mahu <strong>TOLAK</strong> pendaftaran peserta ini?';
-    
+    const message = status === 'VERIFIED' ? 'Adakah anda pasti mahu <strong>SAHKAN</strong> pembayaran peserta ini?' : 'Adakah anda pasti mahu <strong>TOLAK</strong> pendaftaran peserta ini?';
     showConfirmDialog(title, message, async () => {
-        const btnEl = status === 'VERIFIED'
-            ? document.getElementById('btn-verify')
-            : document.getElementById('btn-reject');
-        const otherBtn = status === 'VERIFIED'
-            ? document.getElementById('btn-reject')
-            : document.getElementById('btn-verify');
-
+        const btnEl = status === 'VERIFIED' ? document.getElementById('btn-verify') : document.getElementById('btn-reject');
+        const otherBtn = status === 'VERIFIED' ? document.getElementById('btn-reject') : document.getElementById('btn-verify');
         btnEl.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Processing...`;
-        btnEl.disabled = true;
-        btnEl.classList.add('btn-loading');
-        otherBtn.disabled = true;
-        otherBtn.classList.add('btn-loading');
-
+        btnEl.disabled = true; btnEl.classList.add('btn-loading');
+        otherBtn.disabled = true; otherBtn.classList.add('btn-loading');
         try {
-            const res = await fetch(`${API_BASE}/update-status`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ reg_id: currentRegId, status, notes })
-            });
-            
-            if (!res.ok) {
-                const errData = await res.json().catch(() => ({}));
-                throw new Error(errData.error || 'Update failed');
-            }
-
+            const res = await fetch(`${API_BASE}/update-status`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ reg_id: currentRegId, status, notes }) });
+            if (!res.ok) { const errData = await res.json().catch(()=>({})); throw new Error(errData.error || 'Update failed'); }
             const p = allParticipants.find(x => x.reg_id === currentRegId);
-            if (p) {
-                p.payment_status = status;
-                p.admin_notes    = notes;
-            }
-
+            if (p) { p.payment_status = status; p.admin_notes = notes; }
             btnEl.innerHTML = `<i class="fas fa-check"></i> Success!`;
             btnEl.style.background = status === 'VERIFIED' ? '#15803d' : '#b91c1c';
-            
-            setTimeout(() => {
-                closeDrawer();
-                updateKPIs();
-                updateFilterCounts();
-                renderCharts();
-                applyFilters();
-            }, 800);
-
-        } catch (err) {
-            alert('Ralat: ' + err.message);
-            resetActionButtons();
-        }
+            setTimeout(() => { closeDrawer(); updateKPIs(); updateFilterCounts(); renderCharts(); applyFilters(); }, 800);
+        } catch (err) { alert('Ralat: ' + err.message); resetActionButtons(); }
     });
-}
-
-// ── CHARTS ─────────────────────────────────────
-const CHART_PALETTE = {
-    orange: '#ea580c', navy: '#172554', blue: '#3b82f6', green: '#16a34a',
-    amber: '#d97706', red: '#dc2626', teal: '#0d9488', violet: '#7c3aed',
-    sky: '#0284c7', rose: '#e11d48',
-};
-
-function renderCharts() {
-    renderGenderChart();
-    renderCategoryChart();
-    renderStatusChart();
 }
 
 function destroyChart(ref) { if (ref) { ref.destroy(); return null; } return null; }
 
 function buildLegend(containerId, labels, data, colors) {
-    const total = data.reduce((a,b) => a+b, 0);
-    document.getElementById(containerId).innerHTML = labels.map((l, i) => `
-        <div class="legend-item">
-            <div class="legend-dot" style="background:${colors[i]}"></div>
-            <span>${l}</span>
-            <span class="legend-val">${data[i]} <span style="color:var(--muted);font-weight:400">(${total>0?Math.round(data[i]/total*100):0}%)</span></span>
-        </div>`
-    ).join('');
+    const total = data.reduce((a,b)=>a+b,0);
+    document.getElementById(containerId).innerHTML = labels.map((l,i) => `<div class="legend-item"><div class="legend-dot" style="background:${colors[i]}"></div><span>${l}</span><span class="legend-val">${data[i]} <span style="color:var(--muted);font-weight:400">(${total>0?Math.round(data[i]/total*100):0}%)</span></span></div>`).join('');
 }
 
 function donutConfig(labels, data, colors) {
-    return {
-        type: 'doughnut',
-        data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0, hoverOffset: 6 }] },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '68%',
-            plugins: {
-                legend: { display: false },
-                tooltip: {
-                    callbacks: {
-                        label: ctx => ` ${ctx.label}: ${ctx.parsed} (${Math.round(ctx.parsed/ctx.dataset.data.reduce((a,b)=>a+b,0)*100)}%)`
-                    }
-                }
-            }
-        }
-    };
+    return { type: 'doughnut', data: { labels, datasets: [{ data, backgroundColor: colors, borderWidth: 0, hoverOffset: 6 }] }, options: { responsive: true, maintainAspectRatio: false, cutout: '68%', plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ` ${ctx.label}: ${ctx.parsed} (${Math.round(ctx.parsed/ctx.dataset.data.reduce((a,b)=>a+b,0)*100)}%)` } } } } };
 }
 
 function renderGenderChart() {
     chartGender = destroyChart(chartGender);
-    const counts = {};
-    allParticipants.forEach(p => {
-        const g = (p.gender || 'Unspecified').trim();
-        counts[g] = (counts[g] || 0) + 1;
-    });
-    const labels = Object.keys(counts);
-    const data   = Object.values(counts);
-    const colors = [CHART_PALETTE.navy, CHART_PALETTE.orange, CHART_PALETTE.teal, CHART_PALETTE.rose];
-    chartGender = new Chart(document.getElementById('chart-gender'), donutConfig(labels, data, colors));
-    buildLegend('legend-gender', labels, data, colors);
+    const counts = {}; allParticipants.forEach(p => { const g = (p.gender || 'Unspecified').trim(); counts[g] = (counts[g] || 0) + 1; });
+    const labels = Object.keys(counts), data = Object.values(counts);
+    const colors = ['#172554','#ea580c','#0d9488','#7c3aed'];
+    chartGender = new Chart(document.getElementById('chart-gender'), donutConfig(labels, data, colors.slice(0,labels.length)));
+    buildLegend('legend-gender', labels, data, colors.slice(0,labels.length));
 }
 
 function renderCategoryChart() {
     chartCategory = destroyChart(chartCategory);
-    const counts = {};
-    allParticipants.forEach(p => {
-        const c = (p.category || 'Unknown').trim();
-        counts[c] = (counts[c] || 0) + 1;
-    });
-    const labels = Object.keys(counts);
-    const data   = Object.values(counts);
-    const colors = [CHART_PALETTE.navy, CHART_PALETTE.blue, CHART_PALETTE.sky, CHART_PALETTE.teal, CHART_PALETTE.violet, CHART_PALETTE.orange];
-    chartCategory = new Chart(document.getElementById('chart-category'), donutConfig(labels, data, colors.slice(0, labels.length)));
-    buildLegend('legend-category', labels, data, colors.slice(0, labels.length));
+    const counts = {}; allParticipants.forEach(p => { const c = (p.category || 'Unknown').trim(); counts[c] = (counts[c] || 0) + 1; });
+    const labels = Object.keys(counts), data = Object.values(counts);
+    const colors = ['#172554','#3b82f6','#0284c7','#0d9488','#7c3aed','#ea580c'];
+    chartCategory = new Chart(document.getElementById('chart-category'), donutConfig(labels, data, colors.slice(0,labels.length)));
+    buildLegend('legend-category', labels, data, colors.slice(0,labels.length));
 }
 
 function renderStatusChart() {
     chartStatus = destroyChart(chartStatus);
     const verified = allParticipants.filter(p => p.payment_status === 'VERIFIED').length;
     const rejected = allParticipants.filter(p => p.payment_status === 'REJECTED').length;
-    const pending  = allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
-    const labels = ['Verified', 'Pending', 'Rejected'];
-    const data   = [verified, pending, rejected];
-    const colors = [CHART_PALETTE.green, CHART_PALETTE.amber, CHART_PALETTE.red];
+    const pending = allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
+    const labels = ['Verified', 'Pending', 'Rejected'], data = [verified, pending, rejected];
+    const colors = ['#16a34a','#d97706','#dc2626'];
     chartStatus = new Chart(document.getElementById('chart-status'), donutConfig(labels, data, colors));
     buildLegend('legend-status', labels, data, colors);
 }
 
-// ── EXPORT ─────────────────────────────────────
+function renderCharts() { renderGenderChart(); renderCategoryChart(); renderStatusChart(); }
+
 function exportToExcel() {
     if (!allParticipants.length) { alert('No data to export.'); return; }
     const wb = XLSX.utils.book_new();
@@ -1968,62 +1713,23 @@ function exportToExcel() {
     XLSX.writeFile(wb, 'LER2026_Participants.xlsx');
 }
 
-// ── NAV ────────────────────────────────────────
-function setView(view) {
-    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-    event.currentTarget.classList.add('active');
-}
+function setView(view) { document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); event.currentTarget.classList.add('active'); }
 
-// ── INIT ───────────────────────────────────────
 async function initDashboard() {
     const adminSession = localStorage.getItem("adminSession");
-    
-    if (!adminSession) {
-        window.location.href = "admin_login.html";
-        return;
-    }
-
+    if (!adminSession) { window.location.href = "admin_login.html"; return; }
     try {
-        const res = await fetch("https://langkawi-eco-api.mplbp-media.workers.dev/api/admin/verify", {
-            method: "GET",
-            headers: { "Authorization": adminSession }
-        });
-        
+        const res = await fetch("https://langkawi-eco-api.mplbp-media.workers.dev/api/admin/verify", { method: "GET", headers: { "Authorization": adminSession } });
         const data = await res.json();
-        
-        if (!data.valid) {
-            localStorage.removeItem("adminSession");
-            localStorage.removeItem("adminRole");
-            window.location.href = "admin_login.html";
-            return;
-        }
-
-        const adminUsername = data.adminUsername || localStorage.getItem("adminSession") || "Admin";
-        const adminNameEl = document.getElementById('admin-display-name');
-        if (adminNameEl) adminNameEl.textContent = adminUsername;
-
-        updateClock();
-        setInterval(updateClock, 1000);
+        if (!data.valid) { localStorage.removeItem("adminSession"); localStorage.removeItem("adminRole"); window.location.href = "admin_login.html"; return; }
+        document.getElementById('admin-display-name').textContent = data.adminUsername || localStorage.getItem("adminSession") || "Admin";
+        updateClock(); setInterval(updateClock, 1000);
         fetchParticipants();
-
-    } catch (err) {
-        console.error("Session verification failed:", err);
-        localStorage.removeItem("adminSession");
-        localStorage.removeItem("adminRole");
-        window.location.href = "admin_login.html";
-    }
+    } catch (err) { console.error(err); localStorage.removeItem("adminSession"); localStorage.removeItem("adminRole"); window.location.href = "admin_login.html"; }
 }
 
-// ── LOGOUT ─────────────────────────────────────
-function adminLogout() {
-    if (confirm('Adakah anda pasti mahu log keluar?')) {
-        localStorage.removeItem("adminSession");
-        localStorage.removeItem("adminRole");
-        window.location.href = "admin_login.html";
-    }
-}
+function adminLogout() { if (confirm('Adakah anda pasti mahu log keluar?')) { localStorage.removeItem("adminSession"); localStorage.removeItem("adminRole"); window.location.href = "admin_login.html"; } }
 
-// Start
 initDashboard();
 </script>
 </body>

@@ -38,21 +38,18 @@
         </ul>
     </div>
 
-        <!-- 3. Butang Action & Hamburger Button (Kanan) -->
         <div class="flex items-center space-x-4 md:space-x-6 shrink-0 z-50">
             <a href="login.html" class="text-white font-bold uppercase text-sm hover:opacity-80 transition hidden sm:block">Log in</a>
             <a href="register.html" class="bg-orange-600 hover:bg-orange-700 text-white px-5 md:px-7 py-2 md:py-2.5 rounded-full font-extrabold shadow-lg transition-all transform hover:scale-105 active:scale-95 text-xs md:text-sm uppercase">
                 Register Now
             </a>
             
-            <!-- Butang Hamburger (Hanya Muncul di Mobile/Tablet) -->
             <button id="menu-btn" class="block lg:hidden text-white focus:outline-none p-2" aria-label="Toggle Menu">
                 <i class="fas fa-bars text-2xl transition-transform duration-300" id="menu-icon"></i>
             </button>
         </div>
     </div>
 
-    <!-- 4. Mobile Menu Panel (Slide Down Overlay) -->
     <div id="mobile-menu" class="fixed inset-0 bg-blue-950/98 backdrop-blur-lg z-40 flex flex-col items-center justify-center transition-all duration-500 ease-in-out transform -translate-y-full opacity-0 pointer-events-none">
         <ul class="flex flex-col space-y-6 text-center text-white font-semi-bold uppercase text-lg tracking-widest mb-8">
             <li><a href="#" class="mobile-link text-orange-500 transition">Home</a></li>
@@ -61,7 +58,6 @@
             <li><a href="gallery.html" class="mobile-link hover:text-orange-500 transition">Gallery</a></li>
             <li><a href="info.html" class="mobile-link hover:text-orange-500 transition">Info</a></li>
         </ul>
-        <!-- Special Log In Button for Mobile Only -->
         <div class="w-full max-w-[250px] px-4 sm:hidden">
             <a href="login.html" class="mobile-link block text-center w-full bg-white/5 border border-white/20 backdrop-blur-sm text-orange-500 py-3 px-6 rounded-xl font-bold uppercase tracking-widest text-sm shadow-lg hover:bg-white/10 hover:border-orange-500/50 transition-all duration-300 transform active:scale-95">
                 <i class="fas fa-sign-in-alt mr-2 text-orange-500"></i> Log In
@@ -97,6 +93,13 @@
                     <span class="text-[10px] md:text-xs uppercase tracking-widest opacity-70">Seconds</span>
                 </div>
             </div>
+
+            <!-- EARLY BIRD BANNER START -->
+            <div id="early-bird-banner" class="max-w-xl mx-auto mb-8 p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl text-white shadow-lg text-center">
+                <h3 class="text-xl font-black uppercase">🔥 Early Bird Registration Now Open! 🔥</h3>
+                <p class="text-sm font-light">Save up to RM54! Limited-time offer valid until 30 July 2026.</p>
+            </div>
+            <!-- EARLY BIRD BANNER END -->
 
             <div class="flex flex-row flex-wrap justify-center gap-3 md:gap-4">
                 <a href="register.html" class="w-fit bg-orange-600 hover:bg-orange-700 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-semi-bold text-sm md:text-lg shadow-xl transition transform hover:scale-105 active:scale-95 whitespace-nowrap">
@@ -218,7 +221,9 @@
 
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4 sm:px-6">
         
-        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl">
+        <!-- 🌟 10KM MEN UPDATED 🌟 -->
+        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl relative">
+            <div class="absolute top-4 right-4 bg-orange-500 text-white text-[10px] font-black uppercase px-2 py-1 rounded-full shadow-lg z-10">Early Bird</div>
             <div class="bg-[#0072bc] p-8 flex justify-center items-center relative overflow-hidden">
                 <i class="fas fa-running text-white text-6xl z-10 group-hover:scale-110 transition-transform duration-500"></i>
                 <div class="absolute -right-4 -bottom-4 text-white/10 text-8xl font-black italic">10KM</div>
@@ -227,8 +232,9 @@
                 <h4 class="font-black text-2xl text-blue-950 italic uppercase leading-none">10KM MEN</h4>
                 
                 <div class="mt-3 mb-1">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Registration Fee</span>
-                    <div class="text-2xl md:text-3xl font-black text-orange-600 italic">RM 99.00</div>
+                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Early Bird Price</span>
+                    <div class="text-2xl md:text-3xl font-black text-green-600 italic">RM 79.00</div>
+                    <div class="text-xs text-gray-400 line-through">Normal: RM 99.00</div>
                 </div>
 
                 <div class="my-5 space-y-2">
@@ -245,7 +251,9 @@
             </div>
         </div>
 
-        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl">
+        <!-- 🌟 10KM WOMEN UPDATED 🌟 -->
+        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl relative">
+            <div class="absolute top-4 right-4 bg-orange-500 text-white text-[10px] font-black uppercase px-2 py-1 rounded-full shadow-lg z-10">Early Bird</div>
             <div class="bg-[#10a54a] p-8 flex justify-center items-center relative overflow-hidden">
                 <i class="fas fa-running text-white text-6xl z-10 group-hover:scale-110 transition-transform duration-500"></i>
                 <div class="absolute -right-4 -bottom-4 text-white/10 text-8xl font-black italic">10KM</div>
@@ -254,8 +262,9 @@
                 <h4 class="font-black text-2xl text-blue-950 italic uppercase leading-none">10KM WOMEN</h4>
 
                 <div class="mt-3 mb-1">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Registration Fee</span>
-                    <div class="text-2xl md:text-3xl font-black text-orange-600 italic">RM 99.00</div>
+                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Early Bird Price</span>
+                    <div class="text-2xl md:text-3xl font-black text-green-600 italic">RM 79.00</div>
+                    <div class="text-xs text-gray-400 line-through">Normal: RM 99.00</div>
                 </div>
 
                 <div class="my-5 space-y-2">
@@ -272,7 +281,9 @@
             </div>
         </div>
 
-        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl">
+        <!-- 🌟 5KM MEN UPDATED 🌟 -->
+        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl relative">
+            <div class="absolute top-4 right-4 bg-orange-500 text-white text-[10px] font-black uppercase px-2 py-1 rounded-full shadow-lg z-10">Early Bird</div>
             <div class="bg-[#29abe2] p-8 flex justify-center items-center relative overflow-hidden">
                 <i class="fas fa-walking text-white text-6xl z-10 group-hover:scale-110 transition-transform duration-500"></i>
                 <div class="absolute -right-4 -bottom-4 text-white/10 text-8xl font-black italic">5KM</div>
@@ -281,8 +292,9 @@
                 <h4 class="font-black text-2xl text-blue-950 italic uppercase leading-none">5KM MEN</h4>
 
                 <div class="mt-3 mb-1">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Registration Fee</span>
-                    <div class="text-2xl md:text-3xl font-black text-orange-600 italic">RM 69.00</div>
+                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Early Bird Price</span>
+                    <div class="text-2xl md:text-3xl font-black text-green-600 italic">RM 49.00</div>
+                    <div class="text-xs text-gray-400 line-through">Normal: RM 69.00</div>
                 </div>
 
                 <div class="my-5 space-y-2">
@@ -299,7 +311,9 @@
             </div>
         </div>
 
-        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl">
+        <!-- 🌟 5KM WOMEN UPDATED 🌟 -->
+        <div class="group bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all hover:-translate-y-2 hover:shadow-2xl relative">
+            <div class="absolute top-4 right-4 bg-orange-500 text-white text-[10px] font-black uppercase px-2 py-1 rounded-full shadow-lg z-10">Early Bird</div>
             <div class="bg-[#f7941d] p-8 flex justify-center items-center relative overflow-hidden">
                 <i class="fas fa-walking text-white text-6xl z-10 group-hover:scale-110 transition-transform duration-500"></i>
                 <div class="absolute -right-4 -bottom-4 text-white/10 text-8xl font-black italic">5KM</div>
@@ -308,8 +322,9 @@
                 <h4 class="font-black text-2xl text-blue-950 italic uppercase leading-none">5KM WOMEN</h4>
 
                 <div class="mt-3 mb-1">
-                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Registration Fee</span>
-                    <div class="text-2xl md:text-3xl font-black text-orange-600 italic">RM 69.00</div>
+                    <span class="text-xs text-gray-400 uppercase tracking-wider block font-bold">Early Bird Price</span>
+                    <div class="text-2xl md:text-3xl font-black text-green-600 italic">RM 49.00</div>
+                    <div class="text-xs text-gray-400 line-through">Normal: RM 69.00</div>
                 </div>
 
                 <div class="my-5 space-y-2">
@@ -344,12 +359,9 @@
                     <p class="text-gray-500 text-1xl mb-6 max-w-md">Discover the Official Langkawi Eco Run 2.0 Race Kit and Exclusive Merchandise designed just for you.</p>
                 </div>
                 
-                <!-- Slider Wrapper Container -->
                 <div class="relative group/slider my-auto">
-                    <!-- The Scroll Container -->
                     <div id="merch-slider" class="flex overflow-x-auto scrollbar-none snap-x snap-mandatory scroll-smooth gap-4 pb-4">
                         
-                        <!-- Slide 1: Jersey Front -->
                         <div class="w-full shrink-0 snap-center bg-white rounded-3xl p-6 shadow-sm relative flex flex-col justify-between aspect-square md:aspect-[4/3] lg:aspect-square">
                             <div class="w-full h-[75%] flex items-center justify-center overflow-hidden">
                                 <img src="assets/images/merch01.jpg" alt="Jersey Front" class="w-full h-full object-contain transform hover:scale-105 transition duration-500">
@@ -363,7 +375,6 @@
                             </div>
                         </div>
 
-                        <!-- Slide 2: Jersey Back -->
                         <div class="w-full shrink-0 snap-center bg-white rounded-3xl p-6 shadow-sm relative flex flex-col justify-between aspect-square md:aspect-[4/3] lg:aspect-square">
                             <div class="w-full h-[75%] flex items-center justify-center overflow-hidden">
                                 <img src="assets/images/merch02.jpeg" alt="Jersey Back" class="w-full h-full object-contain transform hover:scale-105 transition duration-500">
@@ -377,7 +388,6 @@
                             </div>
                         </div>
 
-                        <!-- Slide 3: Finisher Medal -->
                         <div class="w-full shrink-0 snap-center bg-white rounded-3xl p-6 shadow-sm relative flex flex-col justify-between aspect-square md:aspect-[4/3] lg:aspect-square">
                             <div class="w-full h-[75%] flex items-center justify-center overflow-hidden">
                                 <img src="assets/images/merch03.jpg" alt="Finisher Medal" class="w-full h-full object-contain transform hover:scale-105 transition duration-500">
@@ -391,7 +401,6 @@
                             </div>
                         </div>
 
-                        <!-- Slide 4: Running Cap -->
                         <div class="w-full shrink-0 snap-center bg-white rounded-3xl p-6 shadow-sm relative flex flex-col justify-between aspect-square md:aspect-[4/3] lg:aspect-square">
                             <div class="w-full h-[75%] flex items-center justify-center overflow-hidden">
                                 <img src="assets/images/merch05.jpg" alt="Running Cap" class="w-full h-full object-contain transform hover:scale-105 transition duration-500">
@@ -405,7 +414,6 @@
                             </div>
                         </div>
 
-                        <!-- Slide 5: Bib Number -->
                         <div class="w-full shrink-0 snap-center bg-white rounded-3xl p-6 shadow-sm relative flex flex-col justify-between aspect-square md:aspect-[4/3] lg:aspect-square">
                             <div class="w-full h-[75%] flex items-center justify-center overflow-hidden">
                                 <img src="assets/images/merch04.jpg" alt="Bib Number" class="w-full h-full object-contain transform hover:scale-105 transition duration-500">
@@ -419,7 +427,6 @@
                             </div>
                         </div>
 
-                        <!-- Slide 6: Drawstring Bag -->
                         <div class="w-full shrink-0 snap-center bg-white rounded-3xl p-6 shadow-sm relative flex flex-col justify-between aspect-square md:aspect-[4/3] lg:aspect-square">
                             <div class="w-full h-[75%] flex items-center justify-center overflow-hidden">
                                 <img src="assets/images/merch06.jpg" alt="Bib Number" class="w-full h-full object-contain transform hover:scale-105 transition duration-500">
@@ -435,7 +442,6 @@
 
                     </div>
 
-                    <!-- Navigation Arrows (Desktop Only Hover-in) -->
                     <button id="prev-slide" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-blue-950 text-white rounded-full flex items-center justify-center opacity-0 group-hover/slider:opacity-100 transition-opacity duration-300 shadow-md z-10">
                         <i class="fas fa-chevron-left text-sm"></i>
                     </button>
@@ -444,7 +450,6 @@
                     </button>
                 </div>
 
-                <!-- Slider Indicators (Dots) -->
                 <div class="flex justify-center gap-2 mt-4" id="slider-dots">
                     <button class="w-8 h-2 rounded-full bg-blue-600 transition-all duration-300" data-index="0"></button>
                     <button class="w-2 h-2 rounded-full bg-blue-200 transition-all duration-300" data-index="1"></button>
@@ -454,7 +459,7 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: LUCKY DRAW (KEKAL SAMA) -->
+            <!-- RIGHT COLUMN: LUCKY DRAW -->
             <div class="relative p-8 md:p-12 bg-blue-950 rounded-[40px] overflow-hidden group flex flex-col justify-between">
                 <div class="absolute top-0 right-0 w-64 h-64 bg-orange-600/20 blur-[100px] rounded-full"></div>
                 <div class="absolute bottom-0 left-0 w-48 h-48 bg-blue-500/20 blur-[80px] rounded-full"></div>
@@ -490,12 +495,10 @@
 
 <!-- SECTION: MEDIA HUB (YOUTUBE & TIKTOK) -->
 <section id="media" class="py-24 px-6 bg-gray-50 relative overflow-hidden">
-    <!-- Dekorasi Latar Belakang Digital -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:24px_24px] opacity-70 pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto relative z-10">
         
-        <!-- Header Section -->
         <div class="text-center mb-16">
             <span class="inline-block px-4 py-1 bg-red-600 text-white text-[10px] font-bold uppercase tracking-[0.2em] rounded-full mb-3 animate-pulse">#LangkawiEcoRun</span>
             <h2 class="text-4xl md:text-6xl font-black italic text-blue-950 uppercase tracking-tighter leading-none">
@@ -504,13 +507,10 @@
             <p class="text-gray-500 text-base mt-4 max-w-md mx-auto">Running spirit of Langkawi Eco Run through our official gallery.</p>
         </div>
 
-        <!-- Main Media Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             
-            <!-- LEFT COLUMN: YOUTUBE CINEMATIC PLAYERS (2 ROWS - 60% Width) -->
             <div class="lg:col-span-7 bg-white p-6 md:p-8 rounded-[40px] shadow-[0_20px_50px_rgba(0,0,0,0.03)] border border-gray-100 flex flex-col justify-between">
                 <div class="space-y-8">
-                    <!-- Header YouTube -->
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center text-red-600">
                             <i class="fab fa-youtube text-xl"></i>
@@ -521,14 +521,11 @@
                         </div>
                     </div>
                     
-                    <!-- CONTAINER UNTUK 2 VIDEO (2 ROWS) -->
                     <div class="grid grid-cols-1 gap-6">
                         
-                        <!-- ROW 1: VIDEO UTAMA (Contoh: Official Teaser) -->
                         <div class="space-y-2">
                             <p class="text-xs font-black text-blue-950 uppercase tracking-wider">1. Event Official Teaser</p>
                             <div class="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_15px_30px_rgba(220,38,38,0.1)]">
-                                <!-- CARA PASTE: Ganti keseluruhan iframe ini dengan EMBED CODE yang anda copy dari Youtube -->
                                 <iframe 
                                     class="absolute top-0 left-0 w-full h-full border-0" 
                                     width="560" height="315" 
@@ -540,11 +537,9 @@
                             </div>
                         </div>
 
-                        <!-- ROW 2: VIDEO KEDUA (Contoh: Race Route / Past Highlights) -->
                         <div class="space-y-2">
                             <p class="text-xs font-black text-blue-950 uppercase tracking-wider">2. Race Route & Marshall Briefing</p>
                             <div class="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-[0_15px_30px_rgba(220,38,38,0.1)]">
-                                <!-- CARA PASTE: Ganti keseluruhan iframe ini dengan EMBED CODE yang anda copy dari Youtube -->
                                 <iframe 
                                     class="absolute top-0 left-0 w-full h-full border-0" 
                                     width="560" height="315" 
@@ -564,14 +559,11 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN: OFFICIAL TIKTOK EMBED HUB (40% Width) -->
             <div class="lg:col-span-5 bg-blue-950 p-6 md:p-8 rounded-[40px] text-white relative overflow-hidden flex flex-col justify-between">
-            <!-- Aura Glow TikTok -->
             <div class="absolute -top-10 -right-10 w-40 h-40 bg-cyan-500/10 blur-[50px] rounded-full"></div>
             <div class="absolute -bottom-10 -left-10 w-40 h-40 bg-pink-500/10 blur-[50px] rounded-full"></div>
 
             <div class="relative z-10 w-full">
-                <!-- Header TikTok -->
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-3">
                         <div class="w-10 h-10 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center text-white border border-white/10">
@@ -585,47 +577,28 @@
                     <span class="text-[10px] font-black tracking-widest bg-white/10 px-3 py-1 rounded-full uppercase">LIVE EMBED</span>
                 </div>
 
-                <!-- CONTAINER UNTUK TAMPAL KOD TIKTOK -->
-                <!-- Di desktop ia akan ada internal scrollbar (max-h) & di mobile ia akan berderet rapi ke bawah -->
                 <div class="relative z-10 flex-1 flex flex-col gap-6 overflow-y-auto scrollbar-none max-h-[700px] w-full items-center justify-start py-4 px-2 pb-12 my-auto">
                     
-                    <!-- SLOT VIDEO TIKTOK 1 -->
                     <div class="w-full max-w-[325px] bg-black/20 rounded-2xl p-2 border border-white/5 shadow-inner flex justify-center items-center mx-auto shrink-0">
-                        
-                        <!-- === TAMPAL KOD EMBED TIKTOK 1 DI BAWAH INI === -->
                         <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@mplbp.official/video/7562786438635408660" data-video-id="7562786438635408660" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@mplbp.official" href="https://www.tiktok.com/@mplbp.official?refer=embed">@mplbp.official</a> Thank you to all participants and winners of the Langkawi Eco Run 2025! 🌍💚 Your energy, enthusiasm, and commitment to a greener future made this event a great success. Heartfelt appreciation and congratulations to all the organising committees, volunteers, and partners for your hard work and dedication behind the scenes you are the true driving force of this event. 🌿👏 Together, we’ve made Langkawi Eco Run 2025 not just a run, but a meaningful step towards a cleaner and greener Langkawi. Majlis Perbandaran Langkawi Bandaraya Pelancongan (MPLBP) <a title="cleanergreenersmater" target="_blank" href="https://www.tiktok.com/tag/cleanergreenersmater?refer=embed">#cleanergreenersmater</a> <a title="ler2025" target="_blank" href="https://www.tiktok.com/tag/ler2025?refer=embed">#LER2025</a> <a title="langkawismartcity" target="_blank" href="https://www.tiktok.com/tag/langkawismartcity?refer=embed">#langkawismartcity</a> <a title="runfornature" target="_blank" href="https://www.tiktok.com/tag/runfornature?refer=embed">#RunForNature</a> <a title="terokalangkawi" target="_blank" href="https://www.tiktok.com/tag/terokalangkawi?refer=embed">#TerokaLangkawi</a> <a target="_blank" title="♬ nhạc nền  - CTedmMusic 🎧" href="https://www.tiktok.com/music/nhạc-nền-CTedmMusic-🎧-7361408834247740161?refer=embed">♬ nhạc nền  - CTedmMusic 🎧</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
-                        <!-- ============================================== -->
-
                     </div>
 
-                    <!-- SLOT VIDEO TIKTOK 2 -->
                     <div class="w-full max-w-[325px] bg-black/20 rounded-2xl p-2 border border-white/5 shadow-inner flex justify-center items-center mx-auto shrink-0">
-                        
-                        <!-- === TAMPAL KOD EMBED TIKTOK 2 DI BAWAH INI === -->
                         <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@mplbp.official/video/7556555484967243028" data-video-id="7556555484967243028" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@mplbp.official" href="https://www.tiktok.com/@mplbp.official?refer=embed">@mplbp.official</a> The wait is over !! ⚪️🟢🔵 🌴🌊 Our official LER 2025 Jersey is here . With High-quality, looking sharp and built for our Nature ! AND GUESS WHAT?  Promo Code Discount is officially here to . Run with style and together we stride for sustainability ! 🏃💨 Jangan tunggu lama-lama dan claim sekarang . Be part of the hype, be part of the run! <a title="cleanergreenersmarter" target="_blank" href="https://www.tiktok.com/tag/cleanergreenersmarter?refer=embed">#CleanerGreenerSmarter</a> <a title="langkawismartcity" target="_blank" href="https://www.tiktok.com/tag/langkawismartcity?refer=embed">#LangkawiSmartCity</a> <a title="ler2025" target="_blank" href="https://www.tiktok.com/tag/ler2025?refer=embed">#LER2025</a> <a title="runfornature" target="_blank" href="https://www.tiktok.com/tag/runfornature?refer=embed">#RunForNature</a> <a title="fyp" target="_blank" href="https://www.tiktok.com/tag/fyp?refer=embed">#fyp</a> <a target="_blank" title="♬ original sound  - Team Vamos" href="https://www.tiktok.com/music/original-sound-Team-Vamos-7552837556208044801?refer=embed">♬ original sound  - Team Vamos</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
-                        <!-- ============================================== -->
-
                     </div>
 
-                    <!-- SLOT VIDEO TIKTOK 3 -->
                     <div class="w-full max-w-[325px] bg-black/20 rounded-2xl p-2 border border-white/5 shadow-inner flex justify-center items-center mx-auto shrink-0">
-                        
-                        <!-- === TAMPAL KOD EMBED TIKTOK 3 DI BAWAH INI === -->
                         <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@mplbp.official/video/7542740222094642453" data-video-id="7542740222094642453" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@mplbp.official" href="https://www.tiktok.com/@mplbp.official?refer=embed">@mplbp.official</a> Dont miss out ! LER 2025 this 18th October . We waiting for your registration . Early bird 25&#47;8-7&#47;9&#47;2025 Only RM 55.00 . <a title="langkawiecorun2025" target="_blank" href="https://www.tiktok.com/tag/langkawiecorun2025?refer=embed">#LangkawiEcoRun2025</a> <a title="strideforsustainability" target="_blank" href="https://www.tiktok.com/tag/strideforsustainability?refer=embed">#StrideForSustainability</a> <a title="cleanergreenersmarter" target="_blank" href="https://www.tiktok.com/tag/cleanergreenersmarter?refer=embed">#CleanerGreenerSmarter</a> <a title="langkawismartcity" target="_blank" href="https://www.tiktok.com/tag/langkawismartcity?refer=embed">#LangkawiSmartCity</a> <a title="terokalangkawi" target="_blank" href="https://www.tiktok.com/tag/terokalangkawi?refer=embed">#TerokaLangkawi</a> <a title="ler2025" target="_blank" href="https://www.tiktok.com/tag/ler2025?refer=embed">#LER2025</a> <a target="_blank" title="♬ Happy (From &#34;Despicable Me 2&#34;) - Pharrell Williams" href="https://www.tiktok.com/music/Happy-From-Despicable-Me-2-6706158507076356097?refer=embed">♬ Happy (From &#34;Despicable Me 2&#34;) - Pharrell Williams</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
-                        <!-- ============================================== -->
-
                     </div>
 
                 </div>
             </div>
 
-            <!-- TikTok Footer Button -->
             <a href="https://tiktok.com" target="_blank" class="relative z-10 w-full max-w-[325px] bg-white text-blue-950 font-black text-xs uppercase tracking-widest py-4 rounded-2xl text-center mx-auto block hover:bg-gradient-to-r hover:from-cyan-400 hover:via-pink-500 hover:to-yellow-400 hover:text-white transition-all duration-500 shadow-lg mt-4 shrink-0">
                 Open TikTok App
             </a>
         </div>
 
-        <!-- FAIL SCRIPT RASMI TIKTOK (Wajib letak sekali untuk hidupkan embed code) -->
         <script async src="https://www.tiktok.com/embed.js"></script>
 
         </div>
@@ -639,13 +612,11 @@
 
 <!-- FOOTER SECTION -->
 <footer class="bg-blue-950 text-white relative overflow-hidden pt-20 pb-10 border-t border-white/10">
-    <!-- Neon Glow Background Elements -->
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-orange-600/10 blur-[150px] rounded-full pointer-events-none"></div>
     <div class="absolute top-0 left-0 w-80 h-80 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10">
         
-        <!-- TOP FOOTER: BIG BRANDING STATEMENT -->
         <div class="border-b border-white/10 pb-12 mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
                 <h2 class="text-4xl md:text-5xl font-black italic uppercase tracking-tighter bg-gradient-to-r from-white via-blue-100 to-orange-500 bg-clip-text text-transparent pr-4">
@@ -653,16 +624,13 @@
                 </h2>
                 <p class="text-blue-200/60 text-sm mt-2 max-w-md">Run for Langkawi. Stride for Sustainability.</p>
             </div>
-            <!-- Butang Pantas Daftar -->
             <a href="register.html" class="bg-orange-600 hover:bg-orange-500 text-white font-black text-xs uppercase tracking-widest py-4 px-8 rounded-full transition-all duration-300 shadow-lg hover:shadow-orange-600/20 hover:-translate-y-1 block shrink-0">
                 Register Now <i class="fas fa-arrow-right ml-2 text-[10px]"></i>
             </a>
         </div>
 
-        <!-- MIDDLE FOOTER: 4-COLUMN LINKS GRID -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
             
-            <!-- Column 1: About & Contact -->
             <div class="space-y-4">
                 <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Contact Us</h4>
                 <p class="text-blue-100/70 text-sm leading-relaxed">
@@ -674,7 +642,6 @@
                 </div>
             </div>
 
-            <!-- Column 2: Quick Links -->
             <div class="space-y-4">
                 <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Quick Links</h4>
                 <ul class="space-y-2 text-sm text-blue-100/70">
@@ -685,7 +652,6 @@
                 </ul>
             </div>
 
-            <!-- Column 3: Event Information -->
             <div class="space-y-4">
                 <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Race Info</h4>
                 <ul class="space-y-2 text-sm text-blue-100/70">
@@ -696,7 +662,6 @@
                 </ul>
             </div>
 
-            <!-- Column 4: Social Media Connect -->
             <div class="space-y-4">
                 <h4 class="text-xs font-black uppercase tracking-[0.2em] text-orange-500">Follow Our Hype</h4>
                 <p class="text-blue-100/70 text-sm">Stay updated with the latest news, announcements, and event updates through our official social media channels.</p>
@@ -718,7 +683,6 @@
 
         </div>
 
-        <!-- BOTTOM FOOTER: COPYRIGHT & LEGAL -->
         <div class="border-t border-white/5 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-blue-200/40 font-medium">
             <p class="text-center sm:text-left">
                 &copy; 2026 Langkawi Eco Run 2.0. All Rights Reserved. Designed by UKPA MPLBP.
@@ -733,21 +697,17 @@
 </footer>
 
 <!-- FLOATING WHATSAPP BUTTON -->
-<!-- Posisi fixed, z-50 memastikan ia sentiasa duduk di lapisan paling atas sekali -->
 <a href="https://wa.me/601158958809?text=Hi%20Admin%20Langkawi%20Eco%20Run!%20Saya%20nak%20tanya%20tentang..." 
    target="_blank" 
    rel="noopener noreferrer"
    class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(37,211,102,0.4)] hover:shadow-[0_15px_40px_rgba(37,211,102,0.6)] border-2 border-white/20 transition-all duration-300 hover:-translate-y-2 group animate-[float_3s_ease-in-out_infinite]"
    title="Hubungi Kami Melalui WhatsApp">
     
-    <!-- Efek Pulse Bulatan Belakang (Glow Ring) -->
     <span class="absolute inset-0 rounded-full bg-[#25D366]/40 animate-ping pointer-events-none scale-105"></span>
     
-    <!-- Ikon WhatsApp FontAwesome -->
     <i class="fab fa-whatsapp text-2xl md:text-3xl relative z-10 transition-transform duration-300 group-hover:scale-110"></i>
 </a>
 
-<!-- Tambah CSS keyframes ini di dalam tag <style> sedia ada anda -->
 <style>
     @keyframes float {
         0%, 100% { transform: translateY(0); }
@@ -755,6 +715,191 @@
     }
 </style>
 
-<script src="assets/js/script.js"></script>
+<script>
+// ========== COUNTDOWN TIMER ==========
+function updateCountdown() {
+    const eventDate = new Date(2026, 10, 21); // 21 November 2026
+    const now = new Date();
+    const diff = eventDate - now;
+
+    if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (86400000)) / (3600000));
+        const minutes = Math.floor((diff % 3600000) / 60000);
+        const seconds = Math.floor((diff % 60000) / 1000);
+        
+        document.getElementById('days').innerText = days;
+        document.getElementById('hours').innerText = hours;
+        document.getElementById('minutes').innerText = minutes;
+        document.getElementById('seconds').innerText = seconds;
+    }
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ========== EARLY BIRD CONFIGURATION ==========
+const EARLY_BIRD_END_DATE = new Date(2026, 6, 30); // 30 Julai 2026 (BETUL: Bulan 6 = Julai)
+
+function isEarlyBirdActive() {
+    return new Date() <= EARLY_BIRD_END_DATE;
+}
+
+function updateHomepagePrices() {
+    const isEarly = isEarlyBirdActive();
+    
+    // Update banner
+    const banner = document.getElementById('early-bird-banner');
+    if (banner) {
+        banner.style.display = isEarly ? 'block' : 'none';
+    }
+    
+    // Update all category cards
+    const cards = document.querySelectorAll('#categories .group');
+    
+    cards.forEach(card => {
+        const earlyBirdBadge = card.querySelector('.absolute.top-4.right-4');
+        const priceElement = card.querySelector('.text-2xl.md\\:text-3xl.font-black');
+        const originalPriceElement = card.querySelector('.text-xs.line-through');
+        const priceContainer = card.querySelector('.mt-3.mb-1');
+        
+        if (!isEarly) {
+            // Hide early bird badge
+            if (earlyBirdBadge) earlyBirdBadge.style.display = 'none';
+            
+            // Update to normal price
+            const cardTitle = card.querySelector('h4')?.innerText || '';
+            if (cardTitle.includes('10KM')) {
+                if (priceElement) {
+                    priceElement.innerText = 'RM 99.00';
+                    priceElement.classList.remove('text-green-600');
+                    priceElement.classList.add('text-orange-600');
+                }
+                if (originalPriceElement) originalPriceElement.style.display = 'none';
+            } else if (cardTitle.includes('5KM')) {
+                if (priceElement) {
+                    priceElement.innerText = 'RM 69.00';
+                    priceElement.classList.remove('text-green-600');
+                    priceElement.classList.add('text-orange-600');
+                }
+                if (originalPriceElement) originalPriceElement.style.display = 'none';
+            }
+            
+            // Remove "Early Bird Price" text
+            const earlyBirdText = priceContainer?.querySelector('.text-xs.text-gray-400.uppercase.tracking-wider');
+            if (earlyBirdText && earlyBirdText.innerText.includes('Early Bird Price')) {
+                earlyBirdText.style.display = 'none';
+            }
+        } else {
+            if (earlyBirdBadge) earlyBirdBadge.style.display = 'block';
+            if (originalPriceElement) originalPriceElement.style.display = 'block';
+            if (priceElement) priceElement.classList.add('text-green-600');
+            
+            const earlyBirdText = priceContainer?.querySelector('.text-xs.text-gray-400.uppercase.tracking-wider');
+            if (earlyBirdText && earlyBirdText.innerText.includes('Early Bird Price')) {
+                earlyBirdText.style.display = 'block';
+            }
+        }
+    });
+}
+
+// ========== MERCHANDISE SLIDER ==========
+function initSlider() {
+    const slider = document.getElementById('merch-slider');
+    const prevBtn = document.getElementById('prev-slide');
+    const nextBtn = document.getElementById('next-slide');
+    const dots = document.querySelectorAll('#slider-dots button');
+    
+    if (!slider) return;
+    
+    const updateDots = () => {
+        const scrollPosition = slider.scrollLeft;
+        const slideWidth = slider.clientWidth;
+        const activeIndex = Math.round(scrollPosition / slideWidth);
+        
+        dots.forEach((dot, idx) => {
+            if (idx === activeIndex) {
+                dot.classList.remove('w-2', 'bg-blue-200');
+                dot.classList.add('w-8', 'bg-blue-600');
+            } else {
+                dot.classList.remove('w-8', 'bg-blue-600');
+                dot.classList.add('w-2', 'bg-blue-200');
+            }
+        });
+    };
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            slider.scrollBy({ left: slider.clientWidth, behavior: 'smooth' });
+            setTimeout(updateDots, 300);
+        });
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            slider.scrollBy({ left: -slider.clientWidth, behavior: 'smooth' });
+            setTimeout(updateDots, 300);
+        });
+    }
+    
+    slider.addEventListener('scroll', updateDots);
+    updateDots();
+}
+
+// ========== MOBILE MENU ==========
+function initMobileMenu() {
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    if (!menuBtn) return;
+    
+    menuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.contains('translate-y-0');
+        if (!isOpen) {
+            mobileMenu.classList.remove('-translate-y-full', 'opacity-0', 'pointer-events-none');
+            mobileMenu.classList.add('translate-y-0', 'opacity-100');
+            menuIcon.classList.remove('fa-bars');
+            menuIcon.classList.add('fa-times', 'rotate-90');
+            document.body.classList.add('overflow-hidden');
+        } else {
+            mobileMenu.classList.remove('translate-y-0', 'opacity-100');
+            mobileMenu.classList.add('-translate-y-full', 'opacity-0', 'pointer-events-none');
+            menuIcon.classList.remove('fa-times', 'rotate-90');
+            menuIcon.classList.add('fa-bars');
+            document.body.classList.remove('overflow-hidden');
+        }
+    });
+    
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', () => menuBtn.click());
+    });
+}
+
+// ========== FAQ TOGGLE ==========
+function initFaq() {
+    document.querySelectorAll(".faq-toggle").forEach(button => {
+        button.addEventListener("click", () => {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector("i");
+            button.classList.toggle("text-orange-500");
+            icon.classList.toggle("rotate-180");
+            if (content.style.maxHeight && content.style.maxHeight !== "0px") {
+                content.style.maxHeight = "0px";
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    });
+}
+
+// ========== INITIALIZE ALL ==========
+document.addEventListener('DOMContentLoaded', () => {
+    updateHomepagePrices();
+    initSlider();
+    initMobileMenu();
+    initFaq();
+});
+</script>
 </body>
 </html>

@@ -17,7 +17,6 @@
             background-size: cover;  
             background-position: center;  
         }  
-        /* Menyembunyikan step form yang tidak aktif */  
         .form-step { display: none; }  
         .form-step-active { display: block; }  
     </style>  
@@ -185,13 +184,14 @@
                         <input type="text" id="input-phone" required inputmode="numeric" maxlength="11" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="0123456789">  
                     </div>  
                     <div class="md:col-span-2">  
-                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Dashboard Password (Min 6 Aksara)</label>  
+                        <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-2">Dashboard Password (Min 6 Characters)</label>  
                         <input type="password" id="input-password" required minlength="6" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-orange-500 font-medium text-gray-800 transition" placeholder="••••••••">  
                         <p class="text-[10px] text-gray-400 mt-1 uppercase font-bold">Use this password to log in to your dashboard later.</p>  
                     </div>  
                 </div>  
             </div>  
   
+            <!-- STEP 2: Race & Kit Preferences (UPDATED WITH LABELS) -->
             <div class="form-step space-y-6">  
                 <div class="border-b border-gray-100 pb-4">  
                     <h2 class="text-2xl font-black italic text-blue-950 uppercase tracking-tight">Step 2: Race & Kit Preferences</h2>  
@@ -202,31 +202,51 @@
                     <label class="block text-xs font-bold uppercase tracking-wider text-blue-950 mb-3">Race Category Selection</label>  
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="10km-men" checked class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="10km-men" data-early-fee="79.00" data-normal-fee="99.00" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">10KM RUN - MEN</span>  
-                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced • RM 99.00</span>  
+                                <div class="flex items-center gap-2 mt-1">  
+                                    <span class="early-bird-badge text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full font-bold uppercase">Early Bird</span>  
+                                    <span class="price-display text-lg font-black text-green-600 italic">RM 79.00</span>  
+                                    <span class="normal-price-display text-xs text-gray-400 line-through">RM 99.00</span>  
+                                </div>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced</span>  
                             </div>  
                         </label>  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="10km-women" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="10km-women" data-early-fee="79.00" data-normal-fee="99.00" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">10KM RUN - WOMEN</span>  
-                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced • RM 99.00</span>  
+                                <div class="flex items-center gap-2 mt-1">  
+                                    <span class="early-bird-badge text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full font-bold uppercase">Early Bird</span>  
+                                    <span class="price-display text-lg font-black text-green-600 italic">RM 79.00</span>  
+                                    <span class="normal-price-display text-xs text-gray-400 line-through">RM 99.00</span>  
+                                </div>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Advanced</span>  
                             </div>  
                         </label>  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="5km-men" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="5km-men" data-early-fee="49.00" data-normal-fee="69.00" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">5KM FUN RUN - MEN</span>  
-                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy • RM 69.00</span>  
+                                <div class="flex items-center gap-2 mt-1">  
+                                    <span class="early-bird-badge text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full font-bold uppercase">Early Bird</span>  
+                                    <span class="price-display text-lg font-black text-green-600 italic">RM 49.00</span>  
+                                    <span class="normal-price-display text-xs text-gray-400 line-through">RM 69.00</span>  
+                                </div>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy</span>  
                             </div>  
                         </label>  
                         <label class="border-2 border-gray-100 rounded-2xl p-4 flex justify-between items-center cursor-pointer hover:border-blue-500 transition-all group relative">  
-                            <input type="radio" name="category" value="5km-women" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
+                            <input type="radio" name="category" value="5km-women" data-early-fee="49.00" data-normal-fee="69.00" class="absolute right-4 top-1/2 -translate-y-1/2 accent-orange-600 w-4 h-4">  
                             <div class="pr-8">  
                                 <span class="block font-black text-lg text-blue-950 group-hover:text-blue-600 transition-colors">5KM FUN RUN - WOMEN</span>  
-                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy • RM 69.00</span>  
+                                <div class="flex items-center gap-2 mt-1">  
+                                    <span class="early-bird-badge text-[10px] bg-orange-500 text-white px-2 py-0.5 rounded-full font-bold uppercase">Early Bird</span>  
+                                    <span class="price-display text-lg font-black text-green-600 italic">RM 49.00</span>  
+                                    <span class="normal-price-display text-xs text-gray-400 line-through">RM 69.00</span>  
+                                </div>  
+                                <span class="text-xs text-gray-400 font-bold uppercase">Difficulty: Easy</span>  
                             </div>  
                         </label>  
                     </div>  
@@ -255,6 +275,7 @@
                 </div>  
             </div>  
   
+            <!-- STEP 3: Declaration & Summary -->
             <div class="form-step space-y-6">  
                 <div class="border-b border-gray-100 pb-4">  
                     <h2 class="text-2xl font-black italic text-blue-950 uppercase tracking-tight">Step 3: Declaration & Summary</h2>  
@@ -285,60 +306,6 @@
                         </div>  
                     </div>  
                 </div>  
-
-        <div id="payment-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
-            <div class="absolute inset-0 bg-blue-950/80 backdrop-blur-sm transition-opacity"></div>
-            <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative overflow-hidden transform scale-95 transition-all duration-300">
-                
-                <div class="bg-blue-950 p-6 flex justify-between items-center">
-                    <div>
-                        <h3 class="text-xl font-black italic text-white uppercase tracking-tight">Payment Details</h3>
-                        <p class="text-blue-200 text-xs uppercase font-bold tracking-wider">Langkawi Eco Run 2.0</p>
-                    </div>
-                    <button id="btn-close-modal" class="text-white/70 hover:text-white transition">
-                        <i class="fas fa-times text-xl"></i>
-                    </button>
-                </div>
-
-                <div class="p-6 md:p-8">
-                    <div class="bg-orange-600 rounded-2xl p-4 mb-8 text-center text-white">
-                        <p class="text-[10px] uppercase font-black opacity-80">Total Amount Payable</p>
-                        <h2 id="modal-payment-amount" class="text-3xl font-black italic uppercase">RM 0.00</h2>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-8">
-                        <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl p-6 bg-gray-50">
-                            <img src="assets/images/payment_qr.png" alt="DuitNow QR" class="w-full max-w-[200px] object-contain mb-3">
-                            <span class="text-[10px] font-bold text-gray-500 uppercase">Scan to Pay</span>
-                        </div>
-
-                        <div class="space-y-6">
-                            <div>
-                                <h4 class="text-xs font-black text-blue-950 uppercase mb-3 border-b pb-2">Bank Transfer</h4>
-                                <div class="text-[11px] text-gray-600 space-y-1">
-                                    <p><strong>Bank:</strong> Maybank</p>
-                                    <p><strong>Account:</strong> 562100123456</p>
-                                    <p><strong>Name:</strong> Langkawi Eco Run</p>
-                                </div>
-                            </div>
-                            <div>
-                                <h4 class="text-xs font-black text-blue-950 uppercase mb-3 border-b pb-2">Steps</h4>
-                                <ul class="text-[11px] text-gray-600 space-y-2 list-decimal list-inside">
-                                    <li>Scan QR/Transfer amount.</li>
-                                    <li>Save transaction receipt.</li>
-                                    <li>Close this window.</li>
-                                    <li>Upload receipt to proceed.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button id="btn-done-modal" class="w-full mt-8 bg-blue-950 hover:bg-orange-600 text-white font-black py-4 rounded-xl transition uppercase tracking-widest text-sm">
-                        I Have Made Payment
-                    </button>
-                </div>
-            </div>
-        </div>
   
                 <button type="button" id="btn-open-payment" class="w-full bg-blue-950 hover:bg-blue-900 text-white font-black text-center py-4 rounded-xl shadow-lg uppercase tracking-widest text-sm transition transform active:scale-95 flex justify-center items-center gap-2">  
                     <i class="fas fa-qrcode"></i> View Payment QR & Details  
@@ -361,6 +328,7 @@
                     </label>  
                 </div>  
   
+                <!-- Summary Section -->
                 <div class="bg-gray-50 border border-gray-100 rounded-2xl p-6 space-y-3">  
                     <h4 class="font-black italic text-base text-blue-950 uppercase tracking-tight border-b border-gray-200/60 pb-2">Review Confirmation Summary</h4>  
                     <div class="grid grid-cols-2 gap-y-2 gap-x-4 text-xs font-bold uppercase tracking-wide">  
@@ -378,6 +346,12 @@
                           
                         <div class="text-gray-400">T-Shirt Size:</div>  
                         <div id="summary-size" class="text-blue-950 text-right">-</div>  
+  
+                        <div class="text-gray-400">Registration Phase:</div>  
+                        <div id="summary-phase" class="text-green-600 font-black text-right">EARLY BIRD</div>  
+  
+                        <div class="text-gray-400">Registration Fee:</div>  
+                        <div id="summary-fee" class="text-orange-600 font-black text-right">RM 0.00</div>  
                     </div>  
                 </div>  
             </div> 
@@ -512,7 +486,178 @@
         </div>  
     </footer> 
   
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">
+        <div class="absolute inset-0 bg-blue-950/80 backdrop-blur-sm transition-opacity"></div>
+        <div class="bg-white rounded-3xl shadow-2xl max-w-2xl w-full relative overflow-hidden transform scale-95 transition-all duration-300">
+            <div class="bg-blue-950 p-6 flex justify-between items-center">
+                <div>
+                    <h3 class="text-xl font-black italic text-white uppercase tracking-tight">Payment Details</h3>
+                    <p class="text-blue-200 text-xs uppercase font-bold tracking-wider">Langkawi Eco Run 2.0</p>
+                </div>
+                <button id="btn-close-modal" class="text-white/70 hover:text-white transition">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="p-6 md:p-8">
+                <div class="bg-orange-600 rounded-2xl p-4 mb-8 text-center text-white">
+                    <p class="text-[10px] uppercase font-black opacity-80">Total Amount Payable</p>
+                    <h2 id="modal-payment-amount" class="text-3xl font-black italic uppercase">RM 0.00</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="flex flex-col items-center justify-center border-2 border-dashed border-gray-200 rounded-2xl p-6 bg-gray-50">
+                        <img src="assets/images/payment_qr.png" alt="DuitNow QR" class="w-full max-w-[200px] object-contain mb-3">
+                        <span class="text-[10px] font-bold text-gray-500 uppercase">Scan to Pay</span>
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="text-xs font-black text-blue-950 uppercase mb-3 border-b pb-2">Bank Transfer</h4>
+                            <div class="text-[11px] text-gray-600 space-y-1">
+                                <p><strong>Bank:</strong> Maybank</p>
+                                <p><strong>Account:</strong> 562100123456</p>
+                                <p><strong>Name:</strong> Langkawi Eco Run</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-black text-blue-950 uppercase mb-3 border-b pb-2">Steps</h4>
+                            <ul class="text-[11px] text-gray-600 space-y-2 list-decimal list-inside">
+                                <li>Scan QR/Transfer amount.</li>
+                                <li>Save transaction receipt.</li>
+                                <li>Close this window.</li>
+                                <li>Upload receipt to proceed.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <button id="btn-done-modal" class="w-full mt-8 bg-blue-950 hover:bg-orange-600 text-white font-black py-4 rounded-xl transition uppercase tracking-widest text-sm">
+                    I Have Made Payment
+                </button>
+            </div>
+        </div>
+    </div>
+  
     <script>  
+        // ========== EARLY BIRD CONFIGURATION ==========
+        // Early Bird berlangsung sehingga 30 Julai 2026
+        const EARLY_BIRD_END_DATE = new Date(2026, 6, 30); // 30 Julai 2026 (Bulan 6 = Julai sebab Jan=0)
+        // ===================================================
+  
+        function isEarlyBirdActive() {
+            const today = new Date();
+            return today <= EARLY_BIRD_END_DATE;
+        }
+  
+        function updatePricesBasedOnDate() {
+            const isEarly = isEarlyBirdActive();
+            const radios = document.querySelectorAll('input[name="category"]');
+            
+            radios.forEach(radio => {
+                const earlyPrice = radio.getAttribute('data-early-fee');
+                const normalPrice = radio.getAttribute('data-normal-fee');
+                const currentFee = isEarly ? earlyPrice : normalPrice;
+                
+                // Update data-fee attribute untuk submission
+                radio.setAttribute('data-fee', currentFee);
+                
+                // Update visual dalam card
+                const parentLabel = radio.closest('label');
+                if (parentLabel) {
+                    const priceDisplay = parentLabel.querySelector('.price-display');
+                    const normalPriceDisplay = parentLabel.querySelector('.normal-price-display');
+                    const earlyBadge = parentLabel.querySelector('.early-bird-badge');
+                    
+                    if (priceDisplay) {
+                        priceDisplay.innerHTML = `RM ${parseFloat(currentFee).toFixed(2)}`;
+                        if (!isEarly) {
+                            priceDisplay.classList.remove('text-green-600');
+                            priceDisplay.classList.add('text-orange-600');
+                        } else {
+                            priceDisplay.classList.remove('text-orange-600');
+                            priceDisplay.classList.add('text-green-600');
+                        }
+                    }
+                    
+                    // Hide normal price jika early bird, tunjuk jika normal
+                    if (normalPriceDisplay) {
+                        if (isEarly) {
+                            normalPriceDisplay.style.display = 'inline-block';
+                        } else {
+                            normalPriceDisplay.style.display = 'none';
+                        }
+                    }
+                    
+                    // Hide early bird badge jika sudah tamat
+                    if (earlyBadge) {
+                        if (isEarly) {
+                            earlyBadge.style.display = 'inline-block';
+                        } else {
+                            earlyBadge.style.display = 'none';
+                        }
+                    }
+                }
+            });
+            
+            // Update summary jika ada radio yang dipilih
+            const checkedRadio = document.querySelector('input[name="category"]:checked');
+            if (checkedRadio) {
+                updateSummaryDisplay(checkedRadio, isEarly);
+            }
+            
+            // Update modal amount
+            updateModalAmount();
+        }
+  
+        function updateSummaryDisplay(selectedRadio, isEarly) {
+            const fee = selectedRadio.getAttribute('data-fee');
+            const summaryFee = document.getElementById('summary-fee');
+            if (summaryFee) summaryFee.innerText = 'RM ' + parseFloat(fee).toFixed(2);
+            
+            const phaseSpan = document.getElementById('summary-phase');
+            const categorySpan = document.getElementById('summary-cate');
+            
+            // Get category name
+            const parentLabel = selectedRadio.closest('label');
+            const categoryName = parentLabel.querySelector('span:first-child')?.innerText || selectedRadio.value;
+            
+            if (phaseSpan) {
+                if (isEarly) {
+                    phaseSpan.innerText = "EARLY BIRD";
+                    phaseSpan.className = "text-green-600 font-black text-right";
+                    // Tunjukkan kategori dengan Early Bird label
+                    if (categorySpan) categorySpan.innerText = `${categoryName} (EARLY BIRD)`;
+                } else {
+                    phaseSpan.innerText = "NORMAL PRICE";
+                    phaseSpan.className = "text-orange-600 font-black text-right";
+                    // Hanya nama kategori sahaja
+                    if (categorySpan) categorySpan.innerText = categoryName;
+                }
+            }
+        }
+  
+        function updateModalAmount() {
+            const selectedCategory = document.querySelector('input[name="category"]:checked');
+            const modalAmount = document.getElementById('modal-payment-amount');
+            if (selectedCategory && modalAmount) {
+                const fee = selectedCategory.getAttribute('data-fee');
+                modalAmount.innerText = 'RM ' + parseFloat(fee).toFixed(2);
+            }
+        }
+  
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updatePricesBasedOnDate();
+            
+            // Add event listener to all radio buttons
+            document.querySelectorAll('input[name="category"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const isEarly = isEarlyBirdActive();
+                    updateSummaryDisplay(radio, isEarly);
+                    updateModalAmount();
+                });
+            });
+        });
+  
+        // IC and Phone validation
         const icInput = document.getElementById('input-ic');  
         const phoneInput = document.getElementById('input-phone');  
         const emPhoneInput = document.getElementById('input-emphone');   
@@ -526,31 +671,26 @@
         if (icInput) {
             icInput.addEventListener('input', (e) => {
                 const ic = e.target.value;
-                  
                 const isIC = /^\d{12}$/.test(ic);  
                 if (isIC) {
                     let birthYearShort = parseInt(ic.substring(0, 2));
                     let birthMonth = parseInt(ic.substring(2, 4));
                     let birthDay = parseInt(ic.substring(4, 6));
-
                     const currentYear = 2026;
                     const currentYearShort = currentYear % 100;   
-
                     let fullBirthYear = (birthYearShort > currentYearShort) ? (1900 + birthYearShort) : (2000 + birthYearShort);
                     let age = currentYear - fullBirthYear;
-
                     if (!isNaN(age) && age >= 0 && birthMonth >= 1 && birthMonth <= 12 && birthDay >= 1 && birthDay <= 31) {
                         ageInput.value = age;
                     } else {
-                        ageInput.value = "INVALID";
+                        ageInput.value = "";
                     }
-
                     let lastDigit = parseInt(ic.charAt(11));
                     if (!isNaN(lastDigit) && genderSelect) {
                         genderSelect.value = (lastDigit % 2 === 0) ? "FEMALE" : "MALE";
                     }
                 } else {  
-                    // ageInput.value = "";   
+                    ageInput.value = "";
                 }  
             });  
         }  
@@ -558,6 +698,7 @@
         if (phoneInput) phoneInput.addEventListener('input', restrictToNumbers);  
         if (emPhoneInput) emPhoneInput.addEventListener('input', restrictToNumbers);  
       
+        // Step navigation
         const steps = Array.from(document.querySelectorAll(".form-step"));  
         const nextBtn = document.getElementById("nextBtn");  
         const prevBtn = document.getElementById("prevBtn");  
@@ -592,29 +733,12 @@
   
             if (currentStep === steps.length - 1) {  
                 nextBtn.classList.add("hidden");  
-                  
                 const ageVal = document.getElementById("input-age").value || "N/A";  
                 const icVal = document.getElementById("input-ic").value || "N/A";  
-                  
                 document.getElementById("summary-name").innerText = document.getElementById("input-name").value || "N/A";  
                 document.getElementById("summary-ic-age").innerText = `${icVal} (${ageVal} YEARS OLD)`;  
                 document.getElementById("summary-state").innerText = document.getElementById("input-state").value || "NOT SELECTED";  
                 document.getElementById("summary-size").innerText = document.getElementById("input-size").value;  
-                  
-                const checkedRadio = document.querySelector('input[name="category"]:checked');  
-                let displayCategory = "None Selected";  
-                  
-                if (checkedRadio) {  
-                    const mapping = {  
-                        '10km-men': '10KM RUN - MEN (RM 99.00)',  
-                        '10km-women': '10KM RUN - WOMEN (RM 99.00)',  
-                        '5km-men': '5KM FUN RUN - MEN (RM 69.00)',  
-                        '5km-women': '5KM FUN RUN - WOMEN (RM 69.00)'  
-                    };  
-                    displayCategory = mapping[checkedRadio.value] || checkedRadio.value;  
-                }  
-                document.getElementById("summary-cate").innerText = displayCategory;  
-                  
             } else {  
                 nextBtn.classList.remove("hidden");  
                 nextBtn.innerHTML = 'Next Step <i class="fas fa-chevron-right ml-2"></i>';  
@@ -631,7 +755,6 @@
                         valid = false;  
                     }  
                 });  
-      
                 if (valid && currentStep < steps.length - 1) {  
                     currentStep++;  
                     updateFormSteps();  
@@ -648,28 +771,16 @@
             });  
         }  
   
+        // Payment Modal
         const paymentModal = document.getElementById('payment-modal');  
         const btnOpenPayment = document.getElementById('btn-open-payment');  
         const btnCloseModal = document.getElementById('btn-close-modal');  
         const btnDoneModal = document.getElementById('btn-done-modal');  
-        const modalAmount = document.getElementById('modal-payment-amount');  
           
         const receiptInput = document.getElementById('input-receipt');  
         const receiptPlaceholder = document.getElementById('receipt-placeholder');  
         const receiptSelected = document.getElementById('receipt-selected');  
         const receiptFilename = document.getElementById('receipt-filename');  
-  
-        const updateModalAmount = () => {  
-            const selectedCategory = document.querySelector('input[name="category"]:checked');  
-            if (selectedCategory && modalAmount) {  
-                const value = selectedCategory.value;  
-                if (value.startsWith('10km')) {  
-                    modalAmount.innerText = 'RM 99.00';  
-                } else if (value.startsWith('5km')) {  
-                    modalAmount.innerText = 'RM 69.00';  
-                }  
-            }  
-        };  
   
         if (btnOpenPayment) {  
             btnOpenPayment.addEventListener('click', () => {  
@@ -680,8 +791,6 @@
   
         const closeModal = () => {  
             paymentModal.classList.add('opacity-0', 'pointer-events-none');  
-            paymentModal.querySelector('.transform').classList.remove('scale-100');  
-            paymentModal.querySelector('.transform').classList.add('scale-95');  
         };  
   
         if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);  
@@ -701,100 +810,82 @@
             });  
         }  
   
-        // 🚀 PENGENDALIAN SUBMIT KEMBALI KE WORKERS LIVE URL
+        // Form submission
         if (form) {
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-
-            // 1. VALIDASI
-            const receiptInput = document.getElementById('input-receipt');
-            const icVal = document.getElementById("input-ic").value;
-            if (!receiptInput.files.length) { alert("Sila muat naik resit bayaran anda."); return; }
-
-            const submitBtn = document.getElementById("btn-submit-registration");
-            const originalBtnText = submitBtn.innerHTML;
-            submitBtn.innerHTML = 'Sedang Memproses...';
-            submitBtn.disabled = true;
-
-            const SUPABASE_URL = "https://iddtihcgnucpgwrjxuzt.supabase.co";
-            const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZHRpaGNnbnVjcGd3cmp4dXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjM0ODUsImV4cCI6MjA5NjI5OTQ4NX0.CTx2yf_TmMuamhcUiBQ7bNy2uhxiij9aM483Zc1G7rs";
-
-            const file = receiptInput.files[0];
-            const fileName = `${icVal}_${Date.now()}.jpg`;
-
-            try {
-                // FASA A: UPLOAD (GUNA FORMDATA UNTUK KESTABILAN)
-                const formData = new FormData();
-                formData.append('file', file);
-
-                const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`, {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer ${SUPABASE_KEY}`,
-                        "apikey": SUPABASE_KEY
-                        // JANGAN LETAK CONTENT-TYPE, BROWSER AKAN AUTO SET UNTUK FORMDATA
-                    },
-                    body: file 
-                });
-
-                if (!uploadResponse.ok) throw new Error("Gagal upload ke Mahsuri Cloudbase " + uploadResponse.statusText);
-
-                const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/receipts/${fileName}`;
-
-                // FASA B: SUBMIT KE WORKER
-                const payload = {
-                    name: document.getElementById("input-name").value,
-                    ic: icVal,
-                    email: document.getElementById("input-email").value,
-                    phone: document.getElementById("input-phone").value,
-                    gender: document.getElementById("input-gender").value,
-                    age: parseInt(document.getElementById("input-age").value),
-                    state: document.getElementById("input-state").value,
-                    category: document.querySelector('input[name="category"]:checked')?.value.split('-')[0].toUpperCase(),
-                    tshirt_size: document.getElementById("input-size").value,
-                    emergency_name: document.getElementById("input-emname").value,
-                    emergency_phone: document.getElementById("input-emphone").value,
-                    password: document.getElementById("input-password").value,
-                    receipt_url: imageUrl
-                };
-
-                const workerResponse = await fetch("https://langkawi-eco-api.mplbp-media.workers.dev/api/register", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!workerResponse.ok) {
-                    const err = await workerResponse.json();
-                    // JIKA WORKER GAGAL, PADAM GAMBAR TADI
-                    await fetch(`${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`, {
-                        method: "DELETE",
-                        headers: { "Authorization": `Bearer ${SUPABASE_KEY}`, "apikey": SUPABASE_KEY }
+            form.addEventListener("submit", async (e) => {
+                e.preventDefault();
+                const receiptInput = document.getElementById('input-receipt');
+                const icVal = document.getElementById("input-ic").value;
+                if (!receiptInput.files.length) { alert("Sila muat naik resit bayaran anda."); return; }
+                const submitBtn = document.getElementById("btn-submit-registration");
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = 'Sedang Memproses...';
+                submitBtn.disabled = true;
+                const SUPABASE_URL = "https://iddtihcgnucpgwrjxuzt.supabase.co";
+                const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlkZHRpaGNnbnVjcGd3cmp4dXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjM0ODUsImV4cCI6MjA5NjI5OTQ4NX0.CTx2yf_TmMuamhcUiBQ7bNy2uhxiij9aM483Zc1G7rs";
+                const file = receiptInput.files[0];
+                const fileName = `${icVal}_${Date.now()}.jpg`;
+                try {
+                    const uploadResponse = await fetch(`${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`, {
+                        method: "POST",
+                        headers: {
+                            "Authorization": `Bearer ${SUPABASE_KEY}`,
+                            "apikey": SUPABASE_KEY
+                        },
+                        body: file 
                     });
-                    throw new Error(err.error || "Pendaftaran gagal di database.");
+                    if (!uploadResponse.ok) throw new Error("Gagal upload ke Mahsuri Cloudbase " + uploadResponse.statusText);
+                    const imageUrl = `${SUPABASE_URL}/storage/v1/object/public/receipts/${fileName}`;
+                    const selectedCategory = document.querySelector('input[name="category"]:checked');
+                    const isEarly = isEarlyBirdActive();
+                    const payload = {
+                        name: document.getElementById("input-name").value,
+                        ic: icVal,
+                        email: document.getElementById("input-email").value,
+                        phone: document.getElementById("input-phone").value,
+                        gender: document.getElementById("input-gender").value,
+                        age: parseInt(document.getElementById("input-age").value),
+                        state: document.getElementById("input-state").value,
+                        category: selectedCategory?.value.split('-')[0].toUpperCase(),
+                        tshirt_size: document.getElementById("input-size").value,
+                        emergency_name: document.getElementById("input-emname").value,
+                        emergency_phone: document.getElementById("input-emphone").value,
+                        password: document.getElementById("input-password").value,
+                        receipt_url: imageUrl,
+                        registration_phase: isEarly ? "Early Bird" : "Normal Price",
+                        registration_fee: parseFloat(selectedCategory?.getAttribute('data-fee') || 0)
+                    };
+                    const workerResponse = await fetch("https://langkawi-eco-api.mplbp-media.workers.dev/api/register", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!workerResponse.ok) {
+                        const err = await workerResponse.json();
+                        await fetch(`${SUPABASE_URL}/storage/v1/object/receipts/${fileName}`, {
+                            method: "DELETE",
+                            headers: { "Authorization": `Bearer ${SUPABASE_KEY}`, "apikey": SUPABASE_KEY }
+                        });
+                        throw new Error(err.error || "Pendaftaran gagal di database.");
+                    }
+                    alert("Pendaftaran Berjaya!");
+                    window.location.reload();
+                } catch (err) {
+                    alert("Ralat: " + err.message);
+                } finally {
+                    submitBtn.innerHTML = originalBtnText;
+                    submitBtn.disabled = false;
                 }
-
-                alert("Pendaftaran Berjaya!");
-                window.location.reload();
-
-            } catch (err) {
-                alert("Ralat: " + err.message);
-            } finally {
-                submitBtn.innerHTML = originalBtnText;
-                submitBtn.disabled = false;
-            }
-        });
-    }
-
-        // --- LOGIK ACCORDION FAQ ---  
+            });
+        }
+  
+        // FAQ toggle
         document.querySelectorAll(".faq-toggle").forEach(button => {  
             button.addEventListener("click", () => {  
                 const content = button.nextElementSibling;  
                 const icon = button.querySelector("i");  
-                  
                 button.classList.toggle("text-orange-500");  
-                icon.classList.toggle("rotate-180");  
-  
+                icon.classList.toggle("rotate-180");
                 if (content.style.maxHeight && content.style.maxHeight !== "0px") {  
                     content.style.maxHeight = "0px";  
                 } else {  
@@ -803,7 +894,7 @@
             });  
         });  
   
-        // --- LOGIK MOBILE MENU ---  
+        // Mobile menu
         const menuBtn = document.getElementById('menu-btn');  
         const mobileMenu = document.getElementById('mobile-menu');  
         const menuIcon = document.getElementById('menu-icon');  
@@ -830,73 +921,24 @@
         mobileLinks.forEach(link => {  
             link.addEventListener('click', () => menuBtn.click());  
         });  
-
-        // --- LOGIK AUTO-TICK KATEGORI BERDASARKAN URL PARAMETER ---
+  
+        // Auto select category from URL parameter
         const handleAutoTick = () => {
             const params = new URLSearchParams(window.location.search);
             const cat = params.get('category');
-            
             if (cat) {
                 const radios = document.getElementsByName('category');
                 radios.forEach(radio => {
                     if (radio.value === cat) {
                         radio.checked = true;
+                        const isEarly = isEarlyBirdActive();
+                        updateSummaryDisplay(radio, isEarly);
+                        updateModalAmount();
                     }
                 });
             }
         };
-
         window.addEventListener('load', handleAutoTick);
     </script>  
-  
-    <div id="payment-modal" class="fixed inset-0 bg-blue-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-all duration-300">  
-        <div class="bg-white rounded-3xl shadow-2xl border border-gray-100 max-w-md w-full overflow-hidden transform scale-95 transition-all duration-300 relative">  
-              
-            <div class="bg-blue-950 text-white p-6 relative">  
-                <h3 class="text-xl font-black italic uppercase tracking-tight">Manual Payment Transfer</h3>  
-                <p class="text-blue-200/60 text-xs uppercase font-bold tracking-wider mt-0.5">Scan QR code or copy details below</p>  
-                <button type="button" id="btn-close-modal" class="absolute top-5 right-5 text-white/70 hover:text-white transition focus:outline-none">  
-                    <i class="fas fa-times text-xl"></i>  
-                </button>  
-            </div>  
-  
-            <div class="p-6 space-y-6">  
-                <div class="flex flex-col items-center justify-center bg-gray-50 border border-gray-100 p-4 rounded-2xl">  
-                    <img src="assets/images/payment_qr.png" alt="DuitNow Payment QR" class="w-48 h-48 object-contain rounded-xl border bg-white p-2 shadow-sm">  
-                    <span class="mt-3 px-3 py-0.5 bg-orange-100 text-orange-700 text-[10px] font-black uppercase tracking-wider rounded-full">DuitNow QR Multi-Bank</span>  
-                </div>  
-  
-                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-4 space-y-3 text-xs font-bold uppercase tracking-wide text-blue-950">  
-                    <div class="flex justify-between border-b border-gray-200/60 pb-2">  
-                        <span class="text-gray-400">Bank Name:</span>  
-                        <span>MAYBANK (MALAYAN BANKING BERHAD)</span>  
-                    </div>  
-                    <div class="flex justify-between border-b border-gray-200/60 pb-2">  
-                        <span class="text-gray-400">Account Name:</span>  
-                        <span>LANGKAWI ECO RUN ENTERPRISE</span>  
-                    </div>  
-                    <div class="flex justify-between border-b border-gray-200/60 pb-2">  
-                        <span class="text-gray-400">Account Number:</span>  
-                        <span class="font-mono tracking-normal text-sm select-all">562100123456</span>  
-                    </div>  
-                    <div class="flex justify-between pt-1">  
-                        <span class="text-gray-400">Required Amount:</span>  
-                        <span id="modal-payment-amount" class="text-orange-600 text-sm font-black">RM --.--</span>  
-                    </div>  
-                </div>  
-  
-                <div class="bg-orange-50 border border-orange-100 rounded-xl p-3 flex gap-3 items-start">  
-                    <i class="fas fa-exclamation-circle text-orange-600 mt-0.5"></i>  
-                    <p class="text-[11px] font-medium text-orange-950/80 leading-relaxed uppercase font-bold">  
-                        Instructions: Please make the exact transfer based on your category fee. Take a screenshot or scan your transaction receipt, close this window, and upload it into the form.  
-                    </p>  
-                </div>  
-  
-                <button type="button" id="btn-done-modal" class="w-full bg-blue-950 hover:bg-blue-900 text-white font-black text-center py-3 rounded-xl shadow-md uppercase tracking-widest text-xs transition">  
-                    I Have Made Payment  
-                </button>  
-            </div>  
-        </div>  
-    </div>  
 </body>  
 </html>

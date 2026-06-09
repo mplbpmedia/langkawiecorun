@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Bib Numbers | LER 2.0 Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;700&display=swap');
+
+        :root {
+            --navy:   #172554;
+            --orange: #ea580c;
+            --bg:     #f8f9fc;
+            --surface:#ffffff;
+            --border: #e8ecf2;
+            --text:   #1e293b;
+            --muted:  #64748b;
+            --soft:   #f1f5f9;
+            --sidebar-w: 260px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; height: 100%; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
+        }
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; }
+
+        /* ═══════════════════════════════════
+           SIDEBAR — identical to dashboard
+        ═══════════════════════════════════ */
+        #sidebar {
+            width: var(--sidebar-w);
+            min-width: var(--sidebar-w);
+            background: var(--navy);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            height: 100dvh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            flex-shrink: 0;
+            z-index: 40;
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .sidebar-brand { padding: 24px 24px 20px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .sidebar-brand h2 { font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:900; font-style:italic; color:white; line-height:1; letter-spacing:-0.02em; }
+        .sidebar-brand span { color: var(--orange); }
+        .sidebar-brand p { font-size:9px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-top:4px; }
+        .nav-section-label { font-size:9px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:rgba(255,255,255,0.25); padding:18px 24px 8px; }
+        .nav-link {
+            display: flex; align-items: center; gap: 14px;
+            padding: 11px 24px;
+            color: rgba(255,255,255,0.5);
+            font-size: 13px; font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none; background: none;
+            width: 100%; text-align: left;
+        }
+        .nav-link:hover { color: white; background: rgba(255,255,255,0.05); }
+        .nav-link.active { color: white; background: rgba(234,88,12,0.15); border-right: 3px solid var(--orange); }
+        .nav-link.active i { color: var(--orange); }
+        .nav-link i { width: 18px; text-align: center; }
+        .nav-badge { margin-left:auto; background:var(--orange); color:white; font-size:10px; font-weight:700; padding:2px 8px; border-radius:999px; }
+        .sidebar-footer { margin-top: auto; padding: 18px 24px; border-top: 1px solid rgba(255,255,255,0.07); }
+        .sidebar-clock { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; gap:12px; }
+        .clock-icon-wrap { width:34px; height:34px; background:rgba(234,88,12,0.12); border:1px solid rgba(234,88,12,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+        .clock-icon-wrap i { color:var(--orange); font-size:13px; }
+        .clock-content { display:flex; flex-direction:column; gap:2px; min-width:0; }
+        .clock-time { font-family:'Oswald',sans-serif; font-size:1.1rem; font-weight:700; color:white; letter-spacing:0.06em; line-height:1; display:flex; align-items:baseline; gap:4px; }
+        .clock-time .seconds { font-size:0.75rem; color:var(--orange); font-weight:500; }
+        .clock-date { font-size:9.5px; font-weight:500; color:rgba(255,255,255,0.4); letter-spacing:0.04em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .sidebar-user { display:flex; align-items:center; gap:12px; }
+        .sidebar-user-avatar { width:36px; height:36px; background:var(--orange); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; color:white; flex-shrink:0; }
+        .sidebar-user-info p { color:white; font-size:13px; font-weight:600; margin:0; }
+        .sidebar-user-info span { color:rgba(255,255,255,0.35); font-size:10px; font-weight:500; }
+        #sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); backdrop-filter:blur(2px); z-index:35; opacity:0; transition:opacity 0.3s; }
+        #sidebar-overlay.active { display:block; opacity:1; }
+        .hamburger-btn { display:none; background:var(--navy); color:white; border:none; width:40px; height:40px; border-radius:10px; cursor:pointer; align-items:center; justify-content:center; font-size:16px; transition:all 0.2s; flex-shrink:0; }
+        .hamburger-btn:active { transform:scale(0.95); }
+
+        /* ═══════════════════════════════════
+           MAIN LAYOUT
+        ═══════════════════════════════════ */
+        #main { flex:1; display:flex; flex-direction:column; overflow:auto; min-width:0; }
+        .topbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 24px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 12px;
+            position: sticky; top: 0; z-index: 20;
+        }
+        .topbar-left { display:flex; align-items:center; gap:12px; min-width:0; }
+        .topbar-title { font-family:'Oswald',sans-serif; font-size:1.2rem; font-weight:700; font-style:italic; text-transform:uppercase; letter-spacing:0.02em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .topbar-title span { color: var(--orange); }
+        .topbar-actions { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+        .btn-primary { background:var(--navy); color:white; border:none; padding:9px 18px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; white-space:nowrap; }
+        .btn-primary:hover { background:var(--orange); transform:translateY(-1px); }
+        .btn-primary:active { transform:scale(0.97); }
+        .btn-secondary { background:var(--soft); color:var(--text); border:1px solid var(--border); padding:9px 16px; border-radius:999px; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:6px; white-space:nowrap; }
+        .btn-secondary:hover { background:var(--border); }
+        .content { padding: 24px; flex: 1; }
+
+        /* ═══════════════════════════════════
+           KPI STRIP
+        ═══════════════════════════════════ */
+        .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px; }
+        .kpi-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:18px 20px; position:relative; overflow:hidden; transition:box-shadow 0.2s; }
+        .kpi-card:hover { box-shadow:0 8px 24px rgba(0,0,0,0.06); }
+        .kpi-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:16px 16px 0 0; }
+        .kpi-card.accent-orange::before { background:var(--orange); }
+        .kpi-card.accent-blue::before   { background:var(--navy); }
+        .kpi-card.accent-green::before  { background:#16a34a; }
+        .kpi-card.accent-amber::before  { background:#d97706; }
+        .kpi-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); margin-bottom:6px; }
+        .kpi-value { font-family:'Oswald',sans-serif; font-size:1.8rem; font-weight:700; color:var(--text); line-height:1; margin-bottom:5px; }
+        .kpi-sub { font-size:11px; color:var(--muted); display:flex; align-items:center; gap:4px; }
+        .kpi-icon { position:absolute; right:16px; top:50%; transform:translateY(-50%); font-size:2.2rem; opacity:0.06; }
+        .kpi-pill { display:inline-flex; align-items:center; gap:4px; font-size:10px; font-weight:700; padding:3px 8px; border-radius:999px; }
+        .pill-green { background:#dcfce7; color:#16a34a; }
+        .pill-amber { background:#fef3c7; color:#d97706; }
+        .pill-blue  { background:#dbeafe; color:#1d4ed8; }
+        .pill-gray  { background:var(--soft); color:var(--muted); }
+        .pill-orange { background:#fff7ed; color:#ea580c; }
+
+        /* ═══════════════════════════════════
+           PROGRESS BAR CARD
+        ═══════════════════════════════════ */
+        .progress-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        .progress-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); margin-bottom:8px; }
+        .progress-bar-wrap { flex:1; min-width:200px; }
+        .progress-track { height:10px; background:var(--soft); border-radius:999px; overflow:hidden; }
+        .progress-fill { height:100%; border-radius:999px; background:linear-gradient(90deg, var(--navy), var(--orange)); transition:width 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .progress-stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 70px;
+        }
+        .progress-stat-val { font-family:'Oswald',sans-serif; font-size:1.6rem; font-weight:700; color:var(--text); line-height:1; }
+        .progress-stat-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-top:3px; }
+        .progress-divider { width:1px; height:40px; background:var(--border); }
+
+        /* ═══════════════════════════════════
+           ALERT BANNERS
+        ═══════════════════════════════════ */
+        .alert-banner {
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .alert-banner.hidden { display: none; }
+        .alert-banner-text { flex:1; min-width:180px; }
+        .alert-banner-text p { margin:0; font-size:13px; font-weight:600; }
+        .alert-banner-text span { font-size:11px; }
+        .alert-orange { background:linear-gradient(135deg,#fff7ed,#ffedd5); border:1px solid #fed7aa; }
+        .alert-orange i { color:var(--orange); }
+        .alert-orange .alert-banner-text p { color:#7c2d12; }
+        .alert-orange .alert-banner-text span { color:#9a3412; }
+        .alert-blue { background:linear-gradient(135deg,#eff6ff,#dbeafe); border:1px solid #bfdbfe; }
+        .alert-blue i { color:#2563eb; }
+        .alert-blue .alert-banner-text p { color:#1e3a8a; }
+        .alert-blue .alert-banner-text span { color:#1d4ed8; }
+        .alert-pill { color:white; font-size:11px; font-weight:700; padding:6px 14px; border-radius:999px; white-space:nowrap; flex-shrink:0; }
+        .alert-pill-orange { background:var(--orange); }
+
+        /* ═══════════════════════════════════
+           FILTER ROW
+        ═══════════════════════════════════ */
+        .filter-row { display:flex; align-items:center; gap:12px; margin-bottom:16px; flex-wrap:wrap; }
+        .search-box { flex:1; min-width:200px; position:relative; }
+        .search-box input { width:100%; padding:10px 16px 10px 40px; border:1px solid var(--border); border-radius:12px; font-size:13px; background:var(--surface); outline:none; transition:border-color 0.2s; font-family:'Inter',sans-serif; color:var(--text); }
+        .search-box input:focus { border-color:var(--navy); }
+        .search-box i { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:13px; }
+        .filter-tabs { display:flex; background:var(--soft); border-radius:12px; padding:4px; gap:2px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+        .filter-tabs::-webkit-scrollbar { display:none; }
+        .filter-tab { padding:7px 14px; border-radius:9px; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.2s; color:var(--muted); border:none; background:none; display:flex; align-items:center; gap:6px; white-space:nowrap; flex-shrink:0; }
+        .filter-tab.active { background:var(--surface); color:var(--text); box-shadow:0 1px 4px rgba(0,0,0,0.08); }
+        .filter-tab .tab-count { font-size:10px; background:var(--soft); border-radius:999px; padding:1px 6px; }
+        .filter-tab.active .tab-count { background:var(--border); }
+        .select-filter { padding:10px 14px; border:1px solid var(--border); border-radius:12px; font-size:12px; font-family:'Inter',sans-serif; background:var(--surface); color:var(--text); outline:none; cursor:pointer; min-width:160px; max-width:100%; }
+
+        /* ═══════════════════════════════════
+           MAIN TABLE CARD
+        ═══════════════════════════════════ */
+        .table-card { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+        .table-card-header { padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
+        .table-meta { font-size:11px; color:var(--muted); }
+        .table-meta strong { color:var(--text); }
+        .table-scroll { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+        table { width:100%; border-collapse:collapse; min-width:760px; }
+        thead tr { background:var(--soft); }
+        th { padding:11px 14px; text-align:left; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); white-space:nowrap; cursor:pointer; user-select:none; transition:color 0.15s; }
+        th:hover { color:var(--text); }
+        th.sorted { color:var(--navy); }
+        th.sorted i { opacity:1; }
+        th i { opacity:0.3; font-size:9px; margin-left:4px; }
+        th:first-child { padding-left:20px; cursor:default; }
+        th:last-child  { padding-right:20px; text-align:right; cursor:default; }
+        tbody tr { border-bottom:1px solid var(--border); transition:background 0.15s; }
+        tbody tr:last-child { border-bottom:none; }
+        tbody tr:hover { background:#f8faff; }
+        td { padding:12px 14px; font-size:13px; vertical-align:middle; }
+        td:first-child { padding-left:20px; }
+        td:last-child  { padding-right:20px; text-align:right; }
+
+        /* ═══════════════════════════════════
+           PARTICIPANT CELL
+        ═══════════════════════════════════ */
+        .participant-cell { display:flex; align-items:center; gap:10px; }
+        .participant-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:white; flex-shrink:0; }
+        .participant-name { font-weight:600; font-size:13px; line-height:1.3; }
+        .participant-id { font-size:10px; color:var(--muted); font-family:monospace; }
+
+        /* ═══════════════════════════════════
+           BIB NUMBER CELLS (main feature)
+        ═══════════════════════════════════ */
+        .bib-cell { display:flex; align-items:center; gap:8px; }
+
+        /* Assigned state */
+        .bib-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Oswald', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--navy);
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 8px;
+            min-width: 52px;
+            padding: 4px 10px;
+            letter-spacing: 0.04em;
+            transition: all 0.15s;
+        }
+        tbody tr:hover .bib-badge { border-color: var(--navy); }
+
+        /* Unassigned state */
+        .bib-unassigned {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            color: var(--orange);
+            font-weight: 600;
+            background: #fff7ed;
+            border: 1.5px dashed #fed7aa;
+            border-radius: 8px;
+            padding: 5px 10px;
+            white-space: nowrap;
+            animation: pulse-dash 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse-dash { 0%,100%{ opacity:1; } 50%{ opacity:0.65; } }
+
+        /* Edit pencil */
+        .bib-edit-btn { background:none; border:none; cursor:pointer; color:var(--muted); font-size:11px; padding:4px 6px; border-radius:6px; transition:all 0.15s; opacity:0; flex-shrink:0; }
+        tbody tr:hover .bib-edit-btn { opacity:1; }
+        .bib-edit-btn:hover { background:var(--soft); color:var(--navy); }
+
+        /* Inline edit form */
+        .bib-edit-form { display:none; align-items:center; gap:6px; }
+        .bib-edit-form.active { display:flex; }
+        .bib-num-input {
+            width: 72px;
+            padding: 6px 8px;
+            border: 1.5px solid var(--navy);
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            color: var(--navy);
+            background: white;
+        }
+        .bib-num-input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(234,88,12,0.1); }
+        .bib-save-btn { background:var(--navy); color:white; border:none; border-radius:7px; padding:5px 11px; font-size:11px; font-weight:700; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+        .bib-save-btn:hover { background:var(--orange); }
+        .bib-cancel-btn { background:var(--soft); color:var(--muted); border:1px solid var(--border); border-radius:7px; padding:5px 8px; font-size:11px; cursor:pointer; transition:background 0.15s; }
+        .bib-cancel-btn:hover { background:var(--border); }
+
+        /* Status badge */
+        .status-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:999px; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; white-space:nowrap; }
+        .status-badge::before { content:''; width:5px; height:5px; border-radius:50%; }
+        .badge-verified { background:#dcfce7; color:#15803d; border:1px solid #bbf7d0; }
+        .badge-verified::before { background:#15803d; }
+        .badge-rejected { background:#fee2e2; color:#dc2626; border:1px solid #fecaca; }
+        .badge-rejected::before { background:#dc2626; }
+        .badge-pending { background:#fef3c7; color:#b45309; border:1px solid #fde68a; animation:pulse-badge 2s infinite; }
+        .badge-pending::before { background:#d97706; }
+        @keyframes pulse-badge { 0%,100%{ opacity:1; } 50%{ opacity:0.7; } }
+
+        /* ═══════════════════════════════════
+           BULK ASSIGN PANEL
+        ═══════════════════════════════════ */
+        .bulk-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 22px;
+        }
+        .bulk-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        .bulk-panel-title { font-family:'Oswald',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; display:flex; align-items:center; gap:10px; }
+        .bulk-panel-title i { color:var(--orange); }
+        .bulk-toggle-btn { background:none; border:none; color:var(--muted); cursor:pointer; font-size:13px; padding:4px 8px; border-radius:8px; transition:all 0.2s; }
+        .bulk-toggle-btn:hover { background:var(--soft); color:var(--text); }
+        .bulk-body { margin-top:18px; display:none; }
+        .bulk-body.open { display:block; }
+        .bulk-form-grid { display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:12px; align-items:end; }
+        .form-group { display:flex; flex-direction:column; gap:5px; }
+        .form-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
+        .form-input { padding:10px 14px; border:1px solid var(--border); border-radius:10px; font-size:13px; font-family:'Inter',sans-serif; background:var(--surface); color:var(--text); outline:none; transition:border-color 0.2s; }
+        .form-input:focus { border-color:var(--navy); }
+        .form-select { padding:10px 14px; border:1px solid var(--border); border-radius:10px; font-size:12px; font-family:'Inter',sans-serif; background:var(--surface); color:var(--text); outline:none; cursor:pointer; }
+        .bulk-preview {
+            margin-top:14px;
+            background:var(--soft);
+            border-radius:10px;
+            padding:12px 16px;
+            font-size:12px;
+            color:var(--muted);
+            display:flex;
+            align-items:center;
+            gap:10px;
+            flex-wrap:wrap;
+        }
+        .bulk-preview strong { color:var(--text); }
+        .bulk-preview i { color:var(--orange); }
+
+        /* ═══════════════════════════════════
+           SIDE DRAWER (participant detail)
+        ═══════════════════════════════════ */
+        #drawer-overlay {
+            position: fixed; inset: 0;
+            background: rgba(23,37,84,0.4);
+            backdrop-filter: blur(2px);
+            z-index: 50; display: none; opacity: 0;
+            transition: opacity 0.25s;
+        }
+        #drawer-overlay.open { display: flex; justify-content: flex-end; }
+        #drawer-overlay.visible { opacity: 1; }
+        #drawer-panel { width:400px; max-width:100%; background:var(--surface); height:100%; height:100dvh; overflow-y:auto; transform:translateX(100%); transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); display:flex; flex-direction:column; }
+        #drawer-overlay.visible #drawer-panel { transform:translateX(0); }
+        .drawer-header { background:var(--navy); color:white; padding:22px 24px; position:sticky; top:0; z-index:1; }
+        .drawer-header h3 { font-family:'Oswald',sans-serif; font-size:1.1rem; font-weight:700; font-style:italic; text-transform:uppercase; letter-spacing:0.05em; margin:0 0 2px; }
+        .drawer-header p { font-size:11px; color:rgba(255,255,255,0.4); margin:0; }
+        .drawer-close { position:absolute; top:18px; right:18px; background:rgba(255,255,255,0.1); border:none; color:white; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:14px; transition:background 0.15s; display:flex; align-items:center; justify-content:center; }
+        .drawer-close:hover { background:rgba(255,255,255,0.2); }
+        .drawer-body { padding:22px 24px; flex:1; display:flex; flex-direction:column; }
+        .drawer-section { margin-bottom:18px; }
+        .drawer-section-label { font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.2em; color:var(--muted); margin-bottom:10px; display:flex; align-items:center; gap:8px; }
+        .drawer-section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+        .info-block { background:var(--soft); border-radius:12px; padding:12px 14px; margin-bottom:10px; }
+        .info-row { display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid var(--border); font-size:12px; gap:12px; }
+        .info-row:last-child { border-bottom:none; padding-bottom:0; }
+        .info-row:first-child { padding-top:0; }
+        .info-key { color:var(--muted); font-weight:500; flex-shrink:0; }
+        .info-val { font-weight:600; color:var(--text); text-align:right; word-break:break-word; }
+        .profile-card { background:linear-gradient(135deg,var(--navy) 0%,#1e3a8a 100%); border-radius:16px; padding:18px; color:white; margin-bottom:14px; position:relative; overflow:hidden; }
+        .profile-card::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:rgba(234,88,12,0.15); }
+        .profile-name { font-family:'Oswald',sans-serif; font-size:1.2rem; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; line-height:1.2; }
+        .profile-email { font-size:12px; color:rgba(255,255,255,0.55); margin-top:4px; }
+        .profile-meta { display:flex; gap:8px; margin-top:12px; flex-wrap:wrap; }
+        .profile-chip { background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.15); border-radius:999px; padding:4px 12px; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; }
+
+        /* ═══════════════════════════════════
+           BIB ASSIGN WIDGET (inside drawer)
+        ═══════════════════════════════════ */
+        .bib-assign-widget {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border: 1.5px solid #bfdbfe;
+            border-radius: 14px;
+            padding: 16px 18px;
+        }
+        .bib-assign-current {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .bib-assign-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.12em; color:#1e40af; }
+        .bib-assign-num { font-family:'Oswald',sans-serif; font-size:2.2rem; font-weight:700; color:var(--navy); line-height:1; }
+        .bib-assign-num.unset { font-size:1rem; color:var(--orange); font-family:'Inter',sans-serif; font-weight:600; }
+        .bib-assign-form { display:flex; gap:8px; align-items:center; }
+        .bib-assign-input { flex:1; padding:10px 14px; border:1.5px solid #bfdbfe; border-radius:10px; font-family:'Oswald',sans-serif; font-size:1.2rem; font-weight:700; text-align:center; color:var(--navy); outline:none; transition:border-color 0.2s; background:white; }
+        .bib-assign-input:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(23,37,84,0.08); }
+        .bib-assign-save { background:var(--navy); color:white; border:none; border-radius:10px; padding:10px 20px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; cursor:pointer; transition:all 0.2s; white-space:nowrap; }
+        .bib-assign-save:hover { background:var(--orange); }
+        .bib-assign-save:active { transform:scale(0.97); }
+
+        /* ═══════════════════════════════════
+           STATES
+        ═══════════════════════════════════ */
+        .empty-state { padding:48px 20px; text-align:center; color:var(--muted); }
+        .empty-state i { font-size:2.2rem; opacity:0.2; margin-bottom:12px; display:block; }
+        .empty-state p { font-size:14px; font-weight:500; }
+        .error-state { padding:40px 20px; text-align:center; color:#dc2626; }
+
+        /* ═══════════════════════════════════
+           CONFIRM DIALOG (reusable)
+        ═══════════════════════════════════ */
+        /* Built dynamically in JS */
+
+        /* ═══════════════════════════════════
+           SCROLLBAR
+        ═══════════════════════════════════ */
+        ::-webkit-scrollbar { width:6px; height:6px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:var(--border); border-radius:999px; }
+        ::-webkit-scrollbar-thumb:hover { background:#cbd5e1; }
+
+        /* ═══════════════════════════════════
+           RESPONSIVE
+        ═══════════════════════════════════ */
+        @media (max-width:1280px) { .kpi-grid { grid-template-columns:repeat(2,1fr); } .bulk-form-grid { grid-template-columns:1fr 1fr; } }
+        @media (max-width:1024px) { :root { --sidebar-w:240px; } .content { padding:20px; } .topbar { padding:12px 20px; } }
+        @media (max-width:900px) {
+            #sidebar { position:fixed; left:0; top:0; transform:translateX(-100%); box-shadow:4px 0 20px rgba(0,0,0,0.2); width:280px; min-width:280px; }
+            #sidebar.open { transform:translateX(0); }
+            .hamburger-btn { display:flex; }
+            .topbar-title { font-size:1rem; }
+            .btn-primary span, .btn-secondary span { display:none; }
+            .btn-primary, .btn-secondary { padding:9px 12px; }
+            .bulk-form-grid { grid-template-columns:1fr 1fr; }
+        }
+        @media (max-width:640px) {
+            :root { --sidebar-w:85vw; }
+            #sidebar { width:85vw; min-width:85vw; max-width:320px; }
+            .content { padding:16px; }
+            .topbar { padding:10px 16px; gap:8px; }
+            .kpi-grid { grid-template-columns:1fr 1fr; gap:10px; }
+            .kpi-card { padding:14px 16px; }
+            .kpi-value { font-size:1.5rem; }
+            .filter-row { gap:8px; }
+            .search-box { min-width:100%; order:-1; }
+            .select-filter { width:100%; min-width:100%; }
+            #drawer-panel { width:100%; }
+            .bulk-form-grid { grid-template-columns:1fr; }
+            .progress-card { flex-direction:column; align-items:flex-start; }
+        }
+        @media (max-width:380px) { .kpi-grid { grid-template-columns:1fr; } }
+    </style>
+</head>
+<body>
+
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+<!-- ═══════════════════════════════════════════════
+     SIDEBAR
+═══════════════════════════════════════════════ -->
+<aside id="sidebar">
+    <div class="sidebar-brand">
+        <h2>LER <span>2.0</span></h2>
+        <p>Admin Command Center</p>
+    </div>
+
+    <p class="nav-section-label">Overview</p>
+    <a href="dashboard_admin.html" class="nav-link">
+        <i class="fas fa-users"></i> Participants
+        <span class="nav-badge" id="sidebar-pending-count">—</span>
+    </a>
+    <a href="admin_analytics.html" class="nav-link">
+        <i class="fas fa-chart-bar"></i> Analytics
+    </a>
+
+    <p class="nav-section-label">Operations</p>
+    <a href="admin_payments.html" class="nav-link">
+        <i class="fas fa-receipt"></i> Payments
+    </a>
+    <a href="admin_bibs.html" class="nav-link active">
+        <i class="fas fa-tag"></i> Bib Numbers
+    </a>
+
+    <div class="sidebar-footer">
+        <div class="sidebar-clock">
+            <div class="clock-icon-wrap"><i class="fas fa-clock"></i></div>
+            <div class="clock-content">
+                <div class="clock-time">
+                    <span id="clock-hm">--:--</span><span class="seconds" id="clock-s">:--</span>
+                </div>
+                <div class="clock-date" id="clock-date">Loading...</div>
+            </div>
+        </div>
+        <div class="sidebar-user">
+            <div class="sidebar-user-avatar">A</div>
+            <div class="sidebar-user-info">
+                <p id="admin-display-name">Admin</p>
+                <span>LER 2.0 Portal</span>
+            </div>
+        </div>
+        <button onclick="adminLogout()" style="width:100%;margin-top:12px;padding:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.2);border-radius:8px;color:#dc2626;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════
+     MAIN
+═══════════════════════════════════════════════ -->
+<div id="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="topbar-title">
+                Bib <span>Numbers</span>
+            </div>
+        </div>
+        <div class="topbar-actions">
+            <button class="btn-secondary" onclick="loadData()" title="Refresh">
+                <i class="fas fa-sync-alt"></i>
+                <span>Refresh</span>
+            </button>
+            <button class="btn-primary" onclick="exportBibs()" title="Export">
+                <i class="fas fa-download"></i>
+                <span>Export</span>
+            </button>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- KPI STRIP -->
+        <div class="kpi-grid">
+            <div class="kpi-card accent-orange">
+                <div class="kpi-label">Total Participants</div>
+                <div class="kpi-value" id="kpi-total">—</div>
+                <div class="kpi-sub"><span class="kpi-pill pill-blue">Registered</span></div>
+                <i class="fas fa-users kpi-icon"></i>
+            </div>
+            <div class="kpi-card accent-green">
+                <div class="kpi-label">Bibs Assigned</div>
+                <div class="kpi-value" id="kpi-assigned">—</div>
+                <div class="kpi-sub"><span class="kpi-pill pill-green" id="kpi-assigned-pct">—% complete</span></div>
+                <i class="fas fa-tag kpi-icon"></i>
+            </div>
+            <div class="kpi-card accent-amber">
+                <div class="kpi-label">Missing Bibs</div>
+                <div class="kpi-value" id="kpi-missing">—</div>
+                <div class="kpi-sub"><span class="kpi-pill pill-orange" id="kpi-missing-sub">Pending assignment</span></div>
+                <i class="fas fa-exclamation-circle kpi-icon"></i>
+            </div>
+            <div class="kpi-card accent-blue">
+                <div class="kpi-label">Verified Only</div>
+                <div class="kpi-value" id="kpi-verified-assigned">—</div>
+                <div class="kpi-sub"><span class="kpi-pill pill-gray">Verified + Bib</span></div>
+                <i class="fas fa-check-double kpi-icon"></i>
+            </div>
+        </div>
+
+        <!-- PROGRESS CARD -->
+        <div class="progress-card">
+            <div class="progress-stat">
+                <div class="progress-stat-val" id="prog-assigned">0</div>
+                <div class="progress-stat-label">Assigned</div>
+            </div>
+            <div class="progress-divider"></div>
+            <div class="progress-bar-wrap">
+                <div class="progress-label">Bib Assignment Progress</div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+                </div>
+                <div style="margin-top:6px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;">
+                    <span>0</span>
+                    <span id="prog-pct" style="font-weight:700;color:var(--navy);">0%</span>
+                    <span id="prog-total">0</span>
+                </div>
+            </div>
+            <div class="progress-divider"></div>
+            <div class="progress-stat">
+                <div class="progress-stat-val" id="prog-missing" style="color:var(--orange);">0</div>
+                <div class="progress-stat-label">Missing</div>
+            </div>
+        </div>
+
+        <!-- ALERT: unverified participants with bibs already -->
+        <div class="alert-banner alert-blue hidden" id="alert-unverified-bibs">
+            <i class="fas fa-info-circle" style="font-size:1.1rem;flex-shrink:0;"></i>
+            <div class="alert-banner-text">
+                <p>Some Unverified Participants Have Bib Numbers</p>
+                <span>Consider assigning bibs only after payment verification to avoid confusion.</span>
+            </div>
+        </div>
+
+        <!-- ALERT: missing bibs -->
+        <div class="alert-banner alert-orange hidden" id="alert-missing">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div class="alert-banner-text">
+                <p>Participants Are Still Missing Bib Numbers</p>
+                <span>Use Bulk Auto-Assign below to quickly fill in sequential bib numbers for all unassigned participants.</span>
+            </div>
+            <div class="alert-pill alert-pill-orange" id="alert-missing-pill">— Missing</div>
+        </div>
+
+        <!-- BULK AUTO-ASSIGN PANEL -->
+        <div class="bulk-panel">
+            <div class="bulk-panel-header" onclick="toggleBulkPanel()">
+                <div class="bulk-panel-title">
+                    <i class="fas fa-magic"></i> Bulk Auto-Assign
+                    <span style="font-family:'Inter',sans-serif;font-size:11px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;margin-left:4px;">— Assign sequential bib numbers automatically</span>
+                </div>
+                <button class="bulk-toggle-btn" id="bulk-toggle-icon" title="Toggle panel">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+            <div class="bulk-body" id="bulk-body">
+                <div class="bulk-form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Starting Bib Number</label>
+                        <input type="number" id="bulk-start" class="form-input" value="1" min="1" max="9999" placeholder="e.g. 1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Apply To Category</label>
+                        <select id="bulk-category" class="form-select" onchange="updateBulkPreview()">
+                            <option value="ALL">All Unassigned Participants</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Sort By</label>
+                        <select id="bulk-sort" class="form-select" onchange="updateBulkPreview()">
+                            <option value="name">Name (A–Z)</option>
+                            <option value="reg_id">Registration ID</option>
+                            <option value="category">Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn-primary" onclick="runBulkAssign()" style="border-radius:10px;justify-content:center;padding:10px 20px;">
+                            <i class="fas fa-magic"></i> <span>Auto-Assign</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="bulk-preview" id="bulk-preview">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Loading preview...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTER ROW -->
+        <div class="filter-row">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search name, ID, or bib number..." oninput="applyFilters()">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-tab active" data-bib="ALL" onclick="setBibTab(this)">
+                    All <span class="tab-count" id="tab-all">—</span>
+                </button>
+                <button class="filter-tab" data-bib="MISSING" onclick="setBibTab(this)">
+                    Missing Bib <span class="tab-count" id="tab-missing">—</span>
+                </button>
+                <button class="filter-tab" data-bib="ASSIGNED" onclick="setBibTab(this)">
+                    Assigned <span class="tab-count" id="tab-assigned">—</span>
+                </button>
+            </div>
+            <select class="select-filter" id="cat-filter" onchange="applyFilters()">
+                <option value="ALL">All Categories</option>
+            </select>
+            <select class="select-filter" id="status-filter" onchange="applyFilters()">
+                <option value="ALL">All Payment Status</option>
+                <option value="VERIFIED">Verified</option>
+                <option value="PENDING">Pending</option>
+                <option value="REJECTED">Rejected</option>
+            </select>
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-card">
+            <div class="table-card-header">
+                <div class="table-meta">
+                    Showing <strong id="showing-count">—</strong> of <strong id="total-count">—</strong> participants
+                </div>
+                <div style="font-size:11px;color:var(--muted);">
+                    <i class="fas fa-pencil-alt" style="margin-right:4px;color:var(--orange);"></i>
+                    Hover a row then click <strong><i class="fas fa-pencil-alt"></i></strong> to edit inline, or click <strong>Open</strong> for full detail.
+                </div>
+            </div>
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th onclick="sortBy('full_name')" data-col="full_name">
+                                Participant <i class="fas fa-sort"></i>
+                            </th>
+                            <th onclick="sortBy('category')" data-col="category">
+                                Category <i class="fas fa-sort"></i>
+                            </th>
+                            <th onclick="sortBy('bib_number')" data-col="bib_number">
+                                Bib No. <i class="fas fa-sort"></i>
+                            </th>
+                            <th onclick="sortBy('tshirt_size')" data-col="tshirt_size">
+                                T-Shirt <i class="fas fa-sort"></i>
+                            </th>
+                            <th onclick="sortBy('payment_status')" data-col="payment_status">
+                                Payment <i class="fas fa-sort"></i>
+                            </th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bib-table">
+                        <tr><td colspan="6">
+                            <div class="empty-state">
+                                <i class="fas fa-circle-notch fa-spin"></i>
+                                <p>Loading participants...</p>
+                            </div>
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ═══════════════════════════════════════════════
+     DETAIL DRAWER
+═══════════════════════════════════════════════ -->
+<div id="drawer-overlay">
+    <div id="drawer-panel">
+        <div class="drawer-header" style="position:relative;">
+            <h3>Assign Bib Number</h3>
+            <p id="d-reg-id">Loading...</p>
+            <button class="drawer-close" onclick="closeDrawer()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="drawer-body">
+
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-name" id="d-name">—</div>
+                <div class="profile-email" id="d-email">—</div>
+                <div class="profile-meta">
+                    <span class="profile-chip" id="d-category">—</span>
+                    <span class="profile-chip" id="d-gender">—</span>
+                    <span class="profile-chip" id="d-tshirt">—</span>
+                </div>
+            </div>
+
+            <!-- Bib Assign Widget -->
+            <div class="drawer-section">
+                <div class="drawer-section-label">Bib Number</div>
+                <div class="bib-assign-widget">
+                    <div class="bib-assign-current">
+                        <div>
+                            <div class="bib-assign-label">Currently Assigned</div>
+                            <div class="bib-assign-num" id="d-bib-current">—</div>
+                        </div>
+                        <i class="fas fa-tag" style="font-size:1.8rem;color:#bfdbfe;"></i>
+                    </div>
+                    <div class="bib-assign-form">
+                        <input type="number" id="d-bib-input" class="bib-assign-input" placeholder="Enter bib no." min="1" max="9999"
+                               onkeydown="if(event.key==='Enter') saveBibFromDrawer()">
+                        <button class="bib-assign-save" onclick="saveBibFromDrawer()">
+                            <i class="fas fa-save"></i> Save
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Participant Info -->
+            <div class="drawer-section">
+                <div class="drawer-section-label">Participant Details</div>
+                <div class="info-block">
+                    <div class="info-row">
+                        <span class="info-key">IC / Passport</span>
+                        <span class="info-val" id="d-ic">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Age</span>
+                        <span class="info-val" id="d-age">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Phone</span>
+                        <span class="info-val" id="d-phone">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">State</span>
+                        <span class="info-val" id="d-state">—</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Payment Status</span>
+                        <span class="info-val" id="d-status-badge">—</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Suggested bibs -->
+            <div class="drawer-section" id="suggestion-section">
+                <div class="drawer-section-label">Quick Suggestions</div>
+                <div id="bib-suggestions" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+                <div style="font-size:11px;color:var(--muted);margin-top:8px;">
+                    Tap a number to fill it in. These are unused bib numbers from the same category range.
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+const API_BASE = "https://langkawi-eco-api.mplbp-media.workers.dev/api/admin";
+const AVATAR_COLORS = ['#172554','#1d4ed8','#ea580c','#16a34a','#7c3aed','#0f766e','#b45309','#be123c'];
+const DAYS   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+// ── STATE ──────────────────────────────────────
+let allParticipants = [];
+let filtered = [];
+let currentRegId = null;
+let activeBibFilter = 'ALL';
+let sortCol = 'full_name';
+let sortDir = 1; // 1 asc, -1 desc
+let bulkOpen = false;
+
+// ── AUTH ───────────────────────────────────────
+async function initPage() {
+    const session = localStorage.getItem('adminSession');
+    if (!session) { window.location.href = 'admin_login.html'; return; }
+    try {
+        const res = await fetch(`${API_BASE}/verify`, { headers: { Authorization: session } });
+        const data = await res.json();
+        if (!data.valid) { localStorage.removeItem('adminSession'); window.location.href = 'admin_login.html'; return; }
+        document.getElementById('admin-display-name').textContent = data.adminUsername || 'Admin';
+        updateClock(); setInterval(updateClock, 1000);
+        loadData();
+    } catch (e) { localStorage.removeItem('adminSession'); window.location.href = 'admin_login.html'; }
+}
+
+function adminLogout() {
+    showConfirm('Log Out', 'Are you sure you want to log out?', () => {
+        localStorage.removeItem('adminSession');
+        window.location.href = 'admin_login.html';
+    });
+}
+
+// ── CLOCK ──────────────────────────────────────
+function updateClock() {
+    const n = new Date();
+    const hh = String(n.getHours()).padStart(2,'0');
+    const mm = String(n.getMinutes()).padStart(2,'0');
+    const ss = String(n.getSeconds()).padStart(2,'0');
+    document.getElementById('clock-hm').textContent = `${hh}:${mm}`;
+    document.getElementById('clock-s').textContent  = `:${ss}`;
+    document.getElementById('clock-date').textContent = `${DAYS[n.getDay()]}, ${String(n.getDate()).padStart(2,'0')} ${MONTHS[n.getMonth()]} ${n.getFullYear()}`;
+}
+
+// ── LOAD DATA ──────────────────────────────────
+async function loadData() {
+    const tbody = document.getElementById('bib-table');
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-circle-notch fa-spin"></i><p>Loading...</p></div></td></tr>`;
+    try {
+        const res = await fetch(`${API_BASE}/participants`);
+        if (!res.ok) throw new Error(`Server error ${res.status}`);
+        allParticipants = await res.json();
+        updateKPIs();
+        populateFilters();
+        applyFilters();
+        updateBulkPreview();
+    } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="error-state"><i class="fas fa-exclamation-circle"></i><p>Failed to load: ${e.message}</p></div></td></tr>`;
+    }
+}
+
+// ── KPIs ───────────────────────────────────────
+function updateKPIs() {
+    const total    = allParticipants.length;
+    const assigned = allParticipants.filter(p => p.bib_number).length;
+    const missing  = total - assigned;
+    const verAssigned = allParticipants.filter(p => p.payment_status === 'VERIFIED' && p.bib_number).length;
+    const pct = total > 0 ? Math.round(assigned / total * 100) : 0;
+
+    document.getElementById('kpi-total').textContent          = total;
+    document.getElementById('kpi-assigned').textContent       = assigned;
+    document.getElementById('kpi-missing').textContent        = missing;
+    document.getElementById('kpi-verified-assigned').textContent = verAssigned;
+    document.getElementById('kpi-assigned-pct').textContent   = `${pct}% complete`;
+    document.getElementById('kpi-missing-sub').textContent    = `${missing} pending`;
+    document.getElementById('sidebar-pending-count').textContent =
+        allParticipants.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
+
+    // Progress bar
+    document.getElementById('prog-assigned').textContent = assigned;
+    document.getElementById('prog-missing').textContent  = missing;
+    document.getElementById('prog-total').textContent    = total;
+    document.getElementById('prog-pct').textContent      = `${pct}%`;
+    document.getElementById('progress-fill').style.width = `${pct}%`;
+
+    // Alerts
+    const alertMissing = document.getElementById('alert-missing');
+    const alertUnverified = document.getElementById('alert-unverified-bibs');
+    missing > 0 ? alertMissing.classList.remove('hidden') : alertMissing.classList.add('hidden');
+    document.getElementById('alert-missing-pill').textContent = `${missing} Missing`;
+
+    const unverWithBib = allParticipants.filter(p => p.bib_number && p.payment_status !== 'VERIFIED').length;
+    unverWithBib > 0 ? alertUnverified.classList.remove('hidden') : alertUnverified.classList.add('hidden');
+
+    // Tab counts
+    document.getElementById('tab-all').textContent     = total;
+    document.getElementById('tab-missing').textContent = missing;
+    document.getElementById('tab-assigned').textContent = assigned;
+}
+
+// ── FILTERS ────────────────────────────────────
+function populateFilters() {
+    const cats = [...new Set(allParticipants.map(p => p.category).filter(Boolean))].sort();
+    const catFilter  = document.getElementById('cat-filter');
+    const bulkCat    = document.getElementById('bulk-category');
+    const optHTML    = `<option value="ALL">All Categories</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+    catFilter.innerHTML = optHTML;
+    bulkCat.innerHTML   = `<option value="ALL">All Unassigned Participants</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+}
+
+function setBibTab(btn) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    activeBibFilter = btn.dataset.bib;
+    applyFilters();
+}
+
+function applyFilters() {
+    const search  = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cat     = document.getElementById('cat-filter').value;
+    const status  = document.getElementById('status-filter').value;
+
+    filtered = allParticipants.filter(p => {
+        const hasBib = !!p.bib_number;
+        const matchBib = activeBibFilter === 'ALL'
+            || (activeBibFilter === 'MISSING'  && !hasBib)
+            || (activeBibFilter === 'ASSIGNED' &&  hasBib);
+        const matchSearch = !search
+            || (p.full_name      || '').toLowerCase().includes(search)
+            || (p.reg_id         || '').toLowerCase().includes(search)
+            || String(p.bib_number || '').includes(search);
+        const matchCat    = cat    === 'ALL' || p.category === cat;
+        const matchStatus = status === 'ALL'
+            || (status === 'PENDING' ? (!p.payment_status || p.payment_status === 'PENDING') : p.payment_status === status);
+        return matchBib && matchSearch && matchCat && matchStatus;
+    });
+
+    // Sort
+    filtered.sort((a, b) => {
+        let va = a[sortCol] ?? '';
+        let vb = b[sortCol] ?? '';
+        if (sortCol === 'bib_number') { va = Number(va)||99999; vb = Number(vb)||99999; }
+        else { va = String(va).toLowerCase(); vb = String(vb).toLowerCase(); }
+        return va < vb ? -sortDir : va > vb ? sortDir : 0;
+    });
+
+    renderTable(filtered);
+    document.getElementById('showing-count').textContent = filtered.length;
+    document.getElementById('total-count').textContent   = allParticipants.length;
+    updateSortIndicators();
+}
+
+// ── SORT ───────────────────────────────────────
+function sortBy(col) {
+    if (sortCol === col) sortDir *= -1;
+    else { sortCol = col; sortDir = 1; }
+    applyFilters();
+}
+function updateSortIndicators() {
+    document.querySelectorAll('th[data-col]').forEach(th => {
+        th.classList.remove('sorted');
+        const icon = th.querySelector('i');
+        if (icon) { icon.className = 'fas fa-sort'; }
+    });
+    const active = document.querySelector(`th[data-col="${sortCol}"]`);
+    if (active) {
+        active.classList.add('sorted');
+        const icon = active.querySelector('i');
+        if (icon) icon.className = sortDir === 1 ? 'fas fa-sort-up' : 'fas fa-sort-down';
+    }
+}
+
+// ── RENDER TABLE ───────────────────────────────
+function renderTable(data) {
+    const tbody = document.getElementById('bib-table');
+    if (!data.length) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-search"></i><p>No participants match your filters.</p></div></td></tr>`;
+        return;
+    }
+    tbody.innerHTML = data.map(p => {
+        const initials = getInitials(p.full_name);
+        const color    = avatarColor(p.full_name);
+        const bibHTML  = p.bib_number
+            ? `<span class="bib-badge">${safeText(p.bib_number)}</span>`
+            : `<span class="bib-unassigned"><i class="fas fa-exclamation" style="font-size:9px"></i> Not Assigned</span>`;
+        const id = safeText(p.reg_id);
+
+        return `
+        <tr>
+            <td>
+                <div class="participant-cell">
+                    <div class="participant-avatar" style="background:${color}">${initials}</div>
+                    <div>
+                        <div class="participant-name">${safeText(p.full_name)}</div>
+                        <div class="participant-id">${id}</div>
+                    </div>
+                </div>
+            </td>
+            <td style="font-size:12px;font-weight:500;">${safeText(p.category)}</td>
+            <td>
+                <div class="bib-cell">
+                    <div id="bib-view-${id}">
+                        ${bibHTML}
+                        <button class="bib-edit-btn" onclick="startInlineEdit('${id}')" title="Edit bib number">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                    </div>
+                    <div class="bib-edit-form" id="bib-form-${id}">
+                        <input type="number" class="bib-num-input" id="bib-input-${id}"
+                               value="${p.bib_number || ''}" placeholder="000" min="1" max="9999"
+                               onkeydown="handleBibKey(event,'${id}')">
+                        <button class="bib-save-btn" onclick="saveInlineBib('${id}')">
+                            <i class="fas fa-check"></i>
+                        </button>
+                        <button class="bib-cancel-btn" onclick="cancelInlineEdit('${id}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </td>
+            <td style="font-size:12px;font-family:monospace;font-weight:600;">${safeText(p.tshirt_size)}</td>
+            <td>${badgeHTML(p.payment_status)}</td>
+            <td>
+                <button class="btn-secondary" onclick="openDrawer('${id}')"
+                        style="padding:6px 14px;font-size:11px;border-radius:8px;">
+                    <i class="fas fa-external-link-alt" style="font-size:10px;"></i> Open
+                </button>
+            </td>
+        </tr>`;
+    }).join('');
+}
+
+// ── INLINE BIB EDIT ────────────────────────────
+function startInlineEdit(regId) {
+    document.getElementById(`bib-view-${regId}`).style.display = 'none';
+    const form = document.getElementById(`bib-form-${regId}`);
+    form.classList.add('active');
+    const input = document.getElementById(`bib-input-${regId}`);
+    input.focus(); input.select();
+}
+
+function cancelInlineEdit(regId) {
+    document.getElementById(`bib-view-${regId}`).style.display = '';
+    document.getElementById(`bib-form-${regId}`).classList.remove('active');
+    const p = allParticipants.find(x => x.reg_id === regId);
+    const input = document.getElementById(`bib-input-${regId}`);
+    if (input && p) input.value = p.bib_number || '';
+}
+
+function handleBibKey(e, regId) {
+    if (e.key === 'Enter')  saveInlineBib(regId);
+    if (e.key === 'Escape') cancelInlineEdit(regId);
+}
+
+async function saveInlineBib(regId) {
+    const input   = document.getElementById(`bib-input-${regId}`);
+    const saveBtn = input.nextElementSibling;
+    const val     = input.value.trim();
+    const err     = validateBib(val);
+    if (err) { flashInput(input); return; }
+
+    const orig = saveBtn.innerHTML;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+    saveBtn.disabled = true; input.disabled = true;
+
+    try {
+        await callUpdateBib(regId, val);
+        saveBtn.innerHTML = '<i class="fas fa-check"></i>';
+        saveBtn.style.background = '#16a34a';
+        setTimeout(() => {
+            updateKPIs();
+            applyFilters();
+            updateBulkPreview();
+            if (currentRegId === regId) {
+                document.getElementById('d-bib-current').textContent = val;
+                document.getElementById('d-bib-input').value = val;
+            }
+        }, 500);
+    } catch (e) {
+        alert('Failed to save: ' + e.message);
+        saveBtn.innerHTML = orig; saveBtn.style.background = '';
+        saveBtn.disabled = false; input.disabled = false; input.focus();
+    }
+}
+
+// ── DRAWER ─────────────────────────────────────
+function openDrawer(regId) {
+    const p = allParticipants.find(x => x.reg_id === regId);
+    if (!p) return;
+    currentRegId = regId;
+
+    document.getElementById('d-reg-id').textContent   = `ID: ${p.reg_id}`;
+    document.getElementById('d-name').textContent     = p.full_name    || '—';
+    document.getElementById('d-email').textContent    = p.email        || '—';
+    document.getElementById('d-category').textContent = p.category     || '—';
+    document.getElementById('d-gender').textContent   = p.gender       || '—';
+    document.getElementById('d-tshirt').textContent   = `Size: ${p.tshirt_size || '—'}`;
+    document.getElementById('d-ic').textContent       = p.ic_or_passport || '—';
+    document.getElementById('d-age').textContent      = p.age          || '—';
+    document.getElementById('d-phone').textContent    = p.phone        || '—';
+    document.getElementById('d-state').textContent    = p.state        || '—';
+
+    const bibEl = document.getElementById('d-bib-current');
+    if (p.bib_number) {
+        bibEl.textContent = p.bib_number;
+        bibEl.className   = 'bib-assign-num';
+    } else {
+        bibEl.textContent = 'Not Assigned';
+        bibEl.className   = 'bib-assign-num unset';
+    }
+    document.getElementById('d-bib-input').value = p.bib_number || '';
+
+    // Status badge in drawer
+    document.getElementById('d-status-badge').innerHTML = badgeHTML(p.payment_status);
+
+    // Suggestions: next 5 unused bibs in plausible range
+    buildSuggestions(p);
+
+    showDrawerOverlay();
+}
+
+function buildSuggestions(p) {
+    const used = new Set(allParticipants.map(x => String(x.bib_number)).filter(Boolean));
+    const suggestions = [];
+    // Start from highest assigned + 1 or 1
+    const maxBib = allParticipants.reduce((m, x) => Math.max(m, Number(x.bib_number) || 0), 0);
+    let candidate = (maxBib || 0) + 1;
+    while (suggestions.length < 5 && candidate <= 9999) {
+        if (!used.has(String(candidate))) suggestions.push(candidate);
+        candidate++;
+    }
+    const container = document.getElementById('bib-suggestions');
+    container.innerHTML = suggestions.map(n => `
+        <button onclick="fillSuggestion(${n})"
+                style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:8px;
+                       padding:6px 14px;font-family:'Oswald',sans-serif;font-size:1rem;
+                       font-weight:700;color:var(--navy);cursor:pointer;transition:all 0.15s;"
+                onmouseover="this.style.background='var(--navy)';this.style.color='white';this.style.borderColor='var(--navy)'"
+                onmouseout="this.style.background='#eff6ff';this.style.color='var(--navy)';this.style.borderColor='#bfdbfe'">
+            ${n}
+        </button>
+    `).join('');
+}
+
+function fillSuggestion(num) {
+    document.getElementById('d-bib-input').value = num;
+    document.getElementById('d-bib-input').focus();
+}
+
+async function saveBibFromDrawer() {
+    if (!currentRegId) return;
+    const input   = document.getElementById('d-bib-input');
+    const saveBtn = document.querySelector('.bib-assign-save');
+    const val     = input.value.trim();
+    const err     = validateBib(val);
+    if (err) { flashInput(input); return; }
+
+    const orig = saveBtn.innerHTML;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+    saveBtn.disabled = true; input.disabled = true;
+
+    try {
+        await callUpdateBib(currentRegId, val);
+        const bibEl = document.getElementById('d-bib-current');
+        bibEl.textContent = val; bibEl.className = 'bib-assign-num';
+        saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+        saveBtn.style.background = '#16a34a';
+        buildSuggestions(allParticipants.find(x => x.reg_id === currentRegId));
+        setTimeout(() => {
+            updateKPIs(); applyFilters(); updateBulkPreview();
+            saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
+            saveBtn.style.background = ''; saveBtn.disabled = false; input.disabled = false;
+        }, 1000);
+    } catch (e) {
+        alert('Failed: ' + e.message);
+        saveBtn.innerHTML = orig; saveBtn.style.background = '';
+        saveBtn.disabled = false; input.disabled = false;
+    }
+}
+
+function showDrawerOverlay() {
+    const ov = document.getElementById('drawer-overlay');
+    ov.style.display = 'flex';
+    requestAnimationFrame(() => requestAnimationFrame(() => ov.classList.add('visible')));
+    document.body.style.overflow = 'hidden';
+}
+function closeDrawer() {
+    const ov = document.getElementById('drawer-overlay');
+    ov.classList.remove('visible');
+    ov.addEventListener('transitionend', function h() { ov.style.display = 'none'; ov.removeEventListener('transitionend', h); });
+    document.body.style.overflow = '';
+    currentRegId = null;
+}
+document.getElementById('drawer-overlay').addEventListener('click', e => { if (e.target.id === 'drawer-overlay') closeDrawer(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+// ── BULK AUTO-ASSIGN ───────────────────────────
+function toggleBulkPanel() {
+    bulkOpen = !bulkOpen;
+    document.getElementById('bulk-body').classList.toggle('open', bulkOpen);
+    const icon = document.getElementById('bulk-toggle-icon').querySelector('i');
+    icon.className = bulkOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
+    if (bulkOpen) updateBulkPreview();
+}
+
+function updateBulkPreview() {
+    const cat       = document.getElementById('bulk-category').value;
+    const sortKey   = document.getElementById('bulk-sort').value;
+    const startNum  = parseInt(document.getElementById('bulk-start').value) || 1;
+
+    let targets = allParticipants.filter(p => !p.bib_number);
+    if (cat !== 'ALL') targets = targets.filter(p => p.category === cat);
+
+    targets.sort((a, b) => {
+        const va = String(a[sortKey] || '').toLowerCase();
+        const vb = String(b[sortKey] || '').toLowerCase();
+        return va < vb ? -1 : va > vb ? 1 : 0;
+    });
+
+    const preview = document.getElementById('bulk-preview');
+    if (!targets.length) {
+        preview.innerHTML = `<i class="fas fa-check-circle" style="color:#16a34a"></i> <span>No unassigned participants in this selection. All bibs are set!</span>`;
+        return;
+    }
+    const end = startNum + targets.length - 1;
+    preview.innerHTML = `
+        <i class="fas fa-info-circle"></i>
+        <span>Will assign bib numbers <strong>${startNum}</strong> to <strong>${end}</strong> to <strong>${targets.length} participant${targets.length > 1 ? 's' : ''}</strong>
+        ${cat !== 'ALL' ? `in category <strong>${cat}</strong>` : 'across all categories'},
+        sorted by <strong>${document.getElementById('bulk-sort').options[document.getElementById('bulk-sort').selectedIndex].text}</strong>.</span>
+    `;
+}
+
+function runBulkAssign() {
+    const cat      = document.getElementById('bulk-category').value;
+    const sortKey  = document.getElementById('bulk-sort').value;
+    const startNum = parseInt(document.getElementById('bulk-start').value);
+    if (!startNum || startNum < 1) { alert('Enter a valid starting bib number (≥ 1).'); return; }
+
+    let targets = allParticipants.filter(p => !p.bib_number);
+    if (cat !== 'ALL') targets = targets.filter(p => p.category === cat);
+    targets.sort((a, b) => {
+        const va = String(a[sortKey] || '').toLowerCase();
+        const vb = String(b[sortKey] || '').toLowerCase();
+        return va < vb ? -1 : va > vb ? 1 : 0;
+    });
+
+    if (!targets.length) { alert('No unassigned participants found for this selection.'); return; }
+
+    const end = startNum + targets.length - 1;
+    showConfirm(
+        'Confirm Bulk Auto-Assign',
+        `This will assign bib numbers <strong>${startNum}–${end}</strong> to <strong>${targets.length} participant${targets.length > 1 ? 's' : ''}</strong>.<br><br>This action <strong>cannot be undone</strong> automatically — you will need to clear bibs one by one.`,
+        async () => {
+            const results = { ok: 0, fail: 0 };
+            for (let i = 0; i < targets.length; i++) {
+                const p   = targets[i];
+                const bib = String(startNum + i);
+                try {
+                    await callUpdateBib(p.reg_id, bib);
+                    results.ok++;
+                } catch (e) { results.fail++; }
+            }
+            updateKPIs(); applyFilters(); updateBulkPreview();
+            const msg = results.fail === 0
+                ? `✅ Successfully assigned ${results.ok} bib number${results.ok > 1 ? 's' : ''}.`
+                : `⚠️ ${results.ok} assigned, ${results.fail} failed. Please retry for failed ones.`;
+            showToast(msg, results.fail === 0 ? 'green' : 'amber');
+        }
+    );
+}
+
+// ── API CALLS ──────────────────────────────────
+async function callUpdateBib(regId, bibValue) {
+    const res = await fetch(`${API_BASE}/update-bib`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ reg_id: regId, bib_number: bibValue })
+    });
+    if (!res.ok) { const d = await res.json().catch(() => ({})); throw new Error(d.error || 'API error'); }
+    const p = allParticipants.find(x => x.reg_id === regId);
+    if (p) p.bib_number = bibValue;
+}
+
+// ── EXPORT ─────────────────────────────────────
+function exportBibs() {
+    if (!allParticipants.length) { alert('No data to export.'); return; }
+    const rows = allParticipants.map(p => ({
+        'Reg ID':       p.reg_id,
+        'Full Name':    p.full_name,
+        'Bib Number':   p.bib_number || '',
+        'Category':     p.category,
+        'T-Shirt':      p.tshirt_size,
+        'Gender':       p.gender,
+        'Payment':      p.payment_status || 'PENDING',
+        'Phone':        p.phone,
+        'Email':        p.email,
+    }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(rows), 'Bibs');
+    XLSX.writeFile(wb, 'LER2026_Bib_Numbers.xlsx');
+}
+
+// ── UTILITIES ──────────────────────────────────
+function getInitials(name) {
+    if (!name) return '?';
+    const p = name.trim().split(/\s+/);
+    return p.length >= 2 ? (p[0][0] + p[p.length-1][0]).toUpperCase() : p[0].substring(0,2).toUpperCase();
+}
+function avatarColor(name) {
+    if (!name) return AVATAR_COLORS[0];
+    let h = 0;
+    for (let i = 0; i < name.length; i++) h = name.charCodeAt(i) + ((h << 5) - h);
+    return AVATAR_COLORS[Math.abs(h) % AVATAR_COLORS.length];
+}
+function badgeHTML(status) {
+    const s   = (status || 'PENDING').toUpperCase();
+    const cls = s === 'VERIFIED' ? 'badge-verified' : s === 'REJECTED' ? 'badge-rejected' : 'badge-pending';
+    const lbl = s === 'PENDING' ? 'Pending' : s === 'VERIFIED' ? 'Verified' : 'Rejected';
+    return `<span class="status-badge ${cls}">${lbl}</span>`;
+}
+function safeText(v) { return v ? String(v).replace(/</g,'&lt;').replace(/>/g,'&gt;') : '—'; }
+function validateBib(v) {
+    if (!v) return 'Please enter a bib number.';
+    const n = parseInt(v);
+    if (isNaN(n) || n < 1 || n > 9999) return 'Bib number must be between 1 and 9999.';
+    return null;
+}
+function flashInput(input) {
+    input.style.borderColor = '#dc2626';
+    input.style.boxShadow   = '0 0 0 3px rgba(220,38,38,0.15)';
+    input.focus();
+    setTimeout(() => { input.style.borderColor = ''; input.style.boxShadow = ''; }, 1200);
+}
+
+// ── CONFIRM DIALOG ─────────────────────────────
+function showConfirm(title, message, onConfirm) {
+    const ov  = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(23,37,84,0.6);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;';
+    const box = document.createElement('div');
+    box.style.cssText = 'background:white;border-radius:20px;padding:28px;max-width:420px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,0.2);font-family:Inter,sans-serif;';
+    box.innerHTML = `
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:40px;height:40px;background:#fff7ed;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="fas fa-exclamation-triangle" style="color:var(--orange);font-size:1.1rem;"></i>
+            </div>
+            <h3 style="font-family:Oswald,sans-serif;font-size:1.1rem;font-weight:700;font-style:italic;text-transform:uppercase;margin:0;">${title}</h3>
+        </div>
+        <p style="font-size:13px;color:#475569;line-height:1.6;margin:0 0 22px;">${message}</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <button id="cd-cancel" style="padding:11px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:background 0.15s;">Cancel</button>
+            <button id="cd-confirm" style="padding:11px;background:var(--navy);color:white;border:none;border-radius:10px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;">Confirm</button>
+        </div>`;
+    ov.appendChild(box);
+    document.body.appendChild(ov);
+    box.querySelector('#cd-cancel').onclick  = () => document.body.removeChild(ov);
+    box.querySelector('#cd-confirm').onclick = () => { document.body.removeChild(ov); onConfirm(); };
+    box.querySelector('#cd-confirm').onmouseover = function() { this.style.background = 'var(--orange)'; };
+    box.querySelector('#cd-confirm').onmouseout  = function() { this.style.background = 'var(--navy)'; };
+}
+
+// ── TOAST NOTIFICATION ─────────────────────────
+function showToast(message, type = 'green') {
+    const colors = {
+        green: { bg:'#dcfce7', border:'#bbf7d0', text:'#15803d', icon:'fa-check-circle' },
+        amber: { bg:'#fef3c7', border:'#fde68a', text:'#b45309', icon:'fa-exclamation-triangle' },
+        red:   { bg:'#fee2e2', border:'#fecaca', text:'#dc2626', icon:'fa-times-circle' },
+    };
+    const c = colors[type] || colors.green;
+    const toast = document.createElement('div');
+    toast.style.cssText = `position:fixed;bottom:24px;right:24px;z-index:200;background:${c.bg};border:1px solid ${c.border};border-radius:12px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;color:${c.text};box-shadow:0 8px 24px rgba(0,0,0,0.1);max-width:340px;transform:translateY(20px);opacity:0;transition:all 0.3s;`;
+    toast.innerHTML = `<i class="fas ${c.icon}"></i><span>${message}</span>`;
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => requestAnimationFrame(() => { toast.style.transform = 'translateY(0)'; toast.style.opacity = '1'; }));
+    setTimeout(() => {
+        toast.style.transform = 'translateY(20px)'; toast.style.opacity = '0';
+        toast.addEventListener('transitionend', () => document.body.removeChild(toast));
+    }, 3500);
+}
+
+// ── SIDEBAR MOBILE ─────────────────────────────
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const isOpen  = sidebar.classList.contains('open');
+    if (isOpen) {
+        sidebar.classList.remove('open'); overlay.classList.remove('active'); document.body.style.overflow = '';
+    } else {
+        sidebar.classList.add('open'); overlay.classList.add('active'); document.body.style.overflow = 'hidden';
+    }
+}
+
+// ── INIT ───────────────────────────────────────
+initPage();
+</script>
+</body>
+</html>
