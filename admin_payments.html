@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Payments Management | LER 2.0 Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Payments | LER 2.0 Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
@@ -20,9 +20,6 @@
             --muted:  #64748b;
             --soft:   #f1f5f9;
             --sidebar-w: 260px;
-            --success: #16a34a;
-            --warning: #d97706;
-            --danger:  #dc2626;
         }
 
         *, *::before, *::after { box-sizing: border-box; }
@@ -35,10 +32,11 @@
             min-height: 100vh;
             min-height: 100dvh;
             overflow-x: hidden;
+            -webkit-text-size-adjust: 100%;
         }
         h1, h2, h3, .font-oswald { font-family: 'Oswald', sans-serif; }
 
-        /* Sidebar Styles - Matching Dashboard Admin */
+        /* ── SIDEBAR (exact from dashboard_admin) ── */
         #sidebar {
             width: var(--sidebar-w);
             min-width: var(--sidebar-w);
@@ -46,8 +44,8 @@
             display: flex;
             flex-direction: column;
             position: fixed;
-            left: 0;
             top: 0;
+            left: 0;
             height: 100vh;
             height: 100dvh;
             overflow-y: auto;
@@ -55,6 +53,7 @@
             flex-shrink: 0;
             z-index: 40;
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateX(0);
         }
         .sidebar-brand {
             padding: 24px 24px 20px;
@@ -110,6 +109,15 @@
         }
         .nav-link.active i { color: var(--orange); }
         .nav-link i { width: 18px; text-align: center; }
+        .nav-badge {
+            margin-left: auto;
+            background: var(--orange);
+            color: white;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 999px;
+        }
         .sidebar-footer {
             margin-top: auto;
             padding: 18px 24px;
@@ -165,14 +173,48 @@
         .sidebar-user-info p { color: white; font-size: 13px; font-weight: 600; margin: 0; }
         .sidebar-user-info span { color: rgba(255,255,255,0.35); font-size: 10px; font-weight: 500; }
 
-        /* Main Content */
+        /* ── MOBILE SIDEBAR OVERLAY ── */
+        #sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(2px);
+            z-index: 35;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        #sidebar-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+        .hamburger-btn {
+            display: none;
+            background: var(--navy);
+            color: white;
+            border: none;
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.2s;
+            flex-shrink: 0;
+        }
+        .hamburger-btn:active { transform: scale(0.95); }
+
+        /* ── MAIN ── */
         #main {
             margin-left: var(--sidebar-w);
             flex: 1;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            overflow-x: auto;
         }
+
+        /* ── TOP BAR ── */
         .topbar {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
@@ -236,14 +278,15 @@
         }
         .btn-secondary:hover { background: var(--border); }
 
+        /* ── CONTENT ── */
         .content { padding: 24px; flex: 1; }
 
-        /* Interactive KPI Cards */
+        /* ── KPI CARDS (matching dashboard) ── */
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 16px;
-            margin-bottom: 24px;
+            gap: 14px;
+            margin-bottom: 22px;
         }
         .kpi-card {
             background: var(--surface);
@@ -252,13 +295,10 @@
             padding: 18px 20px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: box-shadow 0.2s, transform 0.2s;
             cursor: pointer;
         }
-        .kpi-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-        }
+        .kpi-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); transform: translateY(-1px); }
         .kpi-card::before {
             content: '';
             position: absolute;
@@ -267,10 +307,9 @@
             border-radius: 16px 16px 0 0;
         }
         .kpi-card.accent-total::before { background: var(--navy); }
-        .kpi-card.accent-amount::before { background: var(--success); }
-        .kpi-card.accent-pending::before { background: var(--warning); }
-        .kpi-card.accent-verified::before { background: var(--success); }
-        
+        .kpi-card.accent-amount::before { background: #16a34a; }
+        .kpi-card.accent-pending::before { background: #d97706; }
+        .kpi-card.accent-verified::before { background: #16a34a; }
         .kpi-card.active {
             border: 2px solid var(--orange);
             background: linear-gradient(135deg, var(--surface), #fff7ed);
@@ -281,10 +320,10 @@
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: var(--muted);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .kpi-value {
             font-family: 'Oswald', sans-serif;
@@ -292,14 +331,14 @@
             font-weight: 700;
             color: var(--text);
             line-height: 1;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .kpi-sub {
             font-size: 11px;
             color: var(--muted);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
         }
         .kpi-icon {
             position: absolute;
@@ -308,21 +347,15 @@
             transform: translateY(-50%);
             font-size: 2.2rem;
             opacity: 0.06;
-            transition: opacity 0.3s;
         }
-        .kpi-card:hover .kpi-icon { opacity: 0.1; }
 
-        /* Filter Bar */
-        .filter-bar {
+        /* ── FILTER ROW (tabs + dropdowns) ── */
+        .filter-row {
             display: flex;
             align-items: center;
             gap: 12px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
-            margin-bottom: 24px;
-            background: var(--surface);
-            padding: 12px 20px;
-            border-radius: 16px;
-            border: 1px solid var(--border);
         }
         .search-box {
             flex: 1;
@@ -331,25 +364,64 @@
         }
         .search-box input {
             width: 100%;
-            padding: 9px 14px 9px 36px;
+            padding: 10px 14px 10px 38px;
             border: 1px solid var(--border);
             border-radius: 12px;
-            font-size: 12px;
+            font-size: 13px;
             background: var(--surface);
             outline: none;
             transition: border-color 0.2s;
             font-family: 'Inter', sans-serif;
         }
-        .search-box input:focus { border-color: var(--orange); }
+        .search-box input:focus { border-color: var(--navy); }
         .search-box i {
             position: absolute;
-            left: 12px; top: 50%;
+            left: 14px; top: 50%;
             transform: translateY(-50%);
             color: var(--muted);
-            font-size: 12px;
+            font-size: 13px;
         }
-        .filter-select {
-            padding: 9px 16px;
+        .filter-tabs {
+            display: flex;
+            background: var(--soft);
+            border-radius: 12px;
+            padding: 4px;
+            gap: 2px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .filter-tabs::-webkit-scrollbar { display: none; }
+        .filter-tab {
+            padding: 7px 14px;
+            border-radius: 9px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--muted);
+            border: none;
+            background: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .filter-tab.active {
+            background: var(--surface);
+            color: var(--text);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+        .filter-tab .tab-count {
+            font-size: 10px;
+            background: var(--soft);
+            border-radius: 999px;
+            padding: 1px 6px;
+        }
+        .filter-tab.active .tab-count { background: var(--border); }
+        .select-filter {
+            padding: 10px 14px;
             border: 1px solid var(--border);
             border-radius: 12px;
             font-size: 12px;
@@ -360,67 +432,60 @@
             cursor: pointer;
             min-width: 140px;
         }
-        .filter-select:hover { border-color: var(--orange); }
 
-        /* Bulk Actions Bar */
+        /* ── BULK BAR ── */
         .bulk-bar {
             background: linear-gradient(135deg, var(--soft), #e8ecf2);
-            padding: 12px 20px;
+            border: 1px solid var(--border);
             border-radius: 14px;
+            padding: 12px 20px;
             display: flex;
             align-items: center;
             gap: 16px;
             flex-wrap: wrap;
             margin-bottom: 20px;
-            border: 1px solid var(--border);
         }
         .bulk-bar.hidden { display: none; }
         .selected-count {
             background: var(--navy);
             color: white;
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 700;
         }
         .btn-success {
-            background: var(--success);
+            background: #16a34a;
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 10px;
+            border-radius: 999px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-success:hover { background: #15803d; transform: translateY(-1px); }
         .btn-danger {
-            background: var(--danger);
+            background: #dc2626;
             color: white;
             border: none;
             padding: 8px 16px;
-            border-radius: 10px;
+            border-radius: 999px;
             font-size: 11px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         .btn-danger:hover { background: #b91c1c; transform: translateY(-1px); }
-        .btn-warning {
-            background: var(--warning);
-            color: white;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 11px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .btn-warning:hover { background: #b45309; transform: translateY(-1px); }
 
-        /* Table Styles */
+        /* ── TABLE (matching admin_bibs) ── */
         .table-card {
             background: var(--surface);
             border: 1px solid var(--border);
@@ -429,109 +494,105 @@
         }
         .table-header {
             padding: 14px 20px;
-            border-bottom: 1px solid var(--border);
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
+            justify-content: space-between;
             gap: 12px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
         }
         .table-meta { font-size: 11px; color: var(--muted); }
         .table-meta strong { color: var(--text); }
-        .table-scroll { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
+        .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        table { width: 100%; border-collapse: collapse; min-width: 900px; }
+        thead tr { background: var(--soft); }
         th {
+            padding: 11px 14px;
             text-align: left;
-            padding: 12px 16px;
-            background: var(--soft);
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.12em;
             color: var(--muted);
+            white-space: nowrap;
         }
-        td {
-            padding: 12px 16px;
+        th:first-child { padding-left: 20px; width: 40px; }
+        th:last-child { padding-right: 20px; }
+        tbody tr {
             border-bottom: 1px solid var(--border);
+            transition: background 0.15s;
+        }
+        tbody tr:last-child { border-bottom: none; }
+        tbody tr:hover { background: #f8faff; }
+        td {
+            padding: 12px 14px;
             font-size: 13px;
             vertical-align: middle;
         }
-        tbody tr { transition: background 0.2s; }
-        tbody tr:hover { background: #f8faff; }
+        td:first-child { padding-left: 20px; }
+        td:last-child { padding-right: 20px; }
 
-        /* Status Badges */
+        /* Status Badges (unified) */
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 12px;
+            gap: 5px;
+            padding: 4px 10px;
             border-radius: 999px;
             font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.05em;
+            white-space: nowrap;
         }
-        .status-verified { background: #dcfce7; color: #15803d; }
-        .status-pending { background: #fef3c7; color: #b45309; }
-        .status-rejected { background: #fee2e2; color: #dc2626; }
-        
+        .status-badge::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+        }
+        .badge-verified { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+        .badge-verified::before { background: #15803d; }
+        .badge-rejected { background: #fee2e2; color: #dc2626; border: 1px solid #fecaca; }
+        .badge-rejected::before { background: #dc2626; }
+        .badge-pending { background: #fef3c7; color: #b45309; border: 1px solid #fde68a; animation: pulse-badge 2s infinite; }
+        .badge-pending::before { background: #d97706; }
+        @keyframes pulse-badge { 0%,100%{ opacity:1; } 50%{ opacity:0.7; } }
+
+        /* Phase badge */
         .phase-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-radius: 999px;
             font-size: 10px;
             font-weight: 600;
         }
         .phase-early { background: #fef3c7; color: #b45309; }
-        .phase-normal { background: #e0e7ff; color: #1d4ed8; }
+        .phase-normal { background: #dbeafe; color: #1d4ed8; }
 
-        /* Action Buttons */
-        .action-icon {
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid var(--border);
-            background: var(--surface);
-            color: var(--muted);
-        }
-        .action-icon:hover { background: var(--soft); color: var(--orange); transform: scale(1.05); }
-        
+        /* Action buttons in table */
         .action-btn-group {
             display: flex;
             gap: 8px;
             align-items: center;
         }
-        .btn-verify-action {
-            background: var(--success);
-            color: white;
-            border: none;
+        .btn-verify-action, .btn-reject-action {
             padding: 5px 12px;
             border-radius: 8px;
             font-size: 10px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
             min-width: 70px;
+            justify-content: center;
         }
+        .btn-verify-action { background: #16a34a; color: white; }
         .btn-verify-action:hover { background: #15803d; transform: translateY(-1px); }
-        .btn-reject-action {
-            background: var(--danger);
-            color: white;
-            border: none;
-            padding: 5px 12px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            min-width: 70px;
-        }
+        .btn-reject-action { background: #dc2626; color: white; }
         .btn-reject-action:hover { background: #b91c1c; transform: translateY(-1px); }
         .btn-disabled {
             background: var(--soft);
@@ -539,19 +600,33 @@
             padding: 5px 12px;
             border-radius: 8px;
             font-size: 10px;
-            font-weight: 600;
-            min-width: 70px;
+            font-weight: 700;
             text-align: center;
             cursor: not-allowed;
+            min-width: 70px;
         }
-
-        .checkbox-col { width: 40px; text-align: center; }
         .receipt-link {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
             color: var(--navy);
-            text-decoration: none;
-            font-weight: 600;
+            transition: all 0.15s;
         }
-        .receipt-link:hover { color: var(--orange); text-decoration: underline; }
+        .receipt-link:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+        /* Checkbox styling */
+        .checkbox-col input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--orange);
+        }
 
         /* Modal */
         .modal {
@@ -566,7 +641,7 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: white;
+            background: var(--surface);
             border-radius: 20px;
             max-width: 500px;
             width: 90%;
@@ -587,47 +662,54 @@
         }
         .modal-image { max-width: 100%; border-radius: 12px; margin-bottom: 16px; }
 
-        .empty-state { text-align: center; padding: 48px 20px; color: var(--muted); }
-        .empty-state i { font-size: 2rem; opacity: 0.2; margin-bottom: 12px; display: block; }
+        .empty-state, .error-state {
+            padding: 48px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+        .empty-state i, .error-state i { font-size: 2.2rem; opacity: 0.2; margin-bottom: 12px; display: block; }
+        .error-state { color: #dc2626; }
 
-        /* Mobile Responsive */
+        /* Responsive */
+        @media (max-width: 1280px) {
+            .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+        }
         @media (max-width: 1024px) {
-            .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            :root { --sidebar-w: 240px; }
+            .content { padding: 20px; }
+            .topbar { padding: 12px 20px; }
         }
         @media (max-width: 900px) {
             #sidebar {
                 position: fixed;
                 left: 0; top: 0;
                 transform: translateX(-100%);
-                z-index: 50;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+                width: 280px;
+                min-width: 280px;
             }
             #sidebar.open { transform: translateX(0); }
+            .hamburger-btn { display: flex; }
             #main { margin-left: 0; }
-            .hamburger-btn { display: flex !important; }
-        }
-        @media (max-width: 640px) {
-            .kpi-grid { grid-template-columns: 1fr; }
-            .filter-bar { flex-direction: column; align-items: stretch; }
-            .search-box { width: 100%; }
-            .filter-select { width: 100%; }
-            .content { padding: 16px; }
-            .topbar { padding: 12px 16px; }
             .topbar-title { font-size: 1rem; }
             .btn-primary span, .btn-secondary span { display: none; }
+            .btn-primary, .btn-secondary { padding: 9px 12px; }
         }
-
-        .hamburger-btn {
-            display: none;
-            background: var(--navy);
-            color: white;
-            border: none;
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            align-items: center;
-            justify-content: center;
+        @media (max-width: 640px) {
+            .content { padding: 16px; }
+            .topbar { padding: 10px 16px; }
+            .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+            .kpi-card { padding: 14px 16px; }
+            .kpi-value { font-size: 1.5rem; }
+            .filter-row { gap: 8px; }
+            .search-box { min-width: 100%; order: -1; }
+            .select-filter { width: 100%; min-width: 100%; }
+            .bulk-bar { flex-direction: column; align-items: stretch; }
+            .bulk-bar .btn-success, .bulk-bar .btn-danger { justify-content: center; }
         }
-
+        @media (max-width: 380px) {
+            .kpi-grid { grid-template-columns: 1fr; }
+        }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
@@ -635,22 +717,21 @@
 </head>
 <body>
 
-<div id="sidebar-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(2px);z-index:35;" onclick="toggleSidebar()"></div>
+<div id="sidebar-overlay" onclick="toggleSidebar()"></div>
 
 <aside id="sidebar">
     <div class="sidebar-brand">
         <h2>LER <span>2.0</span></h2>
         <p>Admin Command Center</p>
     </div>
-
     <p class="nav-section-label">Overview</p>
     <a href="dashboard_admin.html" class="nav-link">
         <i class="fas fa-users"></i> Participants
+        <span class="nav-badge" id="sidebar-pending-count">—</span>
     </a>
     <a href="admin_analytics.html" class="nav-link">
         <i class="fas fa-chart-bar"></i> Analytics
     </a>
-
     <p class="nav-section-label">Operations</p>
     <a href="admin_payments.html" class="nav-link active">
         <i class="fas fa-receipt"></i> Payments
@@ -658,12 +739,13 @@
     <a href="admin_bibs.html" class="nav-link">
         <i class="fas fa-tag"></i> Bib Numbers
     </a>
-
     <div class="sidebar-footer">
         <div class="sidebar-clock">
             <div class="clock-icon-wrap"><i class="fas fa-clock"></i></div>
             <div class="clock-content">
-                <div class="clock-time"><span id="clock-hm">--:--</span><span class="seconds" id="clock-s">:--</span></div>
+                <div class="clock-time">
+                    <span id="clock-hm">--:--</span><span class="seconds" id="clock-s">:--</span>
+                </div>
                 <div class="clock-date" id="clock-date">Loading...</div>
             </div>
         </div>
@@ -674,7 +756,7 @@
                 <span>LER 2.0 Portal</span>
             </div>
         </div>
-        <button onclick="adminLogout()" style="width:100%;margin-top:12px;padding:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.2);border-radius:8px;color:#dc2626;font-size:11px;font-weight:700;cursor:pointer;">
+        <button onclick="adminLogout()" style="width:100%;margin-top:12px;padding:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.2);border-radius:8px;color:#dc2626;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;">
             <i class="fas fa-sign-out-alt"></i> Logout
         </button>
     </div>
@@ -683,7 +765,9 @@
 <div id="main">
     <div class="topbar">
         <div class="topbar-left">
-            <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+            <button class="hamburger-btn" onclick="toggleSidebar()" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="topbar-title">Payment <span>Management</span></div>
         </div>
         <div class="topbar-actions">
@@ -693,7 +777,7 @@
     </div>
 
     <div class="content">
-        <!-- Interactive KPI Cards -->
+        <!-- KPI Cards -->
         <div class="kpi-grid">
             <div class="kpi-card accent-total" data-filter="all" onclick="filterByCard('all')">
                 <div class="kpi-label"><i class="fas fa-receipt"></i> Total Transactions</div>
@@ -727,27 +811,35 @@
             <span id="selected-count" class="selected-count">0</span> selected
             <button class="btn-success" onclick="bulkVerify()"><i class="fas fa-check"></i> Verify Selected</button>
             <button class="btn-danger" onclick="bulkReject()"><i class="fas fa-times"></i> Reject Selected</button>
-            <button class="btn-warning" onclick="clearSelection()"><i class="fas fa-undo"></i> Clear</button>
+            <button class="btn-secondary" onclick="clearSelection()" style="background:var(--surface);"><i class="fas fa-undo"></i> Clear</button>
         </div>
 
-        <!-- Filter Bar -->
-        <div class="filter-bar">
+        <!-- Filter Row (Tabs + Dropdowns) -->
+        <div class="filter-row">
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" id="search-input" placeholder="Search by name, IC, email..." onkeyup="applyFilters()">
+                <input type="text" id="search-input" placeholder="Search name, ID, IC, email..." oninput="applyFilters()">
             </div>
-            <select id="status-filter" class="filter-select" onchange="applyFilters()">
-                <option value="all">All Status</option>
-                <option value="PENDING">Pending</option>
-                <option value="VERIFIED">Verified</option>
-                <option value="REJECTED">Rejected</option>
-            </select>
-            <select id="phase-filter" class="filter-select" onchange="applyFilters()">
+            <div class="filter-tabs" id="status-tabs">
+                <button class="filter-tab active" data-status="ALL" onclick="setStatusTab(this)">
+                    All <span class="tab-count" id="tab-count-all">—</span>
+                </button>
+                <button class="filter-tab" data-status="PENDING" onclick="setStatusTab(this)">
+                    Pending <span class="tab-count" id="tab-count-pending">—</span>
+                </button>
+                <button class="filter-tab" data-status="VERIFIED" onclick="setStatusTab(this)">
+                    Verified <span class="tab-count" id="tab-count-verified">—</span>
+                </button>
+                <button class="filter-tab" data-status="REJECTED" onclick="setStatusTab(this)">
+                    Rejected <span class="tab-count" id="tab-count-rejected">—</span>
+                </button>
+            </div>
+            <select id="phase-filter" class="select-filter" onchange="applyFilters()">
                 <option value="all">All Phases</option>
                 <option value="Early Bird">Early Bird</option>
                 <option value="Normal Price">Normal Price</option>
             </select>
-            <select id="category-filter" class="filter-select" onchange="applyFilters()">
+            <select id="category-filter" class="select-filter" onchange="applyFilters()">
                 <option value="all">All Categories</option>
             </select>
             <button class="btn-secondary" onclick="resetFilters()">Reset</button>
@@ -779,7 +871,7 @@
                         </tr>
                     </thead>
                     <tbody id="payments-tbody">
-                        <tr><td colspan="9" class="empty-state"><i class="fas fa-circle-notch fa-spin"></i> Loading payments...</td</tr>
+                        <tr><td colspan="9" class="empty-state"><i class="fas fa-circle-notch fa-spin"></i> Loading payments...</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -803,52 +895,55 @@ const API_BASE = "https://langkawi-eco-api.mplbp-media.workers.dev/api/admin";
 let allPayments = [];
 let filteredPayments = [];
 let selectedPayments = new Set();
-let activeCardFilter = 'all';
+let activeStatusFilter = 'ALL';
 
+// Helper: escape HTML
+function escapeHtml(str) {
+    if (!str) return '—';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+// Get initials for avatar
 function getInitials(name) {
     if (!name) return 'A';
     return name.substring(0, 2).toUpperCase();
 }
 
+// Sidebar toggle
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     const isOpen = sidebar.classList.contains('open');
     if (isOpen) {
         sidebar.classList.remove('open');
-        overlay.style.display = 'none';
+        overlay.classList.remove('active');
         document.body.style.overflow = '';
     } else {
         sidebar.classList.add('open');
-        overlay.style.display = 'block';
+        overlay.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
 }
 
-// Show hamburger on mobile
-if (window.innerWidth <= 900) {
-    document.querySelector('.hamburger-btn').style.display = 'flex';
-}
-window.addEventListener('resize', () => {
-    const btn = document.querySelector('.hamburger-btn');
-    if (window.innerWidth <= 900) btn.style.display = 'flex';
-    else btn.style.display = 'none';
-});
-
-// Clock
+// Clock (English)
 function updateClock() {
     const now = new Date();
     const hh = String(now.getHours()).padStart(2,'0');
     const mm = String(now.getMinutes()).padStart(2,'0');
     const ss = String(now.getSeconds()).padStart(2,'0');
-    const days = ['Ahad', 'Isnin', 'Selasa', 'Rabu', 'Khamis', 'Jumaat', 'Sabtu'];
-    const months = ['Jan', 'Feb', 'Mac', 'Apr', 'Mei', 'Jun', 'Jul', 'Ogo', 'Sep', 'Okt', 'Nov', 'Dis'];
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     document.getElementById('clock-hm').textContent = `${hh}:${mm}`;
     document.getElementById('clock-s').textContent = `:${ss}`;
     document.getElementById('clock-date').textContent = `${days[now.getDay()]}, ${String(now.getDate()).padStart(2,'0')} ${months[now.getMonth()]} ${now.getFullYear()}`;
 }
 
-// Auth
+// Auth check
 async function checkAuth() {
     const adminSession = localStorage.getItem("adminSession");
     if (!adminSession) { window.location.href = "admin_login.html"; return false; }
@@ -871,7 +966,7 @@ async function checkAuth() {
     }
 }
 
-// Fetch data
+// Fetch all participants (payments data)
 async function fetchPayments() {
     const tbody = document.getElementById('payments-tbody');
     tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fas fa-circle-notch fa-spin"></i> Loading payments...</td></tr>';
@@ -880,16 +975,18 @@ async function fetchPayments() {
         if (!res.ok) throw new Error('Failed to fetch');
         allPayments = await res.json();
         populateCategoryFilter();
-        applyFilters();
         updateKPIs();
+        updateFilterCounts();
+        applyFilters();
     } catch (err) {
-        tbody.innerHTML = `<tr><td colspan="9" class="empty-state"><i class="fas fa-exclamation-circle"></i> Failed to load data: ${err.message}</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="9" class="error-state"><i class="fas fa-exclamation-circle"></i> Failed to load data: ${err.message}</td></tr>`;
     }
 }
 
 function populateCategoryFilter() {
     const categories = [...new Set(allPayments.map(p => p.category).filter(Boolean))];
     const select = document.getElementById('category-filter');
+    select.innerHTML = '<option value="all">All Categories</option>';
     categories.forEach(cat => {
         const option = document.createElement('option');
         option.value = cat;
@@ -898,54 +995,16 @@ function populateCategoryFilter() {
     });
 }
 
-function filterByCard(filterType) {
-    document.querySelectorAll('.kpi-card').forEach(card => card.classList.remove('active'));
-    document.querySelector(`.kpi-card[data-filter="${filterType}"]`).classList.add('active');
-    activeCardFilter = filterType;
-    
-    if (filterType === 'PENDING') {
-        document.getElementById('status-filter').value = 'PENDING';
-        applyFilters();
-    } else if (filterType === 'VERIFIED') {
-        document.getElementById('status-filter').value = 'VERIFIED';
-        applyFilters();
-    } else {
-        document.getElementById('status-filter').value = 'all';
-        applyFilters();
-    }
-}
-
-function applyFilters() {
-    const search = document.getElementById('search-input').value.toLowerCase();
-    const statusFilter = document.getElementById('status-filter').value;
-    const phaseFilter = document.getElementById('phase-filter').value;
-    const categoryFilter = document.getElementById('category-filter').value;
-    
-    filteredPayments = allPayments.filter(p => {
-        const matchSearch = !search || 
-            (p.full_name || '').toLowerCase().includes(search) ||
-            (p.ic_or_passport || '').toLowerCase().includes(search) ||
-            (p.email || '').toLowerCase().includes(search);
-        const matchStatus = statusFilter === 'all' || (p.payment_status || 'PENDING') === statusFilter;
-        const matchPhase = phaseFilter === 'all' || p.registration_phase === phaseFilter;
-        const matchCategory = categoryFilter === 'all' || p.category === categoryFilter;
-        return matchSearch && matchStatus && matchPhase && matchCategory;
-    });
-    
-    renderTable();
-    updateKPIs();
-}
-
-function resetFilters() {
-    document.getElementById('search-input').value = '';
-    document.getElementById('status-filter').value = 'all';
-    document.getElementById('phase-filter').value = 'all';
-    document.getElementById('category-filter').value = 'all';
-    
-    document.querySelectorAll('.kpi-card').forEach(card => card.classList.remove('active'));
-    document.querySelector('.kpi-card[data-filter="all"]').classList.add('active');
-    activeCardFilter = 'all';
-    applyFilters();
+function updateFilterCounts() {
+    const total = allPayments.length;
+    const pending = allPayments.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
+    const verified = allPayments.filter(p => p.payment_status === 'VERIFIED').length;
+    const rejected = allPayments.filter(p => p.payment_status === 'REJECTED').length;
+    document.getElementById('tab-count-all').textContent = total;
+    document.getElementById('tab-count-pending').textContent = pending;
+    document.getElementById('tab-count-verified').textContent = verified;
+    document.getElementById('tab-count-rejected').textContent = rejected;
+    document.getElementById('sidebar-pending-count').textContent = pending;
 }
 
 function updateKPIs() {
@@ -953,18 +1012,86 @@ function updateKPIs() {
     const totalAmount = allPayments.reduce((sum, p) => sum + (p.registration_fee || 0), 0);
     const pending = allPayments.filter(p => !p.payment_status || p.payment_status === 'PENDING').length;
     const verified = allPayments.filter(p => p.payment_status === 'VERIFIED').length;
-    
     document.getElementById('total-transactions').innerHTML = total.toLocaleString();
     document.getElementById('total-amount').innerHTML = 'RM ' + totalAmount.toLocaleString('en-MY', { minimumFractionDigits: 2 });
     document.getElementById('pending-count').innerHTML = pending;
     document.getElementById('verified-count').innerHTML = verified;
-    document.getElementById('total-count').innerHTML = filteredPayments.length;
+}
+
+// Set status tab
+function setStatusTab(btn) {
+    document.querySelectorAll('#status-tabs .filter-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    activeStatusFilter = btn.dataset.status;
+    // Update active card highlight
+    document.querySelectorAll('.kpi-card').forEach(card => card.classList.remove('active'));
+    if (activeStatusFilter === 'ALL') document.querySelector('.kpi-card[data-filter="all"]')?.classList.add('active');
+    else if (activeStatusFilter === 'PENDING') document.querySelector('.kpi-card[data-filter="PENDING"]')?.classList.add('active');
+    else if (activeStatusFilter === 'VERIFIED') document.querySelector('.kpi-card[data-filter="VERIFIED"]')?.classList.add('active');
+    else if (activeStatusFilter === 'REJECTED') document.querySelector('.kpi-card[data-filter="REJECTED"]')?.classList.add('active');
+    applyFilters();
+}
+
+function filterByCard(filterType) {
+    if (filterType === 'all') {
+        activeStatusFilter = 'ALL';
+        document.querySelector('#status-tabs .filter-tab[data-status="ALL"]')?.click();
+    } else if (filterType === 'PENDING') {
+        activeStatusFilter = 'PENDING';
+        document.querySelector('#status-tabs .filter-tab[data-status="PENDING"]')?.click();
+    } else if (filterType === 'VERIFIED') {
+        activeStatusFilter = 'VERIFIED';
+        document.querySelector('#status-tabs .filter-tab[data-status="VERIFIED"]')?.click();
+    } else if (filterType === 'amount') {
+        // just highlight, no filter change
+        document.querySelectorAll('.kpi-card').forEach(c => c.classList.remove('active'));
+        document.querySelector('.kpi-card[data-filter="amount"]')?.classList.add('active');
+        return;
+    } else if (filterType === 'REJECTED') {
+        activeStatusFilter = 'REJECTED';
+        document.querySelector('#status-tabs .filter-tab[data-status="REJECTED"]')?.click();
+    } else {
+        applyFilters();
+    }
+}
+
+function applyFilters() {
+    const search = document.getElementById('search-input').value.toLowerCase();
+    const phaseFilter = document.getElementById('phase-filter').value;
+    const categoryFilter = document.getElementById('category-filter').value;
+    
+    filteredPayments = allPayments.filter(p => {
+        const matchSearch = !search || 
+            (p.full_name || '').toLowerCase().includes(search) ||
+            (p.reg_id || '').toLowerCase().includes(search) ||
+            (p.ic_or_passport || '').toLowerCase().includes(search) ||
+            (p.email || '').toLowerCase().includes(search);
+        const matchStatus = activeStatusFilter === 'ALL' || 
+            (activeStatusFilter === 'PENDING' ? (!p.payment_status || p.payment_status === 'PENDING') : p.payment_status === activeStatusFilter);
+        const matchPhase = phaseFilter === 'all' || p.registration_phase === phaseFilter;
+        const matchCategory = categoryFilter === 'all' || p.category === categoryFilter;
+        return matchSearch && matchStatus && matchPhase && matchCategory;
+    });
+    
+    renderTable();
+    document.getElementById('showing-count').innerHTML = filteredPayments.length;
+    document.getElementById('total-count').innerHTML = allPayments.length;
+    updateBulkBar();
+}
+
+function resetFilters() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('phase-filter').value = 'all';
+    document.getElementById('category-filter').value = 'all';
+    activeStatusFilter = 'ALL';
+    document.querySelector('#status-tabs .filter-tab[data-status="ALL"]')?.click();
+    document.querySelectorAll('.kpi-card').forEach(c => c.classList.remove('active'));
+    document.querySelector('.kpi-card[data-filter="all"]')?.classList.add('active');
+    applyFilters();
 }
 
 function renderTable() {
     const tbody = document.getElementById('payments-tbody');
-    document.getElementById('showing-count').innerHTML = filteredPayments.length;
-    
     if (filteredPayments.length === 0) {
         tbody.innerHTML = '<tr><td colspan="9" class="empty-state"><i class="fas fa-inbox"></i> No payments found</td></tr>';
         return;
@@ -972,7 +1099,7 @@ function renderTable() {
     
     tbody.innerHTML = filteredPayments.map(p => {
         const status = p.payment_status || 'PENDING';
-        const statusClass = status === 'VERIFIED' ? 'status-verified' : (status === 'REJECTED' ? 'status-rejected' : 'status-pending');
+        const statusClass = status === 'VERIFIED' ? 'badge-verified' : (status === 'REJECTED' ? 'badge-rejected' : 'badge-pending');
         const statusText = status === 'VERIFIED' ? 'Verified' : (status === 'REJECTED' ? 'Rejected' : 'Pending');
         const phaseClass = p.registration_phase === 'Early Bird' ? 'phase-early' : 'phase-normal';
         const phaseText = p.registration_phase === 'Early Bird' ? 'Early Bird' : (p.registration_phase || 'Normal');
@@ -985,12 +1112,12 @@ function renderTable() {
                 <td class="checkbox-col"><input type="checkbox" class="payment-checkbox" data-id="${escapeHtml(p.reg_id)}" ${isSelected ? 'checked' : ''} onchange="toggleSelect('${escapeHtml(p.reg_id)}')"></td>
                 <td>
                     <div><strong>${escapeHtml(p.full_name || '—')}</strong></div>
-                    <div style="font-size: 11px; color: var(--muted);">${escapeHtml(p.ic_or_passport || '—')}</div>
+                    <div style="font-size: 11px; color: var(--muted);">${escapeHtml(p.reg_id || '—')}</div>
                 </td>
                 <td>${escapeHtml(p.category || '—')}</td>
                 <td><span class="phase-badge ${phaseClass}">${phaseText}</span></td>
                 <td><strong style="color: var(--success);">RM ${(p.registration_fee || 0).toFixed(2)}</strong></td>
-                <td>${p.receipt_r2_key ? `<button class="action-icon" onclick="viewReceipt('${p.receipt_r2_key}')" title="View Receipt"><i class="fas fa-eye"></i></button>` : '<span style="color: #cbd5e1;">—</span>'}</td>
+                <td>${p.receipt_r2_key ? `<button class="receipt-link" onclick="viewReceipt('${p.receipt_r2_key}')" title="View Receipt"><i class="fas fa-eye"></i></button>` : '<span style="color: #cbd5e1;">—</span>'}</td>
                 <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                 <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(p.admin_notes || '')}">${escapeHtml(p.admin_notes || '—')}</td>
                 <td>
@@ -1002,19 +1129,7 @@ function renderTable() {
             </tr>
         `;
     }).join('');
-    
-    updateBulkBar();
     updateSelectAllCheckbox();
-}
-
-function escapeHtml(str) {
-    if (!str) return '—';
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
 }
 
 function toggleSelect(regId) {
@@ -1052,6 +1167,22 @@ function updateBulkBar() {
 function clearSelection() {
     selectedPayments.clear();
     renderTable();
+}
+
+async function updatePaymentStatus(regId, status) {
+    const action = status === 'VERIFIED' ? 'verify' : 'reject';
+    if (!confirm(`Are you sure you want to ${action} this payment?`)) return;
+    
+    try {
+        const res = await fetch(`${API_BASE}/update-status`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reg_id: regId, status, notes: `Payment ${action}ed by admin` })
+        });
+        if (!res.ok) throw new Error('Update failed');
+        alert(`Payment ${action}ed successfully`);
+        await fetchPayments();
+    } catch (err) { alert('Error: ' + err.message); }
 }
 
 async function bulkVerify() {
@@ -1094,22 +1225,6 @@ async function bulkReject() {
     } catch (err) { alert('Error: ' + err.message); }
 }
 
-async function updatePaymentStatus(regId, status) {
-    const action = status === 'VERIFIED' ? 'verify' : 'reject';
-    if (!confirm(`Are you sure you want to ${action} this payment?`)) return;
-    
-    try {
-        const res = await fetch(`${API_BASE}/update-status`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ reg_id: regId, status, notes: `Payment ${action}ed by admin` })
-        });
-        if (!res.ok) throw new Error('Update failed');
-        alert(`Payment ${action}ed successfully`);
-        await fetchPayments();
-    } catch (err) { alert('Error: ' + err.message); }
-}
-
 function viewReceipt(url) {
     const modal = document.getElementById('receipt-modal');
     const img = document.getElementById('receipt-image');
@@ -1140,7 +1255,6 @@ function exportPayments() {
         'Payment Status': p.payment_status || 'PENDING',
         'Admin Notes': p.admin_notes
     }));
-    
     const ws = XLSX.utils.json_to_sheet(exportData);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Payments');
@@ -1148,12 +1262,19 @@ function exportPayments() {
 }
 
 function adminLogout() {
-    if (confirm('Log keluar?')) {
+    if (confirm('Log out?')) {
         localStorage.removeItem('adminSession');
         window.location.href = 'admin_login.html';
     }
 }
 
+// Close modal on outside click
+document.getElementById('receipt-modal').addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) closeModal();
+});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+// Initialize
 async function init() {
     const auth = await checkAuth();
     if (!auth) return;
