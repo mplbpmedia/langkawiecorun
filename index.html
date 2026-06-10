@@ -94,12 +94,7 @@
                 </div>
             </div>
 
-            <!-- EARLY BIRD BANNER START -->
-            <div id="early-bird-banner" class="max-w-xl mx-auto mb-8 p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl text-white shadow-lg text-center">
-                <h3 class="text-xl font-black uppercase">🔥 Early Bird Registration Now Open! 🔥</h3>
-                <p class="text-sm font-light">Save up to RM54! Limited-time offer valid until 30 July 2026.</p>
-            </div>
-            <!-- EARLY BIRD BANNER END -->
+            <!-- EARLY BIRD BANNER TELAH DIALIHKAN KE BAWAH (dalam section categories) -->
 
             <div class="flex flex-row flex-wrap justify-center gap-3 md:gap-4">
                 <a href="register.html" class="w-fit bg-orange-600 hover:bg-orange-700 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-semi-bold text-sm md:text-lg shadow-xl transition transform hover:scale-105 active:scale-95 whitespace-nowrap">
@@ -169,8 +164,8 @@
                 </h2>
             </div>
             <div>
-                <p class="text-gray-600 text-lg leading-relaxed">
-                    Langkawi Eco Run 2.0 is more than just a competitive running event, it is a community movement dedicated to preserving the natural beauty of our legendary island. Guided by the principles of environmental sustainability, community engagement, and healthy living, the event embraces the theme “Stride for Sustainability,” where every step represents a commitment towards a better future. Aligned with the vision of Majlis Perbandaran Langkawi Bandaraya Pelancongan and its slogan “Cleaner, Greener, Smarter,” Langkawi Eco Run 2.0 aims to inspire environmental awareness, promote sustainable lifestyles, and unite the community in building a greener and more sustainable Langkawi. 🌿
+                <p class="text-gray-600 text-lg pt-4 leading-normal font-normal font-sans">
+                    Langkawi Eco Run 2.0 is more than just a competitive running event, it is a community movement dedicated to preserving the natural beauty of our legendary island. Guided by the principles of environmental sustainability, community engagement, and healthy living, the event embraces the theme <strong>“Stride for Sustainability”,</strong> where every step represents a commitment towards a better future. Aligned with the vision of Majlis Perbandaran Langkawi Bandaraya Pelancongan and its slogan <strong>“Cleaner, Greener, Smarter”,</strong> Langkawi Eco Run 2.0 aims to inspire environmental awareness, promote sustainable lifestyles, and unite the community in building a greener and more sustainable Langkawi. 🌿
                 </p>
             </div>
         </div>
@@ -182,7 +177,7 @@
                     <i class="fas fa-broom text-blue-600 group-hover:text-white text-2xl"></i>
                 </div>
                 <h3 class="text-2xl font-black italic text-blue-950 mb-4 uppercase">Cleaner</h3>
-                <p class="text-gray-500 leading-relaxed">
+                <p class="text-gray-500 leading-relaxed font-sans">
                     Our commitment to a cleaner Langkawi is reflected through litter-free running zones, and sustainability awareness initiatives that encourage participants and the community to reduce waste and protect the island’s natural environment.
                 </p>
             </div>
@@ -192,7 +187,7 @@
                     <i class="fas fa-leaf text-green-600 group-hover:text-white text-2xl"></i>
                 </div>
                 <h3 class="text-2xl font-black italic text-blue-950 mb-4 uppercase">Greener</h3>
-                <p class="text-gray-500 leading-relaxed">
+                <p class="text-gray-500 leading-relaxed font-sans">
                     Every stride contributes to a greener future. Through eco-friendly practices, sustainable event management, and environmental conservation efforts, we aim to promote a deeper appreciation for Langkawi’s natural heritage while encouraging a more sustainable lifestyle for all. 
                 </p>
             </div>
@@ -202,7 +197,7 @@
                     <i class="fas fa-lightbulb text-orange-600 group-hover:text-white text-2xl"></i>
                 </div>
                 <h3 class="text-2xl font-black italic text-blue-950 mb-4 uppercase">Smarter</h3>
-                <p class="text-gray-500 leading-relaxed">
+                <p class="text-gray-500 leading-relaxed font-sans">
                     Integration of technology in efficient event management, digital registration systems, and accurate race timing to enhance the overall participant experience.
                 </p>
             </div>
@@ -213,10 +208,16 @@
 
     <!-- Race Categories & Register -->
     <section id="categories" class="pt-10 pb-10 pxy-6 bg-white">
-    <div class="max-w-7xl mx-auto text-center mb-16">
+    <div class="max-w-7xl mx-auto text-center mb-10">
         <h2 class="text-3xl md:text-5xl font-black italic uppercase tracking-tighter text-blue-950">Race Categories</h2>
         <p class="text-gray-500 uppercase tracking-[0.2em] font-semi-bold mt-2">Find Your Perfect Challenge</p>
         <div class="w-20 h-1.5 bg-orange-600 mx-auto mt-4 rounded-full"></div>
+    </div>
+
+    <!-- EARLY BIRD BANNER (DIPINDAHKAN KE SINI) -->
+    <div id="early-bird-banner" class="max-w-fit mx-auto mb-12 p-4 bg-gradient-to-r from-orange-500 to-red-500 rounded-2xl text-white shadow-lg text-center">
+        <h3 class="text-xl font-black uppercase">🔥 Early Bird Registration Open! 🔥</h3>
+        <p class="text-sm font-light">Offer ends 30 Jul 2026.</p>
     </div>
 
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 px-4 sm:px-6">
@@ -747,7 +748,7 @@ function isEarlyBirdActive() {
 function updateHomepagePrices() {
     const isEarly = isEarlyBirdActive();
     
-    // Update banner
+    // Update banner (sekarang di dalam section#categories)
     const banner = document.getElementById('early-bird-banner');
     if (banner) {
         banner.style.display = isEarly ? 'block' : 'none';
